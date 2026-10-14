@@ -170,7 +170,7 @@ export class GameScene extends Phaser.Scene {
         this.trayRoot.add(tool.stockLabel);
       }
     }
-    this.trayFoot = label(this, 240, 784, this.tray === 'salt' ? 'VÙNG XANH = KEM HOÀN HẢO · THẢ TAY ĐỂ DỪNG' : this.tray === 'brew' ? 'DỤNG CỤ THẬT · CHẠM, KÉO VÀ GIỮ ĐỂ PHA' : this.tray === 'milk' ? 'THÊM MỘT CHÚT NGỌT NGÀO CHO BUỔI SÁNG' : 'BỌT TRỨNG CẦN CHUYỂN ĐỘNG · KHÔNG CHỈ GIỮ YÊN', 8, '#b2c09e', { letterSpacing: 1 });
+    this.trayFoot = label(this, 240, 784, this.tray === 'salt' ? '' : this.tray === 'brew' ? 'DỤNG CỤ THẬT · CHẠM, KÉO VÀ GIỮ ĐỂ PHA' : this.tray === 'milk' ? 'THÊM MỘT CHÚT NGỌT NGÀO CHO BUỔI SÁNG' : 'BỌT TRỨNG CẦN CHUYỂN ĐỘNG · KHÔNG CHỈ GIỮ YÊN', 8, '#b2c09e', { letterSpacing: 1 });
     this.trayRoot.add(this.trayFoot);
     this.tabButtons.forEach((b, i) => b.setAlpha(['brew', 'milk', 'egg', 'salt'][i] === this.tray ? 1 : 0.65));
   }

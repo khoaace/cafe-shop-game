@@ -22,21 +22,21 @@ async page => {
   await drag(126,517,90,280);check((await snap()).session.served===1,'Original black coffee still served');
   await page.mouse.click(421,656);await page.waitForTimeout(150);
   // Cream pour starts only after entering the bowl and moving right to tilt.
-  await page.mouse.move(210,715);await page.mouse.down();await page.mouse.move(80,714,{steps:15});await page.mouse.move(128,714,{steps:12});
+  await page.mouse.move(267,715);await page.mouse.down();await page.mouse.move(40,727,{steps:15});await page.mouse.move(88,727,{steps:12});
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().saltedCream.amounts.cream >= 39.5);await page.mouse.up();await page.waitForTimeout(260);
   const amount = (await snap()).saltedCream.amounts.cream;
-  await drag(290,715,90,714);await drag(290,715,90,714);
+  await drag(325,715,64,727);await drag(325,715,64,727);
   check(Math.abs((await snap()).saltedCream.amounts.salt-0.3)<0.001,'Two measuring spoons add 0.3g exactly');
-  await page.mouse.move(370,715);await page.mouse.down();await page.mouse.move(115,714,{steps:15});await page.waitForTimeout(650);
+  await page.mouse.move(383,715);await page.mouse.down();await page.mouse.move(89,727,{steps:15});await page.waitForTimeout(650);
   check((await snap()).saltedCream.whipping===0,'Stationary hold produces no progress');
-  for (let i=1;i<=165;i++) {const angle=i*Math.PI/20;await page.mouse.move(90+Math.cos(angle)*25,714+Math.sin(angle)*25);await page.waitForTimeout(13);if((await snap()).saltedCream.stage==='PERFECT CREAM')break;}
+  for (let i=1;i<=165;i++) {const angle=i*Math.PI/20;await page.mouse.move(64+Math.cos(angle)*25,727+Math.sin(angle)*25);await page.waitForTimeout(13);if((await snap()).saltedCream.stage==='PERFECT CREAM')break;}
   await page.mouse.up();await page.waitForTimeout(260); const cream=(await snap()).saltedCream;
   check(cream.stage==='PERFECT CREAM','Actual circular motion reaches Perfect zone');
   await page.screenshot({path:'output/playwright/phase10-perfect-cream.png'});
-  await page.mouse.move(444,715);await page.mouse.down();await page.mouse.move(330,517,{steps:15});await page.mouse.move(378,517,{steps:12});
+  await page.mouse.move(441,715);await page.mouse.down();await page.mouse.move(330,517,{steps:15});await page.mouse.move(378,517,{steps:12});
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().stations[1].drink.preparation.amounts.brewedCoffee>=0.98);await page.mouse.up();await page.waitForTimeout(260);
   const stock=(await snap()).session.ingredients.remaining;
-  await page.mouse.move(90,714);await page.mouse.down();await page.mouse.move(330,517,{steps:15});await page.mouse.move(378,517,{steps:12});
+  await page.mouse.move(64,727);await page.mouse.down();await page.mouse.move(330,517,{steps:15});await page.mouse.move(378,517,{steps:12});
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().stations[1].drink.preparation.amounts.cream>=15);await page.screenshot({path:'output/playwright/phase10-cream-ribbon.png'});
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().stations[1].drink.preparation.amounts.cream>=39);await page.mouse.up();await page.waitForTimeout(400);
   const ready=await snap();check(ready.stations[1].drink.preparation.creamTechnique===1,'Technique survives manual transfer');

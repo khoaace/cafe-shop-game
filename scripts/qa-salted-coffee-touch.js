@@ -23,28 +23,28 @@ async page => {
   await drag(360,715,240,517,740);await drag(440,715,240,517,1900);
   await tap(181,656);await drag(56,715,240,517,1530);await drag(240,715,240,517);
   await tap(421,656);
-  await start(210,715);await path(210,715,80,714);await path(80,714,128,714);
+  await start(267,715);await path(267,715,40,727);await path(40,727,88,727);
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().saltedCream.amounts.cream>=39.5);await end();
   // A cancelled measuring spoon must not add any salt.
-  await start(290,715);await path(290,715,90,714);await cdp.send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]});await page.waitForTimeout(260);
+  await start(325,715);await path(325,715,64,727);await cdp.send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]});await page.waitForTimeout(260);
   check(!(await snap()).saltedCream.amounts.salt,'Cancellation applies no salt');
-  await drag(290,715,90,714);await drag(290,715,90,714);
-  await start(370,715);await path(370,715,115,714);await page.waitForTimeout(700);check((await snap()).saltedCream.whipping===0,'Touch holding earns zero foam');
-  for(let i=1;i<=180;i++){const a=i*Math.PI/20;await move(90+Math.cos(a)*25,714+Math.sin(a)*25);await page.waitForTimeout(16);if((await snap()).saltedCream.stage==='PERFECT CREAM')break;}
+  await drag(325,715,64,727);await drag(325,715,64,727);
+  await start(383,715);await path(383,715,89,727);await page.waitForTimeout(700);check((await snap()).saltedCream.whipping===0,'Touch holding earns zero foam');
+  for(let i=1;i<=180;i++){const a=i*Math.PI/20;await move(64+Math.cos(a)*25,727+Math.sin(a)*25);await page.waitForTimeout(16);if((await snap()).saltedCream.stage==='PERFECT CREAM')break;}
   await end();check((await snap()).saltedCream.stage==='PERFECT CREAM','Touch circles reach Perfect');
-  await start(444,715);await path(444,715,216,517);await path(216,517,264,517);
+  await start(441,715);await path(441,715,216,517);await path(216,517,264,517);
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().stations[0].drink.preparation.amounts.brewedCoffee>=0.98);await end();
-  await start(90,714);await path(90,714,216,517);await path(216,517,264,517);
+  await start(64,727);await path(64,727,216,517);await path(216,517,264,517);
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().stations[0].drink.preparation.amounts.cream>=39);await end();
   const ready=await snap();check(ready.stations[0].evaluation.quality==='PERFECT','Touch drink evaluates Perfect');
   await page.waitForTimeout(350);check((await snap()).stations[0].drink.preparation.amounts.cream===ready.stations[0].drink.preparation.amounts.cream,'Release immediately stops cream flow');
   await page.screenshot({path:'output/playwright/phase10-touch-layered.png'});
   // A new bowl independently demonstrates excess salt and overwhipping.
-  await tap(158,714);await start(210,715);await path(210,715,80,714);await path(80,714,128,714);
+  await tap(182,758);await start(267,715);await path(267,715,40,727);await path(40,727,88,727);
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().saltedCream.amounts.cream>=38);await end();
-  for(let i=0;i<4;i++)await drag(290,715,90,714);
-  await start(370,715);await path(370,715,115,714);
-  for(let i=1;i<=250;i++){const a=i*Math.PI/20;await move(90+Math.cos(a)*25,714+Math.sin(a)*25);await page.waitForTimeout(16);if((await snap()).saltedCream.stage==='OVERWHIPPED')break;}
+  for(let i=0;i<4;i++)await drag(325,715,64,727);
+  await start(383,715);await path(383,715,89,727);
+  for(let i=1;i<=250;i++){const a=i*Math.PI/20;await move(64+Math.cos(a)*25,727+Math.sin(a)*25);await page.waitForTimeout(16);if((await snap()).saltedCream.stage==='OVERWHIPPED')break;}
   await end();const over=await snap();check(over.saltedCream.stage==='OVERWHIPPED','Touch overwhipping tracked');
   check(over.saltedCream.amounts.salt>=0.59,'Four measured spoonfuls track excess salt');check(over.stations[0].evaluation.quality==='PERFECT','Second bowl does not alter first cup');
   check(over.diagnostics.inputListeners.every(n=>n===1),'Touch has no duplicate input handlers');check(await page.evaluate(()=>scrollX===0&&scrollY===0),'No page scroll');
