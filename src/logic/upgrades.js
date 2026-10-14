@@ -1,14 +1,15 @@
-export const INITIAL_UPGRADES = { phins: 1, seats: 3, premium: false, fan: false, decor: false };
+export const INITIAL_UPGRADES = { phins: 1, seats: 3, premium: false, fan: false, decor: false, blender: false };
 export const UPGRADES = {
   phins: { name: 'Thêm phin nhôm', icon: 'phin', min: 1, max: 4, prices: [25000, 50000, 85000], description: 'Một trạm độc lập. Tối đa 4 phin, hai trang bàn pha.' },
   seats: { name: 'Thêm ghế nhựa', icon: 'seat', min: 3, max: 6, prices: [30000, 45000, 65000], description: 'Thêm chỗ đón khách. Tối đa 6 ghế, hai hàng.' },
   premium: { name: 'Sữa đặc cao cấp', icon: 'condensed', price: 20000, description: 'Tip sữa đá và bạc xỉu tăng 20%. Vẫn tự tay rót.' },
   fan: { name: 'Quạt mát góc phố', icon: 'fan', price: 15000, description: 'Khách mất kiên nhẫn chậm hơn 15% khi có điện.' },
   decor: { name: 'Chút xanh, chút đèn', icon: 'plant', price: 40000, description: 'Mỗi đơn đúng thêm 0,1 sao, tối đa 5 sao.' },
+  blender: { name: 'Máy xay sinh tố', icon: 'blender', price: 60000, description: 'Đặt trên quầy pha. Mở món Cà phê cốt dừa từ ngày 5.' },
 };
 export function normalizeUpgrades(raw = {}, legacy = false) {
   const value = (key, min, max) => Number.isFinite(raw?.[key]) ? Math.max(min, Math.min(max, Math.floor(raw[key]))) : min;
-  return { phins: legacy ? 2 : value('phins', 1, 4), seats: value('seats', 3, 6), premium: raw?.premium === true, fan: raw?.fan === true, decor: raw?.decor === true };
+  return { phins: legacy ? 2 : value('phins', 1, 4), seats: value('seats', 3, 6), premium: raw?.premium === true, fan: raw?.fan === true, decor: raw?.decor === true, blender: raw?.blender === true };
 }
 export function quoteUpgrade(upgrades, key) {
   const spec = UPGRADES[key];

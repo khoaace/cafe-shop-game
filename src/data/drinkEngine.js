@@ -24,7 +24,7 @@ export const INGREDIENT_DEFINITIONS = {
 
 // Planning metadata only: no recipe quantities, unlocks or customer orders yet.
 export const PLANNED_DRINKS = Object.freeze([
-  ['cotdua', 'Cà phê cốt dừa'], ['tratac', 'Trà tắc'],
+  ['tratac', 'Trà tắc'],
   ['tradao', 'Trà đào cam sả'], ['travai', 'Trà vải'], ['cacao', 'Cacao sữa đá'], ['matcha', 'Matcha latte đá'],
 ].map(([id, name]) => Object.freeze({ id, name, status: 'planned' })));
 

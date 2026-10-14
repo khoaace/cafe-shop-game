@@ -21,7 +21,7 @@ export class SummaryScene extends Phaser.Scene {
     label(this, 240, 271, money(r.earnings), 43, '#31523e', { fontFamily: SERIF, fontStyle: 'bold' });
     const rows = [
       ['Tiền bán cà phê', money(r.revenue)], ['Khách gửi thêm', money(r.tips)], ['Thưởng combo / VIP / thử thách', money(r.bonuses + (r.challengeReward || 0))],
-      ['Giá trị nguyên liệu đã dùng', money(r.ingredientCost || r.ingredients?.cost || 0)], ['Khách vui / khách bỏ về', `${r.served} / ${r.lost}`], ['Ly Perfect / combo tốt nhất', `${r.perfect} / ×${r.bestCombo}`],
+      ['Giá trị nguyên liệu đã dùng', `${money(r.ingredientCost || r.ingredients?.cost || 0)}${r.ingredients?.wasteCost ? ` · bỏ ${money(r.ingredients.wasteCost)}` : ''}`], ['Khách vui / khách bỏ về', `${r.served} / ${r.lost}`], ['Ly Perfect / combo tốt nhất', `${r.perfect} / ×${r.bestCombo}`],
       ['Đánh giá trong ngày', r.ratings.length ? `${r.rating.toFixed(1)} / 5 ★` : 'Chưa có đánh giá'],
     ];
     for (let i = 0; i < rows.length; i++) {

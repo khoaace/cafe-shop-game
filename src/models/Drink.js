@@ -1,4 +1,5 @@
-import { INGREDIENT_NAMES, RECIPES, RULES } from '../config.js';
+import { INGREDIENT_NAMES, PITCHER_RECIPES, RECIPES, RULES } from '../config.js';
+import { CoconutBlend } from './CoconutBlend.js';
 import { PreparationState } from './PreparationState.js';
 import { INGREDIENT_DEFINITIONS } from '../data/drinkEngine.js';
 import { evaluatePreparation } from '../logic/drinkQuality.js';
@@ -22,6 +23,7 @@ export class Drink {
     this.timedSteps = new Set();
     this.coffeeSource = new PreparationState(`${this.id}-phin-collection`, 3);
     this.creamTechniqueTotal = 0; this.creamMovementTotal = 0;
+    this.blendTechniqueTotal = 0; this.blendTimeTotal = 0; this.blendedCoconut = 0;
     this.preparation = new PreparationState(this.id, RECIPES[recipeId]?.visual.capacity || 300, Object.fromEntries((RECIPES[recipeId]?.ingredients || []).filter(i => i.volumePerUnit).map(i => [i.id, i.volumePerUnit])));
   }
   placePhin() {
@@ -67,7 +69,7 @@ export class Drink {
     if (this.state !== 'BREWING') return false;
     this.brewElapsed = Math.min(RULES.brewSeconds, this.brewElapsed + Math.max(0, seconds));
     this.coffee = this.water * this.brewElapsed / RULES.brewSeconds;
-    if (this.brewElapsed >= RULES.brewSeconds) { this.state = 'BREWED'; if (this.recipeId === 'muoi') this.coffeeSource.add('brewedCoffee', this.coffee); return true; }
+    if (this.brewElapsed >= RULES.brewSeconds) { this.state = 'BREWED'; if (PITCHER_RECIPES.includes(this.recipeId)) this.coffeeSource.add('brewedCoffee', this.coffee); return true; }
     return false;
   }
   addMeasuredIngredient(kind, amount) {
@@ -78,6 +80,8 @@ export class Drink {
       return accepted;
     }
     if (this.recipeId === 'muoi' && ['cream', 'salt', 'brewedCoffee'].includes(kind)) return this.preparation.add(kind, amount);
+    // Coconut coffee receives milk and ice only through the blender jar, and coffee only from its pitcher.
+    if (this.recipeId === 'cotdua') return 0;
     if (!Object.hasOwn(INGREDIENT_NAMES, kind)) return 0;
     const accepted = Math.min(amount, Math.max(0, (kind === 'ice' ? 9 : 5) - this[kind]));
     this[kind] += accepted;
@@ -88,10 +92,12 @@ export class Drink {
   addIngredient(kind, amount) { return this.addMeasuredIngredient(kind, amount) > 0; }
   getAmounts() {
     return RECIPES[this.recipeId]?.engine === 'phin'
-      ? { coffee: this.grounds, water: this.water, condensed: this.condensed, milk: this.milk, foam: this.foam, ice: this.ice, ...(this.recipeId === 'muoi' ? this.preparation.amounts : {}) }
+      ? this.recipeId === 'cotdua' ? { coffee: this.grounds, water: this.water, ...this.preparation.amounts }
+        : { coffee: this.grounds, water: this.water, condensed: this.condensed, milk: this.milk, foam: this.foam, ice: this.ice, ...(this.recipeId === 'muoi' ? this.preparation.amounts : {}) }
       : { ...this.preparation.amounts };
   }
   acceptPreparedMixture(mixture, source) {
+    if (this.recipeId === 'cotdua') return this.acceptCoconutPour(mixture, source);
     if (this.recipeId !== 'muoi' || this.consumed || this.state !== 'BREWED') return 0;
     const coffee = mixture.brewedCoffee || 0, cream = mixture.cream || 0;
     if (coffee && source !== this.coffeeSource || !coffee && (!cream || !source?.whipping)) return 0;
@@ -105,6 +111,34 @@ export class Drink {
       this.preparation.foam = source.foam;
       this.preparation.steps.whisk = { amount: this.creamMovementTotal / this.preparation.amounts.cream, technique: this.preparation.creamTechnique };
       this.preparation.revision++;
+    }
+    return fraction;
+  }
+  // Coffee is collected from this cup's own phin only after a blended coconut base is in the glass.
+  acceptCoconutPour(mixture, source) {
+    if (this.consumed || !source) return 0;
+    const p = this.preparation, ids = Object.keys(mixture);
+    if (source === this.coffeeSource) {
+      if (this.state !== 'BREWED' || !((p.amounts.coconutCream || 0) > 0) || ids.some(id => id !== 'brewedCoffee')) return 0;
+      const coffee = mixture.brewedCoffee || 0, room = Math.max(0, p.capacity - p.volume) / (p.volumePerUnit.brewedCoffee || 1);
+      const fraction = Math.min(1, room / (coffee || 1));
+      if (!(fraction > 0)) return 0;
+      p.add('brewedCoffee', coffee * fraction); return fraction;
+    }
+    if (!(source instanceof CoconutBlend) || !(source.blendTime > 0) || !['GLASS', 'BREWED'].includes(this.state)) return 0;
+    if (ids.some(id => !['coconutCream', 'condensed', 'ice'].includes(id))) return 0;
+    const volume = ids.reduce((sum, id) => sum + (id === 'ice' ? 0 : mixture[id] * (p.volumePerUnit[id] || 1)), 0);
+    const fraction = Math.min(1, Math.max(0, (p.capacity - p.volume) / (volume || 1)));
+    if (!(fraction > 0)) return 0;
+    for (const id of ids) p.add(id, mixture[id] * fraction);
+    // Crushed ice is part of the slush, not loose cubes.
+    p.ice = [];
+    const coconut = (mixture.coconutCream || 0) * fraction;
+    if (coconut > 0) {
+      this.blendedCoconut += coconut; this.blendTechniqueTotal += coconut * source.technique; this.blendTimeTotal += coconut * source.blendTime;
+      p.blendTechnique = this.blendTechniqueTotal / this.blendedCoconut; p.blendTime = this.blendTimeTotal / this.blendedCoconut;
+      p.steps.blend = { amount: Math.min(4, p.blendTime), technique: p.blendTechnique };
+      p.foam = source.foam; p.crush = source.crush; p.revision++;
     }
     return fraction;
   }
@@ -125,6 +159,10 @@ export class Drink {
     const values = { ...Object.fromEntries(Object.entries(this.preparation.steps).map(([id, step]) => [id, step.amount])), collect: this.preparation.amounts.brewedCoffee || 0, 'cream-pour': this.preparation.amounts.cream || 0, salt: this.preparation.amounts.salt || 0, phin: this.state !== 'GLASS' ? 1 : 0, grounds: this.grounds, press: this.press, water: this.water, brew: this.brewElapsed, mix: this.stir, foam: this.foam * RULES.whiskDistance };
     for (const step of recipe.steps) steps[step.id] = { amount: values[step.id] || 0, technique: 1 };
     if (this.recipeId === 'muoi' && recipe.id === 'muoi') steps.whisk = this.preparation.steps.whisk || { amount: 0, technique: 0 };
+    if (recipe.id === 'cotdua') {
+      const a = this.preparation.amounts, blended = this.recipeId === 'cotdua' && (a.coconutCream || 0) > 0;
+      Object.assign(steps, { coconut: { amount: a.coconutCream || 0, technique: 1 }, condensed: { amount: a.condensed || 0, technique: 1 }, ice: { amount: a.ice || 0, technique: 1 }, lid: { amount: blended ? 1 : 0, technique: 1 }, mixture: { amount: a.coconutCream || 0, technique: 1 }, collect: { amount: a.brewedCoffee || 0, technique: 1 }, blend: blended && this.preparation.steps.blend || { amount: 0, technique: 0 } });
+    }
     const result = evaluatePreparation(recipe, this.getAmounts(), steps, this.state === 'BREWED');
     if (recipe.id === 'muoi') {
       const technique = this.preparation.creamTechnique || 0;
@@ -133,6 +171,14 @@ export class Drink {
       if (result.valid && technique < 0.95 && result.quality === 'PERFECT') { result.quality = result.finalQuality = 'GOOD'; result.score = 4.3; result.message = 'Kem hơi lệch độ bông, ly vẫn ngon!'; }
       if (result.valid && technique < 0.6) { result.quality = result.finalQuality = 'ACCEPTABLE'; result.score = 3.4; result.message = 'Kem chưa mịn hoặc quá bông rồi.'; }
       if (result.valid && (this.preparation.amounts.salt || 0) > 0.405) result.message = 'Hơi mặn rồi!';
+    }
+    if (recipe.id === 'cotdua' && this.recipeId === 'cotdua') {
+      const technique = this.preparation.blendTechnique || 0, time = this.preparation.blendTime || 0;
+      result.perfectBlend = technique >= 0.99;
+      result.tipMultiplier = result.valid && result.perfectBlend ? 1.15 : 1;
+      if (result.valid && technique < 0.95 && result.quality === 'PERFECT') { result.quality = result.finalQuality = 'GOOD'; result.score = 4.3; result.message = 'Dừa xay mịn vừa, ly vẫn ngon!'; }
+      if (result.valid && technique < 0.6) { result.quality = result.finalQuality = 'ACCEPTABLE'; result.score = 3.4; result.message = time >= 5.6 ? 'Xay quá nhuyễn, dừa hơi loãng rồi.' : 'Dừa còn lợn cợn đá, xay thêm chút nha.'; }
+      if (!result.valid && result.recipeCorrectness && (this.preparation.steps.blend?.amount || 0) < 0.4 && (this.preparation.amounts.coconutCream || 0) > 0) result.message = 'Cốt dừa chưa được xay!';
     }
     if (this.state !== 'BREWED') { result.message = this.nextStep(); return result; }
     if (recipe.stir && this.stir < RULES.stirRadians * 0.05 && result.recipeCorrectness) {
@@ -143,12 +189,18 @@ export class Drink {
   nextStep() {
     const recipe = RECIPES[this.recipeId];
     if (recipe?.engine !== 'phin') return recipe?.steps.find(s => (this.preparation.steps[s.id]?.amount || 0) < s.target)?.instruction || 'Kéo ly đến khách.';
+    if (this.recipeId === 'cotdua' && this.state === 'GLASS') return (this.preparation.amounts.coconutCream || 0) > 0 ? 'Đã có dừa xay. Kéo phin lên ly để pha cà phê.' : 'Xay cốt dừa ở khay 05 rồi rót vào ly, hoặc đặt phin trước.';
     if (this.state === 'GLASS') return 'Kéo phin lên ly.';
     if (this.state === 'PHIN') return this.grounds ? 'Kéo lõi vào phin, giữ để nén.' : 'Kéo muỗng vào hũ bột, rồi vào phin.';
     if (this.state === 'PRESSED') return 'Kéo ấm vào phin, giữ rót rồi thả.';
     if (this.state === 'POURING') return 'Thả tay khi nước chạm vạch xanh.';
     if (this.state === 'BREWING') return 'Phin đang nhỏ giọt, chờ một chút nhé.';
     if (this.recipeId === 'muoi') { const result = this.evaluate('muoi'); return result.valid ? 'Kéo ly cà phê muối đến khách.' : result.message; }
+    if (this.recipeId === 'cotdua') {
+      if (!((this.preparation.amounts.coconutCream || 0) > 0)) return 'Rót cốt dừa đã xay từ cối vào ly (khay 05).';
+      if (this.coffeeSource.volume > 0.01) return 'Kéo ca phin vào ly, nghiêng rót cà phê lên lớp dừa.';
+      const result = this.evaluate('cotdua'); return result.valid ? 'Kéo ly cà phê cốt dừa đến khách.' : result.message;
+    }
     return 'Thêm nguyên liệu, rồi kéo ly đến khách.';
   }
 }

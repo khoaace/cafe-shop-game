@@ -34,6 +34,34 @@ RECIPES.muoi = defineRecipe({
     { id: 'whisk', action: 'whisk', target: Math.PI * 6, instruction: 'Đánh vòng tròn trong tô đến vùng xanh; dừng trước quá bông.', minimumProgress: 0.1 },
   ], visual: { capacity: 80, color: 0xfff7e8, glass: 'glass', saltedCream: true }, unlock: { day: 4 },
 });
+RECIPES.cotdua = defineRecipe({
+  id: 'cotdua', name: 'Cà phê cốt dừa', short: 'Cà phê dừa', price: 30000, engine: 'phin',
+  coffee: 1, water: 1, condensed: 1, milk: 0, foam: 0, ice: 3, stir: false, color: 0xf3e6cf,
+  hint: 'Máy xay: 60 ml cốt dừa · 15 ml sữa đặc · 100 g đá · xay mịn · rót vào ly · rót cà phê phin lên trên',
+  equipment: ['glass', 'phin', 'spoon', 'press', 'kettle', 'coffee-pitcher', 'blender', 'blender-jar', 'blender-lid', 'coconut-cream', 'condensed', 'ice-scoop'],
+  // Project units: 1 muỗng bột ≈ 18 g, 1 phần sữa đặc = 15 ml, 3 viên đá ≈ 100 g, 1 phần cà phê phin ≈ 40 ml.
+  ingredients: [
+    { id: 'coffee', target: 1, unit: 'muỗng', label: '18 g (1 muỗng)' }, { id: 'water', target: 1, unit: 'phần', label: '100%' },
+    { id: 'brewedCoffee', target: 1, unit: 'phần', volumePerUnit: 40, label: '1 phần phin (~40 ml)' }, { id: 'coconutCream', target: 60, unit: 'ml', label: '60 ml' },
+    { id: 'condensed', target: 1, unit: 'phần', volumePerUnit: 15, label: '15 ml' }, { id: 'ice', target: 3, unit: 'viên', label: '100 g (3 viên)' },
+  ], supplies: { coffee: 1, condensed: 1, ice: 1, coconutCream: 60 },
+  steps: [
+    { id: 'phin', action: 'place', target: 1, instruction: 'Kéo ly, phin; xúc 1 muỗng bột (18 g).' },
+    { id: 'grounds', action: 'scoop', target: 1, instruction: 'Muỗng → hũ bột → phin.' },
+    { id: 'press', action: 'press', target: 0.65, instruction: 'Giữ lõi để nén bột.' },
+    { id: 'water', action: 'pour', ingredient: 'water', target: 1, instruction: 'Rót nước 100%, thả tay để ủ.' },
+    { id: 'brew', action: 'brew', target: 8, instruction: 'Chờ 8 giây; xay cốt dừa trong lúc phin nhỏ.' },
+    { id: 'coconut', action: 'pour', ingredient: 'coconutCream', target: 60, instruction: 'Đặt cối lên máy xay, nghiêng hộp rót 60 ml cốt dừa.' },
+    { id: 'condensed', action: 'pour', ingredient: 'condensed', target: 1, instruction: 'Rót từ từ 15 ml sữa đặc vào cối.' },
+    { id: 'ice', action: 'ice', target: 3, instruction: 'Xúc 100 g đá, thả vào cối.' },
+    { id: 'lid', action: 'lid', target: 1, instruction: 'Kéo nắp lên cối cho khớp.' },
+    { id: 'blend', action: 'blend', target: 4, instruction: 'Giữ công tắc để xay; thả tay ở vùng Hoàn hảo.', minimumProgress: 0.1 },
+    { id: 'mixture', action: 'pour', ingredient: 'coconutCream', target: 60, instruction: 'Mở nắp, kéo cối lên ly, nghiêng rót cốt dừa xay.' },
+    { id: 'collect', action: 'pour', ingredient: 'brewedCoffee', target: 1, instruction: 'Kéo ca phin vào ly, rót cà phê lên lớp dừa.' },
+  ], visual: { capacity: 200, color: 0xf3e6cf, glass: 'glass', coconut: true }, unlock: { day: 5, upgrades: { blender: 1 } },
+});
+// Recipes whose phin drips into a per-cup pitcher, poured by hand after other preparation.
+export const PITCHER_RECIPES = Object.freeze(['muoi', 'cotdua']);
 // Register before creating a scene/save. Planned drinks are deliberately absent.
 export function registerRecipe(raw) {
   const recipe = defineRecipe(raw);

@@ -40,13 +40,14 @@ export class Overlay {
       page(art); page(createCupArt(scene, recipePreview(recipe), 240, 327, 1.25));
       page(label(scene, 240, 405, recipe.name, 25, '#304d3b', { fontFamily: SERIF }));
       page(label(scene, 240, 435, `${money(recipe.price)} · ${mastery(scene.game.save.data.mastery[id])}`, 14, '#a46a3d', { fontStyle: 'bold' }));
-      const lines = (recipe.engine === 'gesture' || recipe.id === 'muoi') ? (guideMode === 'ingredients' ? recipe.ingredients.map(i => `${INGREDIENT_DEFINITIONS[i.id].name}: ${i.target} ${i.unit}`) : recipe.steps.map(s => s.instruction)) : [
+      const structured = recipe.engine === 'gesture' || ['muoi', 'cotdua'].includes(recipe.id);
+      const lines = structured ? (guideMode === 'ingredients' ? recipe.ingredients.map(i => `${INGREDIENT_DEFINITIONS[i.id].name}: ${i.label || `${i.target} ${i.unit}`}`) : recipe.steps.map(s => s.instruction)) : [
         `Bột cà phê: ${recipe.coffee === 0.5 ? '½ muỗng' : '1 muỗng'}   ·   Nước: ${recipe.water * 100}%`,
         recipe.condensed ? `Sữa đặc: ${recipe.condensed} phần${recipe.milk ? `   ·   Sữa tươi: ${recipe.milk} phần` : ''}` : recipe.foam ? 'Bọt trứng: đánh bông rồi kéo tô vào ly' : 'Cà phê nguyên chất, không thêm sữa',
         recipe.ice ? `Đá: ${recipe.ice} viên (1 lần kéo muỗng đá)` : 'Uống nóng · không thêm đá',
         recipe.stir ? 'Khuấy tròn 1½ vòng sau khi pha xong.' : recipe.foam ? 'Giữ lớp bọt vàng trên mặt, không khuấy.' : 'Chờ phin nhỏ xong rồi kéo ly đến khách.',
       ];
-      if ((recipe.engine === 'gesture' || recipe.id === 'muoi')) {
+      if (structured) {
         for (const [mode, title, x] of [['ingredients', 'Định lượng', 159], ['steps', 'Thao tác', 321]]) page(button(scene, x, 469, 146, 32, title, () => { guideMode = mode; guidePage = 0; render(id); }, { size: 12, fill: guideMode === mode ? C.green : C.sage }));
         const pages = Math.ceil(lines.length / 2); guidePage = Math.min(guidePage, pages - 1);
         page(wrappedLabel(scene, 240, 536, lines.slice(guidePage * 2, guidePage * 2 + 2).join('\n'), 320, 14));
@@ -57,7 +58,7 @@ export class Overlay {
       } else page(wrappedLabel(scene, 240, 511, lines.join('\n'), 365, 14));
       if (stationIndex !== null && unlocked.includes(id)) {
         page(button(scene, 240, 615, 335, 45, `Dùng gợi ý này cho trạm ${stationIndex + 1}`, () => { if (scene.stations[stationIndex].model.chooseRecipe(id) === false) { scene.toast('Dọn ly cũ trước khi đổi loại dụng cụ.'); return; } scene.selectedStation = stationIndex; this.close(); scene.toast(`Trạm ${stationIndex + 1}: ${recipe.hint}`); }, { size: 13 }));
-      } else page(button(scene, 240, 615, 335, 45, unlocked.includes(id) ? 'Nhớ rồi, về bàn pha thôi' : `Chưa mở · từ ngày ${recipe.unlock.day || 1}`, () => this.close()));
+      } else page(button(scene, 240, 615, 335, 45, unlocked.includes(id) ? 'Nhớ rồi, về bàn pha thôi' : `Chưa mở · từ ngày ${recipe.unlock.day || 1}${recipe.unlock.upgrades?.blender && !scene.session.upgrades.blender ? ' · cần máy xay' : ''}`, () => this.close()));
       page(label(scene, 240, 663, 'Đồng hồ, khách và phin đều đang tạm dừng.', 11, '#7b8068'));
     };
     render(initial);

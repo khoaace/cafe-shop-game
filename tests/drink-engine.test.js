@@ -19,7 +19,7 @@ const fixture = () => ({ id: 'fixture', name: 'Ly kiểm tra', price: 10000, equ
   steps: [{ id: 'fill', action: 'pour', ingredient: 'milk', target: 1, instruction: 'Rót sữa.' }, { id: 'mix', action: 'stir', target: 10, after: ['fill'], instruction: 'Khuấy.' }] });
 
 test('planned drinks are metadata only; schema rejects units and invalid dependencies', () => {
-  assert.equal(PLANNED_DRINKS.length, 6);
+  assert.equal(PLANNED_DRINKS.length, 5);
   for (const planned of PLANNED_DRINKS) assert.equal(RECIPES[planned.id], undefined);
   const bad = fixture(); bad.ingredients[0].unit = 'ml'; assert.throws(() => defineRecipe(bad));
   const dependency = fixture(); dependency.steps[0].after = ['mix']; assert.throws(() => defineRecipe(dependency));

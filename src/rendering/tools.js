@@ -167,6 +167,30 @@ function proceduralToolArt(scene, kind, x = 0, y = 0) {
       line(g,[[15,-27],[-1,-2]],0x4c3527,9); line(g,[[14,-27],[-1,-3]],0xba7c43,6); line(g,[[12,-26],[-2,-3]],0xf0c187,1.5);
       g.lineStyle(3,0x426e64); g.strokeEllipse(-8,10,25,31); g.lineStyle(1.5,0xdce9d7); g.strokeEllipse(-8,9,23,30); g.strokeEllipse(-8,9,12,30);
       line(g,[[-1,-3],[-14,23]],0xf8fae6,1.5); break;
+    case 'coconut':
+      // Coconut cream tin: green label, half a coconut, white cream at the open rim.
+      round(g,-20,-25,40,52,0x3d5f55,6); round(g,-18,-23,36,48,0xe8efe4,5);
+      round(g,-18,-12,36,27,0x3f7a4f,2); round(g,-16,-11,4,25,0xffffff,2,0.18);
+      g.fillStyle(0x6b4428); g.fillEllipse(0,2,24,17); g.fillStyle(0xfdf8ec); g.fillEllipse(0,0,19,12); g.fillStyle(0xeee3cc); g.fillEllipse(2,1,10,6);
+      g.fillStyle(0xc9d7cb); g.fillEllipse(0,-24,40,9); g.fillStyle(0xfffaf0); g.fillEllipse(0,-24,32,6);
+      g.lineStyle(1,0xa9bcb0); g.strokeEllipse(0,-24,40,9);
+      line(g,[[-17,21],[16,21]],0xa3bcb0,2); break;
+    case 'scoop':
+      // Ice scoop resting in a small steel bin of cubes.
+      round(g,-24,0,48,26,0x41625c,6); round(g,-22,2,44,22,0x9fb8b0,5);
+      for (const [xx,yy] of [[-14,-2],[-3,-5],[9,-2],[16,-6]]) { round(g,xx-6,yy-6,12,12,0x6fa9ae,3); round(g,xx-5,yy-5,10,10,0xcdeef0,3); }
+      line(g,[[4,-6],[22,-28]],0x2f4c45,6); line(g,[[4,-7],[22,-28]],0xc9d9d0,3.5);
+      g.fillStyle(0x4f706a); g.fillEllipse(-2,-3,24,15); g.fillStyle(0xe2ece4); g.fillEllipse(-2,-4,20,12);
+      round(g,-8,-9,6,6,0xe8fbf8,2); round(g,-1,-8,6,6,0xd2f1f1,2);
+      line(g,[[-22,22],[20,22]],0x6c8a83,1.5); break;
+    case 'blender':
+      // Shop icon: steel motor base with a clear jar and green lid.
+      round(g,-17,8,34,20,0x2f4a44,6); round(g,-15,9,30,16,0x9cb3aa,5); g.fillStyle(0x7fc06c); g.fillCircle(0,17,4);
+      g.fillStyle(0xd7ebe6,0.55); g.fillPoints([{x:-15,y:-24},{x:15,y:-24},{x:11,y:7},{x:-11,y:7}],true);
+      g.fillStyle(0xf6eedd); g.fillPoints([{x:-13,y:-9},{x:13,y:-9},{x:11,y:6},{x:-11,y:6}],true);
+      g.lineStyle(1.5,0x58817a); g.strokePoints([{x:-15,y:-24},{x:15,y:-24},{x:11,y:7},{x:-11,y:7}],true);
+      round(g,-16,-30,32,7,0x3f6b52,3); round(g,-4,-34,8,5,0x2f5240,2);
+      g.lineStyle(2.5,0x58817a); g.strokeRoundedRect(14,-19,8,18,3); break;
     case 'trash':
       round(g,-18,-14,36,38,0x395c52,5); round(g,-16,-14,32,35,0x789888,4); round(g,-14,-11,6,29,0xb2c5ad,2);
       round(g,-21,-21,42,8,0x2e5145,3); round(g,-20,-22,39,6,0xa7bfa7,3);

@@ -43,8 +43,11 @@ export class InteractiveDrinkEngine {
     if (this.scene.paused || this.scene.finishing || this.active.has(pointer.id)) return false;
     const p = this.point(pointer);
     const shown = object => { for (let parent = object; parent; parent = parent.parentContainer) if (!parent.visible || !parent.active) return false; return true; };
-    const tool = [...this.tools.values()].reverse().find(t => shown(t.object) && t.object.visible && t.object.active && ![...this.active.values()].some(a => a.tool === t) && Math.abs(p.x - t.object.x) <= t.hitSize / 2 && Math.abs(p.y - t.object.y) <= t.hitSize / 2);
+    const tool = [...this.tools.values()].reverse().find(t => shown(t.object) && t.object.visible && t.object.active && t.enabled?.() !== false && ![...this.active.values()].some(a => a.tool === t) && Math.abs(p.x - t.object.x) <= t.hitSize / 2 && Math.abs(p.y - t.object.y) <= t.hitSize / 2);
     if (!tool || tool.sourceTarget && this.owners.has(tool.sourceTarget)) return false;
+    // A tool whose stock or prerequisite is missing stays put and explains why.
+    const blocked = tool.blocked?.();
+    if (blocked) { this.scene.toast(blocked); this.scene.game.audio.play('error'); return true; }
     if (tool.sourceTarget) this.owners.set(tool.sourceTarget, tool.id);
     const a = { tool, point: p, origin: { ...p }, target: null, worked: false, state: null, drawOffset: { x: 0, y: 0 } };
     this.active.set(pointer.id, a); this.scene.game.audio.unlock(); this.scene.tweens.killTweensOf(tool.object);
@@ -97,7 +100,7 @@ export class InteractiveDrinkEngine {
       const step = this.step(target, a.tool); if (!step) continue;
       if (a.tool.action === 'pour') {
         const source = a.tool.sourceState?.(target);
-        if (a.tool.sourceState && !source) { this.scene.setLiveHint(a.tool.emptyHint || 'Nguồn nguyên liệu chưa sẵn sàng.'); continue; }
+        if (a.tool.sourceState && !source) { const hint = typeof a.tool.emptyHint === 'function' ? a.tool.emptyHint(target) : a.tool.emptyHint; this.scene.setLiveHint(hint || 'Nguồn nguyên liệu chưa sẵn sàng.'); continue; }
         const transfer = source && a.tool.sourceType === 'blender' ? this.blender : this.pour;
         const transferMethod = source && a.tool.sourceType === 'blender' ? 'pour' : 'transfer';
         const amount = this.pour.update(key, seconds, target, n => source ? transfer[transferMethod](source, n, (mixture, consistency) => {
@@ -117,7 +120,8 @@ export class InteractiveDrinkEngine {
         a.tool.object.setScale(1.05, 1 - Math.min(0.15, (state.steps[step.id]?.amount || 0) / step.target * 0.15));
       } else if (a.tool.action === 'blend') {
         // Independent hold switches; releasing/leaving only stops this blender.
-        if (this.blender.running.has(key)) {
+        if (a.tool.hold) { const amount = a.tool.hold(this.blender.running.has(key) ? seconds : 0, target, state); a.worked ||= amount > 0; }
+        else if (this.blender.running.has(key)) {
           const amount = state.record('blend', seconds, step.target);
           if (step.id !== 'blend') state.record(step.id, amount, step.target);
           state.consistency = Math.min(1, (state.steps.blend?.amount || 0) / step.target); state.mixing = state.consistency;
@@ -154,6 +158,7 @@ export class InteractiveDrinkEngine {
         if (amount) { state.record(step.id, amount, step.target); t.onChange?.(tool.action, amount); }
       }
     }
+    tool.release?.({ target: t, state, point: a.point, canceled, matched: !!state && state === a.state });
     this.effects.streams.delete(key); this.pour.end(key); this.whisk.end(key); this.stir.end(key); this.fruit.end(key); this.blender.end(key);
     if (t) this.owners.delete(t.id); if (tool.sourceTarget) this.owners.delete(tool.sourceTarget); this.active.delete(key); this.scene.liveHint = null;
     if (canceled || this.effects.reduced) tool.object.setPosition(tool.home.x, tool.home.y).setScale(tool.home.scaleX, tool.home.scaleY).setRotation(tool.home.rotation);

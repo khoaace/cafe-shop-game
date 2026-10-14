@@ -39,7 +39,7 @@ export class MenuScene extends Phaser.Scene {
     button(this, 106, 735, 133, 40, 'Cửa hàng', () => this.scene.start('Shop'), { fill: C.paper, color: '#576443', size: 12 });
     button(this, 245, 735, 133, 40, 'Sổ góc phố', () => this.scene.start('Notebook'), { fill: C.paper, color: '#576443', size: 12 });
     button(this, 384, 735, 133, 40, 'Học pha · 3 ly', () => this.scene.start('Tutorial'), { fill: C.paper, color: '#576443', size: 12 });
-    this.saveNote = wrappedLabel(this, 240, 779, this.game.save.warning || inventoryShortage(save.inventory, save.day, plan.expectedOrders), 433, 10, '#8a8069');
+    this.saveNote = wrappedLabel(this, 240, 779, this.game.save.warning || inventoryShortage(save.inventory, save.day, plan.expectedOrders, save.upgrades), 433, 10, '#8a8069');
     this.menuTime = 0; this.dialog = null;
     announce('Phin góc phố. Mở quán hoặc học pha phin qua 3 ly hướng dẫn.');
   }

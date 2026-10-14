@@ -228,6 +228,8 @@ export class AudioManager {
       milk: { base: 540, q: 0.5, mul: 1.05, rate: 7, spark: 0.22, from: 480, to: 250, drip: 0.08 },
       creamPour: { base: 330, q: 0.35, mul: 0.75, rate: 4, spark: 0.3, from: 220, to: 110, drip: 0.12 },
       condensed: { base: 230, q: 0.42, mul: 1.15, rate: 3.2, spark: 0.28, from: 170, to: 85, drip: 0.13 },
+      // Motor hum: low band of noise with a fast wobble and occasional pitch dips under load.
+      blender: { base: 150, q: 1.6, mul: 1.3, rate: 38, spark: 0.45, from: 210, to: 140, drip: 0.2 },
     }[kind] || { base: 900, q: 0.7, mul: 1, rate: 10, spark: 0.2, from: 700, to: 360, drip: 0.08 };
     const entry = this.loopNoise({
       id: kind, map: this.streams, type: 'bandpass', q: spec.q,
@@ -305,6 +307,9 @@ export class AudioManager {
         this.sweep(980, 620, volume * 0.18, 0.035, 'sine'); break;
       case 'creamLanding':
         this.sweep(240, 100, volume * 0.32, 0.12, 'sine'); break;
+      case 'iceCrack':
+        this.noiseHit({ volume: volume * 0.55, frequency: 2600 + wobble * 900, type: 'bandpass', duration: 0.03, q: 1.6 });
+        this.blip(1900 + wobble * 600, volume * 0.18, 0.03, 'sine', 0.01); break;
       case 'creamPerfect':
         [880, 1175, 1568].forEach((freq, i) => this.blip(freq, volume * 0.38, 0.18, 'sine', i * 0.055)); break;
       case 'whisk':
@@ -380,9 +385,9 @@ export class AudioManager {
 
   play(kind, volume = 0.035) {
     if (!this.save.data.settings.sound || this.context?.state !== 'running') return;
-    if (kind === 'pour' || kind === 'milk' || kind === 'condensed' || kind === 'creamPour') { this.stream(kind, volume); return; }
+    if (kind === 'pour' || kind === 'milk' || kind === 'condensed' || kind === 'creamPour' || kind === 'blender') { this.stream(kind, volume); return; }
     const now = this.context.currentTime;
-    const gap = { foamBubble: 0.35, creamWhisk: 0.06, creamLanding: 0.25, stir: 0.06, whisk: 0.05, press: 0.09, drop: 0.18 }[kind] ?? 0.08;
+    const gap = { iceCrack: 0.07, foamBubble: 0.35, creamWhisk: 0.06, creamLanding: 0.25, stir: 0.06, whisk: 0.05, press: 0.09, drop: 0.18 }[kind] ?? 0.08;
     if (now - (this.last.get(kind) ?? -10) < gap) return;
     this.last.set(kind, now);
     this.effect(kind, volume);
