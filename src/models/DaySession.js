@@ -16,7 +16,7 @@ export class DaySession {
     this.recipes = emptyRecipes(); this.storyEncounters = new Set(); this.storyMessages = [];
     this.rushServed = 0; this.rushLost = 0; this.vipSpawned = false; this.wrongOrders = 0;
     this.openingInventory = normalizeInventory(options.inventory || INITIAL_INVENTORY); this.inventory = normalizeInventory(this.openingInventory);
-    this.ingredientUsed = emptyIngredientTotals(); this.preparedRecipeProvider = () => [];
+    this.ingredientUsed = emptyIngredientTotals(); this.ingredientWasted = emptyIngredientTotals(); this.preparedRecipeProvider = () => [];
     this.stockout = false; this.endReason = null;
     this.maxCustomers = tutorial ? 1 : this.difficulty.capacity;
   }
@@ -49,6 +49,21 @@ export class DaySession {
     this.inventory[id] = Math.round((this.inventory[id] + amount) * 1000) / 1000;
     this.ingredientUsed[id] = Math.max(0, Math.round((this.ingredientUsed[id] - amount) * 1000) / 1000);
   }
+  // Discarded preparations stay consumed; the amounts are reported as waste (stock units).
+  recordWaste(amounts) {
+    if (this.tutorial || !amounts) return 0;
+    let total = 0;
+    for (const [id, amount] of Object.entries(amounts)) if (Object.hasOwn(INGREDIENTS, id) && Number.isFinite(amount) && amount > 0) {
+      const wasted = Math.min(amount, this.ingredientUsed[id] - this.ingredientWasted[id]);
+      if (wasted > 1e-9) { this.ingredientWasted[id] = Math.round((this.ingredientWasted[id] + wasted) * 1000) / 1000; total += wasted; }
+    }
+    return total;
+  }
+  recordDrinkWaste(drink) {
+    if (!drink || drink.consumed) return 0;
+    const a = drink.getAmounts();
+    return this.recordWaste({ coffee: a.coffee, condensed: a.condensed, milk: a.milk, egg: a.foam, ice: (a.ice || 0) / 3, cream: a.cream, salt: a.salt, coconutCream: a.coconutCream });
+  }
   addGrounds(drink, amount) {
     if (!drink || drink.state !== 'PHIN') return 0;
     const used = this.consumeIngredient('coffee', amount);
@@ -62,6 +77,18 @@ export class DaySession {
     this.refundIngredient(kind, used - accepted);
     return accepted;
   }
+  // Blender jar: stock is charged exactly when an ingredient enters the jar; blending and serving never charge again.
+  pourIntoBlender(jar, kind, amount) {
+    if (!jar || jar.lid || !['coconutCream', 'condensed'].includes(kind)) return 0;
+    const used = this.consumeIngredient(kind, amount), accepted = used ? jar.add(kind, used) : 0;
+    this.refundIngredient(kind, used - accepted); return accepted;
+  }
+  scoopIceIntoBlender(jar, cubes = 3) {
+    if (!jar || jar.lid) return 0;
+    const wanted = Math.min(cubes, 12 - (jar.amounts.ice || 0)), taken = wanted > 0 ? this.tutorial ? wanted : this.consumeIngredient('ice', wanted / 3) * 3 : 0;
+    const accepted = Math.floor(taken + 1e-9) ? jar.add('ice', Math.floor(taken + 1e-9)) : 0;
+    this.refundIngredient('ice', (taken - accepted) / 3); return accepted;
+  }
   addIce(drink) {
     if (!drink || drink.consumed || (!this.tutorial && this.inventory.ice < 1)) return false;
     const used = this.consumeIngredient('ice', 1);
@@ -70,7 +97,8 @@ export class DaySession {
   }
   ingredientSummary() {
     const used = normalizeInventory(this.ingredientUsed, emptyIngredientTotals());
-    return { opening: { ...this.openingInventory }, remaining: { ...this.inventory }, used, cost: ingredientValue(used) };
+    const wasted = normalizeInventory(this.ingredientWasted, emptyIngredientTotals());
+    return { opening: { ...this.openingInventory }, remaining: { ...this.inventory }, used, cost: ingredientValue(used), wasted, wasteCost: ingredientValue(wasted) };
   }
   spawn() {
     const occupied = new Set(this.customers.map(c => c.seat));
@@ -139,6 +167,7 @@ export class DaySession {
     if (!customer.resolve('served')) return { valid: false, ignored: true };
     drink.consumed = true;
     if (customer.recipeId === 'muoi') { customer.servedDrink = drink; if (result.quality === 'ACCEPTABLE') customer.type = { ...customer.type, happy: 'Kem hơi lệch vị, lần sau pha khéo hơn nha.' }; }
+    if (customer.recipeId === 'cotdua') { customer.servedDrink = drink; if (result.quality === 'ACCEPTABLE') customer.type = { ...customer.type, happy: result.message.includes('loãng') ? 'Dừa hơi loãng, lần sau xay vừa thôi nha.' : 'Còn hơi lợn cợn đá, lần sau xay mịn hơn nha.' }; }
     const price = RECIPES[customer.recipeId].price;
     const premium = this.upgrades.premium && ['sua', 'bac'].includes(customer.recipeId) ? 1.2 : 1;
     const eventTip = this.event === 'rain' ? 1.2 : this.event === 'lucky' ? 1.25 : 1;

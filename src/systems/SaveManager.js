@@ -104,7 +104,7 @@ export class SaveManager {
   }
   supplyPlan() {
     const plan = this.prepareDay();
-    return createSupplyPlan(this.data.inventory, this.data.day, plan.expectedOrders);
+    return createSupplyPlan(this.data.inventory, this.data.day, plan.expectedOrders, this.data.upgrades);
   }
   purchaseSupplyPlan(expectedInventory) {
     if (this.inShift) return { ok: false, message: 'Chỉ nhập nguyên liệu khi quán đã nghỉ ca.' };

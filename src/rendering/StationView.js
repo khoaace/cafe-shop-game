@@ -39,7 +39,7 @@ export class StationView {
       motion && (drink?.state === 'BREWING' || (drink?.state === 'BREWED' && !drink.ice)) ? Math.floor(t / 33) : 0, this.kick > 0].join('/');
     if (cupKey !== this.lastCup) {
       this.lastCup = cupKey;
-      this.cup.setPosition(this.x + Math.sin(t / 24) * this.kick * 2, this.y).setScale(recipe.id === 'muoi' ? 1.04 : 0.78);
+      this.cup.setPosition(this.x + Math.sin(t / 24) * this.kick * 2, this.y).setScale(['muoi', 'cotdua'].includes(recipe.id) ? 1.04 : 0.78);
       this.cup.paint(this.draggingCup ? null : drink, motion ? t : 0);
       const level = this.scene.game.save.data.mastery[this.model.recipeId] || 0;
       if (!this.draggingCup && drink?.state === 'BREWED' && level >= 15) { this.cup.details.lineStyle(2, level >= 30 ? C.gold : C.green, 0.7); this.cup.details.strokeEllipse(0, 35, 70, 13); }
@@ -60,6 +60,7 @@ export class StationView {
     if (drink.state === 'BREWED') {
       const result = drink.evaluate(this.model.recipeId);
       status = result.valid ? '✓ Sẵn sàng · kéo ly đến khách' : result.message.replace(' Vẽ vòng tròn trong ly.', '').replace(' rồi!', '');
+      if (!result.valid && recipe.id === 'cotdua' && drink.recipeId === 'cotdua') status = !(drink.preparation.amounts.coconutCream > 0) ? '5. Rót dừa xay từ cối (khay 05)' : drink.coffeeSource.volume > 0.01 ? '6. Rót cà phê từ ca phin' : status;
       if (status.length > 37) status = 'Thêm đúng nguyên liệu theo sổ';
     }
     this.status.setText(status).setColor(drink.state === 'BREWED' ? '#365f43' : '#3d5b48');
@@ -68,6 +69,7 @@ export class StationView {
     if (drink.condensed) a.push(`${drink.condensed.toFixed(1)} đặc`);
     if (drink.milk) a.push(`${drink.milk.toFixed(1)} tươi`);
     if (drink.ice) a.push(`${drink.ice} đá`);
+    if (recipe.id === 'cotdua') { a.push(`${(drink.preparation.amounts.coconutCream || 0).toFixed(0)}ml dừa`); a.push(`${(drink.preparation.amounts.brewedCoffee || 0).toFixed(1)} phin`); }
     if (recipe.id === 'muoi') { a.push(`${(drink.preparation.amounts.brewedCoffee || 0).toFixed(1)} phin`); a.push(`${(drink.preparation.amounts.cream || 0).toFixed(0)}ml kem`); }
     if (drink.foam) a.push('bọt trứng');
     if (recipe.engine !== 'phin') for (const ingredient of recipe.ingredients) { const amount = drink.preparation.amounts[ingredient.id] || 0; if (amount) a.push(`${amount.toFixed(1)} ${ingredient.unit}`); }

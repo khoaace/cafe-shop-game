@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Drink } from '../src/models/Drink.js';
 import { SaltedCream } from '../src/models/SaltedCream.js';
+import { CoconutBlend } from '../src/models/CoconutBlend.js';
+import { BlenderSystem } from '../src/systems/preparation/BlenderSystem.js';
 import { LiquidPourSystem } from '../src/systems/preparation/LiquidPourSystem.js';
 import { BrewingStation } from '../src/models/BrewingStation.js';
 import { Customer } from '../src/models/Customer.js';
@@ -13,6 +15,10 @@ import { ARCHETYPES, RECIPES, RULES, clockText, unlockedRecipes } from '../src/c
 function prepare(id = 'den', additionsFirst = false) {
   const r = RECIPES[id]; const d = new Drink(id);
   const add = () => {
+    if (id === 'cotdua') {
+      const jar = new CoconutBlend(); jar.add('coconutCream', 60); jar.add('condensed', 1); jar.add('ice', 3); jar.lid = true; for (let i = 0; i < 45; i++) jar.blend(0.1); jar.lid = false;
+      new BlenderSystem().pour(jar, 1000, m => d.acceptPreparedMixture(m, jar)); return;
+    }
     for (const k of ['condensed', 'milk', 'ice', 'foam']) if (r[k]) d.addIngredient(k, r[k]);
   };
   if (additionsFirst) add();
@@ -23,6 +29,7 @@ function prepare(id = 'den', additionsFirst = false) {
     const bowl = new SaltedCream(); bowl.add('cream', 40); bowl.add('salt', 0.3); bowl.whip(Math.PI * 7);
     const pour = new LiquidPourSystem(); pour.transfer(d.coffeeSource, 1, m => d.acceptPreparedMixture(m, d.coffeeSource)); pour.transfer(bowl, 40.3, m => d.acceptPreparedMixture(m, bowl));
   }
+  if (id === 'cotdua') new LiquidPourSystem().transfer(d.coffeeSource, 1, m => d.acceptPreparedMixture(m, d.coffeeSource));
   if (r.stir) d.stirBy(RULES.stirRadians);
   return d;
 }

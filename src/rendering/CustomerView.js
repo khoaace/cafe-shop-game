@@ -14,6 +14,7 @@ export class CustomerView {
     const recipe = RECIPES[model.recipeId];
     this.name = label(scene, 0, this.compact ? -10 : -8, model.type.name, 10, '#715936');
     this.icon = scene.add.graphics(); if (model.recipeId === 'muoi') { this.icon.fillStyle(0x48281b); this.icon.fillRoundedRect(-57, -3, 10, 14, 2); this.icon.fillStyle(0xfff7e8); this.icon.fillRoundedRect(-57, -7, 10, 6, 2); }
+    if (model.recipeId === 'cotdua') { this.icon.fillStyle(0xf6eddb); this.icon.fillRoundedRect(-57, -6, 10, 17, 2); this.icon.lineStyle(1.5, 0x6b3d25); this.icon.beginPath(); this.icon.moveTo(-55, -5); this.icon.lineTo(-51, 0); this.icon.lineTo(-54, 5); this.icon.lineTo(-50, 10); this.icon.strokePath(); this.icon.fillStyle(0x5a3322); this.icon.fillRoundedRect(-57, -8, 10, 3, 1); }
     this.order = label(scene, 0, this.compact ? 4 : 8, recipe.short, 14, '#324b38', { fontStyle: 'bold' });
     this.bar = scene.add.graphics();
     this.root.add([bg, this.icon, this.name, this.order, this.bar]);
@@ -36,7 +37,7 @@ export class CustomerView {
     this.character.update(t, walking, mood, seated, c.state === 'ORDERING');
     if (this.lastState !== c.state) {
       this.lastState = c.state; this.character.drawFace(mood);
-      if (c.state === 'SERVED' && c.recipeId === 'muoi') {
+      if (c.state === 'SERVED' && ['muoi', 'cotdua'].includes(c.recipeId)) {
         this.sipCup = createCupArt(this.scene, c.servedDrink, 12, -4, 0.42); this.character.root.add(this.sipCup);
         this.scene.time.delayedCall(650, () => { if (c.state === 'SERVED' && this.character.root.active) { this.scene.game.audio.play('talk', 0.02); this.scene.showDialogue(c.type.name, c.type.happy); } });
       }

@@ -7,6 +7,7 @@ export class Customer {
   constructor(archetype, recipeId, seat, tutorial = false) {
     this.id = `customer-${++nextId}`; this.type = archetype; this.recipeId = recipeId; this.seat = seat;
     if (recipeId === 'muoi') this.type = { ...archetype, line: 'Cho chị ly cà phê muối, lớp kem dày dày nha!', happy: 'Trời ơi, béo mặn vừa đủ, đỉnh quá!' };
+    if (recipeId === 'cotdua') this.type = { ...archetype, line: 'Cho em cà phê dừa xay mịn, béo béo nha!', happy: 'Mịn mát, béo thơm mùi dừa, ghiền luôn!' };
     this.state = 'ARRIVING'; this.stateTime = 0; this.waited = 0;
     this.patience = archetype.patience; this.tutorial = tutorial; this.resolved = false; this.outcome = null;
   }

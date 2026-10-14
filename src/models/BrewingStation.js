@@ -11,6 +11,8 @@ export class BrewingStation {
     // A partly prepared cup keeps its engine and materials when switching the quantity guide.
     if (this.drink && RECIPES[this.drink.recipeId]?.engine !== RECIPES[id].engine) return false;
     if (this.drink && this.drink.state !== 'GLASS' && (this.drink.recipeId === 'muoi') !== (id === 'muoi')) return false;
+    // A coconut glass keeps its recipe once the phin or the coconut base is in it.
+    if (this.drink && this.drink.recipeId !== id && (this.drink.recipeId === 'cotdua' || id === 'cotdua') && (this.drink.state !== 'GLASS' || this.drink.preparation.volume > 0)) return false;
     this.recipeId = id;
     if (this.drink) {
       this.drink.recipeId = id;

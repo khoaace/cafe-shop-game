@@ -8,6 +8,7 @@ export const INGREDIENTS = {
   ice: { id: 'ice', name: 'Đá viên', unit: 'phần 3 viên', pack: 12, price: 6000, icon: 'ice' },
   cream: { id: 'cream', name: 'Kem béo', unit: 'ml', pack: 240, price: 24000, icon: 'milk' },
   salt: { id: 'salt', name: 'Muối mịn', unit: 'g', pack: 6, price: 2000, icon: 'spoon' },
+  coconutCream: { id: 'coconutCream', name: 'Cốt dừa', unit: 'ml', pack: 400, price: 28000, icon: 'coconut', packLabel: 'lon 400 ml' },
 };
 
 export function registerSupply(id, spec, initial = 0) {
@@ -15,7 +16,7 @@ export function registerSupply(id, spec, initial = 0) {
   INGREDIENTS[id] = Object.freeze({ ...spec, id }); INITIAL_INVENTORY[id] = safeAmount(initial);
 }
 
-export const INITIAL_INVENTORY = { coffee: 10, condensed: 6, milk: 6, egg: 4, ice: 12, cream: 240, salt: 3 };
+export const INITIAL_INVENTORY = { coffee: 10, condensed: 6, milk: 6, egg: 4, ice: 12, cream: 240, salt: 3, coconutCream: 240 };
 export const emptyIngredientTotals = () => Object.fromEntries(Object.keys(INGREDIENTS).map(id => [id, 0]));
 
 const safeAmount = value => Number.isFinite(value) && value >= 0 ? Math.min(999, Math.round(value * 1000) / 1000) : 0;
@@ -46,8 +47,8 @@ export function drinkHasRecipeMaterials(drink, recipeId) {
   return true;
 }
 
-export function estimateDemand(day, expectedOrders) {
-  const recipes = unlockedRecipes(day);
+export function estimateDemand(day, expectedOrders, upgrades = {}) {
+  const recipes = unlockedRecipes(day, upgrades);
   if (!recipes.length) return emptyIngredientTotals();
   const demand = emptyIngredientTotals();
   const add = id => {
@@ -59,8 +60,8 @@ export function estimateDemand(day, expectedOrders) {
   return normalizeInventory(demand, emptyIngredientTotals());
 }
 
-export function createSupplyPlan(inventory, day, expectedOrders) {
-  const target = estimateDemand(day, expectedOrders);
+export function createSupplyPlan(inventory, day, expectedOrders, upgrades = {}) {
+  const target = estimateDemand(day, expectedOrders, upgrades);
   const items = [];
   for (const [id, spec] of Object.entries(INGREDIENTS)) {
     const missing = Math.max(0, target[id] - safeAmount(inventory?.[id]));
@@ -74,7 +75,7 @@ export function ingredientValue(amounts) {
   return Math.round(Object.entries(INGREDIENTS).reduce((sum, [id, spec]) => sum + safeAmount(amounts?.[id]) * spec.price / spec.pack, 0) / 100) * 100;
 }
 
-export function inventoryShortage(inventory, day, expectedOrders) {
-  const plan = createSupplyPlan(inventory, day, expectedOrders);
+export function inventoryShortage(inventory, day, expectedOrders, upgrades = {}) {
+  const plan = createSupplyPlan(inventory, day, expectedOrders, upgrades);
   return plan.items.length ? `Kho dự kiến thiếu ${plan.items.map(item => INGREDIENTS[item.id].name.toLowerCase()).join(', ')}.` : 'Kho đủ cho ca tới và một lượt pha dự phòng.';
 }

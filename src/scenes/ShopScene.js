@@ -48,6 +48,7 @@ export class ShopScene extends Phaser.Scene {
       if (['phin', 'condensed'].includes(spec.icon)) icon = toolArt(this, spec.icon, 61, y + 3).setScale(0.7);
       else if (key === 'seats') icon = stool(this, 61, y + 10, 0.65);
       else if (key === 'decor') icon = plant(this, 61, y + 27, 0.43);
+      else if (key === 'blender') icon = toolArt(this, 'blender', 61, y + 2).setScale(0.8);
       else icon = fanArt(this, 61, y, 0.68);
       this.cards.add(icon);
       this.cards.add(label(this, 98, y - 12, spec.name, 14, '#304d3b', { fontStyle: 'bold' }).setOrigin(0, 0.5));
@@ -94,7 +95,7 @@ export class ShopScene extends Phaser.Scene {
       this.time.delayedCall(350, () => this.refresh());
     }, { fill: plan.items.length && d.balance >= plan.price ? C.gold : 0x7c846c, color: plan.items.length ? '#304b36' : '#e8ead5', size: 12 });
     if (!plan.items.length) quick.input.enabled = false; this.quickRoot.add(quick);
-    this.message.setText(inventoryShortage(d.inventory, d.day, this.game.save.data.dayPlan.expectedOrders));
+    this.message.setText(inventoryShortage(d.inventory, d.day, this.game.save.data.dayPlan.expectedOrders, d.upgrades));
   }
   update(_time, delta) { this.game.audio.ambient(Math.min(delta, 100) / 1000, false); }
 }

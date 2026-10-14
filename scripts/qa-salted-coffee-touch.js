@@ -22,7 +22,7 @@ async page => {
   await start(200,715);await path(200,715,280,715);await path(280,715,240,517);await end();
   await drag(360,715,240,517,740);await drag(440,715,240,517,1900);
   await tap(181,656);await drag(56,715,240,517,1530);await drag(240,715,240,517);
-  await tap(421,656);
+  await tap(335,656);
   await start(267,715);await path(267,715,40,727);await path(40,727,88,727);
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().saltedCream.amounts.cream>=39.5);await end();
   // A cancelled measuring spoon must not add any salt.

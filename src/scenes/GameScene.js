@@ -7,6 +7,7 @@ import { DaySession } from '../models/DaySession.js';
 import { INGREDIENT_DEFINITIONS } from '../data/drinkEngine.js';
 import { InteractiveDrinkEngine } from '../systems/InteractiveDrinkEngine.js';
 import { SaltedCreamStation } from '../rendering/SaltedCreamStation.js';
+import { CoconutBlenderStation } from '../rendering/CoconutBlenderStation.js';
 import { DragController } from '../systems/DragController.js';
 import { CustomerView } from '../rendering/CustomerView.js';
 import { StationView } from '../rendering/StationView.js';
@@ -48,12 +49,9 @@ export class GameScene extends Phaser.Scene {
     const discard = toolArt(this, 'trash', 441, 613); discard.setScale(0.58).setDepth(60);
     const trashZone = this.add.zone(441, 613, 52, 42).setInteractive().setDepth(61);
     trashZone.on('pointerdown', (p, x, y, event) => { event.stopPropagation(); this.toast('Kéo ly cần bỏ vào thùng này để làm lại.'); });
-    this.tabButtons = [
-      button(this, 61, 656, 116, 32, '01 PHA PHIN', () => this.setTray('brew'), { fill: 0x58735a, size: 11, radius: 6 }),
-      button(this, 181, 656, 116, 32, '02 SỮA & ĐÁ', () => this.setTray('milk'), { fill: 0x3b5645, size: 11, radius: 6 }),
-      button(this, 301, 656, 116, 32, '03 BỌT TRỨNG', () => this.setTray('egg'), { fill: 0x3b5645, size: 11, radius: 6 }),
-    ];
-    this.tabButtons.push(button(this, 421, 656, 116, 32, '04 KEM MUỐI', () => this.setTray('salt'), { fill: 0x3b5645, size: 11, radius: 6 }));
+    this.trayIds = ['brew', 'milk', 'egg', 'salt', 'coconut'];
+    this.tabButtons = [['01 PHA PHIN', 0x58735a], ['02 SỮA & ĐÁ', 0x3b5645], ['03 BỌT TRỨNG', 0x3b5645], ['04 KEM MUỐI', 0x3b5645], ['05 CỐT DỪA', 0x3b5645]]
+      .map(([title, fill], i) => button(this, 50 + i * 95, 656, 91, 32, title, () => this.setTray(this.trayIds[i]), { fill, size: 10, radius: 6 }));
     this.trayRoot = this.add.container(0, 0).setDepth(30);
     this.trayDetail = this.add.graphics().setDepth(31);
     this.drinkEngine = new InteractiveDrinkEngine(this);
@@ -73,7 +71,7 @@ export class GameScene extends Phaser.Scene {
       },
       acceptMixture: (mixture, consistency, source) => {
         const drink = station.model.drink;
-        if (drink?.recipeId === 'muoi') return drink.acceptPreparedMixture(mixture, source);
+        if (drink?.recipeId === 'muoi' || drink?.recipeId === 'cotdua') return drink.acceptPreparedMixture(mixture, source);
         if (!drink || drink.consumed || drink.preparation.lid || RECIPES[drink.recipeId]?.engine !== 'gesture') return 0;
         const volume = Object.entries(mixture).reduce((sum, [id, n]) => sum + (INGREDIENT_DEFINITIONS[id].liquid || INGREDIENT_DEFINITIONS[id].foam ? n * (drink.preparation.volumePerUnit[id] || 1) : 0), 0);
         const room = drink.preparation.capacity - drink.preparation.volume;
@@ -88,6 +86,7 @@ export class GameScene extends Phaser.Scene {
       },
     });
     this.saltedCream = new SaltedCreamStation(this);
+    this.coconut = new CoconutBlenderStation(this);
     this.drag = new DragController(this);
     this.renderTray();
     if (this.session.event) this.time.delayedCall(400, () => this.showDialogue(EVENTS[this.session.event].name, EVENTS[this.session.event].description));
@@ -105,7 +104,7 @@ export class GameScene extends Phaser.Scene {
     this.events.once('shutdown', () => {
       document.removeEventListener('visibilitychange', this.onVisibility);
       this.input.keyboard?.off('keydown-ESC', this.escape);
-      this.drag.destroy(); this.saltedCream.destroy(); this.drinkEngine.destroy();
+      this.drag.destroy(); this.saltedCream.destroy(); this.coconut.destroy(); this.drinkEngine.destroy();
       this.tweens.resumeAll(); this.time.paused = false;
       this.pauseReasons.clear(); this.game.save.inShift = false; this.game.audio.pause();
     });
@@ -145,15 +144,17 @@ export class GameScene extends Phaser.Scene {
   setTray(id) {
     if (this.paused || this.finishing) return;
     this.drag.cancel(); this.tray = id; this.renderTray();
+    if (id === 'coconut') { this.toast(this.session.upgrades.blender ? 'Cối lên đế · 60 ml cốt dừa · 15 ml sữa đặc · 100 g đá · đậy nắp · giữ công tắc · rót vào ly · rót cà phê' : 'Chưa có máy xay. Mua trong cửa hàng sau ca nhé.'); return; }
     this.toast(id === 'brew' ? 'Ly → phin → muỗng vào hũ bột → nén → rót nước' : id === 'salt' ? 'Rót 40 ml kem vào tô · 2 muỗng muối · đánh tròn đến vùng xanh · kéo tô vào ly để rót' : id === 'milk' ? 'Kéo bình vào ly, di chuyển ngang để nghiêng · thả để dừng · khuấy tròn hoặc qua lại' : 'Kéo phới vào tô, đánh qua lại. Bông rồi kéo tô vào ly.');
   }
   renderTray() {
     this.saltedCream?.setVisible(this.tray === 'salt');
+    this.coconut?.setVisible(this.tray === 'coconut');
     this.trayRoot.removeAll(true);
     const groups = {
       brew: [['glass', 'Ly', 40], ['phin', 'Phin', 120], ['spoon', 'Muỗng', 200], ['grounds', 'Bột', 280], ['press', 'Lõi nén', 360], ['kettle', 'Ấm nước', 440]],
       milk: [['condensed', 'Sữa đặc', 56], ['milk', 'Sữa tươi', 148], ['ice', '3 viên đá', 240], ['stir', 'Khuấy', 332], ['trash', 'Bỏ ly', 424]],
-      salt: [],
+      salt: [], coconut: [],
       egg: [['bowl', 'Tô trứng', 140], ['whisk', 'Phới đánh', 280], ['trash', 'Bỏ ly', 410]],
     };
     const width = this.tray === 'brew' ? 70 : this.tray === 'milk' ? 82 : 108;
@@ -170,9 +171,9 @@ export class GameScene extends Phaser.Scene {
         this.trayRoot.add(tool.stockLabel);
       }
     }
-    this.trayFoot = label(this, 240, 784, this.tray === 'salt' ? '' : this.tray === 'brew' ? 'DỤNG CỤ THẬT · CHẠM, KÉO VÀ GIỮ ĐỂ PHA' : this.tray === 'milk' ? 'THÊM MỘT CHÚT NGỌT NGÀO CHO BUỔI SÁNG' : 'BỌT TRỨNG CẦN CHUYỂN ĐỘNG · KHÔNG CHỈ GIỮ YÊN', 8, '#b2c09e', { letterSpacing: 1 });
+    this.trayFoot = label(this, 240, 784, ['salt', 'coconut'].includes(this.tray) ? '' : this.tray === 'brew' ? 'DỤNG CỤ THẬT · CHẠM, KÉO VÀ GIỮ ĐỂ PHA' : this.tray === 'milk' ? 'THÊM MỘT CHÚT NGỌT NGÀO CHO BUỔI SÁNG' : 'BỌT TRỨNG CẦN CHUYỂN ĐỘNG · KHÔNG CHỈ GIỮ YÊN', 8, '#b2c09e', { letterSpacing: 1 });
     this.trayRoot.add(this.trayFoot);
-    this.tabButtons.forEach((b, i) => b.setAlpha(['brew', 'milk', 'egg', 'salt'][i] === this.tray ? 1 : 0.65));
+    this.tabButtons.forEach((b, i) => b.setAlpha(this.trayIds[i] === this.tray ? 1 : 0.65));
   }
   toast(text) { this.toastText = text; this.toastUntil = this.visualTime + 3900; announce(text); }
   setLiveHint(text) { this.liveHint = text; }

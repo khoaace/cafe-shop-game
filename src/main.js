@@ -48,6 +48,8 @@ if (import.meta.env.DEV) {
         liquidDiagnostics: scene?.stations?.map(s => { const liquid = s.cup.list[0]?.list[0]; return { commands: liquid?.commandBuffer?.length, clip: liquid?.mask?.geometryMask?.commandBuffer?.slice(), x: s.cup.x, y: s.cup.y }; }) ?? [],
         diagnostics: scene ? { objects: scene.children.length, tweens: scene.tweens.getTweens().length, timers: (scene.time._active?.length ?? 0), fps: Math.round(game.loop.actualFps), inputListeners: ['pointerdown', 'pointermove', 'pointerup', 'pointerupoutside'].map(event => scene.input.listenerCount(event)), scaleListeners: game.scale.listenerCount('resize') } : null,
         saltedCream: scene?.saltedCream ? JSON.parse(JSON.stringify(scene.saltedCream.state)) : null,
+        toast: scene?.toastText ?? null, hint: scene?.hint?.text ?? null,
+        coconut: scene?.coconut ? { docked: scene.coconut.docked, owned: scene.coconut.owned, motor: scene.coconut.motorRunning, state: JSON.parse(JSON.stringify(scene.coconut.state)), stage: scene.coconut.state.stage, blendTime: scene.coconut.state.blendTime, lid: scene.coconut.state.lid } : null,
         engine: scene?.drinkEngine ? { active: scene.drinkEngine.active.size, owners: [...scene.drinkEngine.owners.keys()] } : null,
         gesture: scene?.drag ? { active: scene.drag.active?.kind ?? null, foam: scene.drag.whiskProgress, loaded: scene.drag.spoonLoaded } : null,
       };

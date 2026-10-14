@@ -141,7 +141,7 @@ export class DragController {
       const poured = this.pourSystem.update(a.pointerId, seconds, station, n => this.scene.session.pourIngredient(drink, a.kind, n));
       if (!poured) {
         if ((this.pourSystem.sessions.get(a.pointerId)?.tilt || 0) < 0.15) { this.scene.setLiveHint('Di chuyển bình sang phải để nghiêng và rót.'); return; }
-        if (this.scene.visualTime >= a.toastAt) { a.toastAt = this.scene.visualTime + 1200; this.scene.toast(`Hết ${a.kind === 'milk' ? 'sữa tươi' : 'sữa đặc'} rồi!`); this.scene.game.audio.play('error'); }
+        if (this.scene.visualTime >= a.toastAt) { a.toastAt = this.scene.visualTime + 1200; this.scene.toast(drink.recipeId === 'cotdua' ? 'Cà phê cốt dừa: sữa đặc rót vào máy xay ở khay 05.' : `Hết ${a.kind === 'milk' ? 'sữa tươi' : 'sữa đặc'} rồi!`); this.scene.game.audio.play('error'); }
         return;
       }
       a.worked = true; a.proxy.rotation = -0.65 * (this.pourSystem.sessions.get(a.pointerId)?.tilt || 0);
@@ -188,7 +188,7 @@ export class DragController {
     let ok = false;
     if (a.kind === 'cup') {
       if (a.x > 406 && a.y >= 589 && a.y <= 637) {
-        a.source.model.discard(); scene.toast('Đã dọn ly. Bắt đầu lại thật thong thả nhé.'); scene.game.audio.play('trash'); a.heard = true; ok = true;
+        scene.session.recordDrinkWaste(a.source.model.drink); a.source.model.discard(); scene.toast('Đã dọn ly. Bắt đầu lại thật thong thả nhé.'); scene.game.audio.play('trash'); a.heard = true; ok = true;
       } else {
         const target = [...scene.customerViews.values()].find(view => view.contains(a.x, a.y));
         if (target) {
@@ -220,7 +220,7 @@ export class DragController {
     } else if (a.kind === 'ice') {
       ok = scene.session.addIce(drink);
       if (ok) { scene.dropIce(station); scene.game.audio.play('ice'); a.heard = true; }
-      else scene.toast(drink ? 'Hết đá rồi. Ca sau nhập thêm trong cửa hàng nhé.' : 'Kéo đá vào ly ở trạm pha.');
+      else scene.toast(drink?.recipeId === 'cotdua' ? 'Cà phê cốt dừa: đá cho vào máy xay ở khay 05.' : drink ? 'Hết đá rồi. Ca sau nhập thêm trong cửa hàng nhé.' : 'Kéo đá vào ly ở trạm pha.');
     } else if (a.kind === 'bowl') {
       if (this.whiskProgress >= RULES.whiskDistance && drink) {
         ok = drink.addIngredient('foam', 1); this.whiskState = new PreparationState('egg-bowl'); this.whiskProgress = 0; this.whiskEggLoaded = false; scene.toast('Lớp bọt vàng mịn, thơm ghê!'); scene.game.audio.play('foam'); a.heard = true;
