@@ -1,0 +1,172 @@
+{
+  "result": "PASS: touch milk pouring, circular stirring, stationary whisk rejection, foam preparation and transfer",
+  "state": {
+    "scene": "Tutorial",
+    "render": {
+      "factor": 2,
+      "canvas": [
+        960,
+        1600
+      ],
+      "textCount": 33,
+      "textResolution": 2,
+      "textPixels": [
+        486,
+        60
+      ],
+      "textLogical": [
+        243,
+        30.48046875
+      ],
+      "textureCount": 33
+    },
+    "save": {
+      "version": 2,
+      "day": 1,
+      "balance": 0,
+      "ratingSum": 20,
+      "ratingCount": 5,
+      "tutorialDone": false,
+      "upgrades": {
+        "phins": 1,
+        "seats": 3,
+        "premium": false,
+        "fan": false,
+        "decor": false
+      },
+      "dayPlan": null,
+      "lastCommittedDay": 0,
+      "achievements": [],
+      "stories": {
+        "driver": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "office": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "student": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        }
+      },
+      "mastery": {
+        "den": 0,
+        "sua": 0,
+        "bac": 0,
+        "trung": 0
+      },
+      "stats": {
+        "served": 0,
+        "lost": 0,
+        "perfect": 0,
+        "bestCombo": 0,
+        "lifetimeRevenue": 0,
+        "lifetimeTips": 0,
+        "lifetimeBonuses": 0,
+        "lifetimeEarnings": 0,
+        "upgradeExpenses": 0,
+        "bestDay": 0,
+        "sessions": 0
+      },
+      "settings": {
+        "sound": true,
+        "music": true,
+        "reducedMotion": false
+      }
+    },
+    "paused": false,
+    "session": {
+      "day": 1,
+      "tutorial": true,
+      "revenue": 0,
+      "tips": 0,
+      "bonuses": 0,
+      "earnings": 0,
+      "served": 0,
+      "lost": 0,
+      "perfect": 0,
+      "bestCombo": 0,
+      "elapsed": 29.23044333333359,
+      "ended": false,
+      "event": null,
+      "challengeComplete": false,
+      "recipes": {
+        "den": 0,
+        "sua": 0,
+        "bac": 0,
+        "trung": 0
+      },
+      "storyEncounters": [],
+      "rushServed": 0,
+      "rushLost": 0,
+      "wrongOrders": 0,
+      "rating": 0,
+      "ratings": [],
+      "review": "Một buổi sáng yên tĩnh. Ngày mai mình thử lại nhé!",
+      "rush": false,
+      "powerOut": false,
+      "fanActive": false
+    },
+    "customers": [
+      {
+        "id": "customer-1",
+        "name": "Chị Lan",
+        "recipe": "den",
+        "state": "WAITING",
+        "ratio": 1,
+        "seat": 0,
+        "vip": false,
+        "type": "office"
+      }
+    ],
+    "stations": [
+      {
+        "id": "station-1",
+        "visible": true,
+        "page": 0,
+        "x": 240,
+        "y": 517,
+        "recipeId": "sua",
+        "drink": {
+          "id": "cup-1",
+          "recipeId": "sua",
+          "state": "BREWED",
+          "grounds": 1,
+          "press": 0.6499999999999995,
+          "water": 1.085544,
+          "brewElapsed": 8,
+          "coffee": 1.085544,
+          "condensed": 1.0599600000000007,
+          "milk": 0,
+          "foam": 1,
+          "ice": 3,
+          "stir": 9.42477796076938,
+          "consumed": false
+        }
+      }
+    ],
+    "diagnostics": {
+      "objects": 54,
+      "tweens": 2,
+      "timers": 0,
+      "fps": 60,
+      "inputListeners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "scaleListeners": 10
+    },
+    "gesture": {
+      "active": null,
+      "foam": 0,
+      "loaded": 0
+    }
+  }
+}

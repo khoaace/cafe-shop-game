@@ -1,0 +1,283 @@
+{
+  "result": "PASS: full production cycle at persistent DPR 2",
+  "day": {
+    "result": "PASS: production subpath, four physically prepared recipes, reviewer Perfect bonus, optional challenge, end-day settlement and reload",
+    "pixels": [
+      1440,
+      2400
+    ],
+    "statuses": [
+      "Tuyệt vời! Perfect Brew! Tỉnh cả buổi sáng luôn!",
+      "Reviewer tặng 5 sao · Thưởng 10.000đ!",
+      "Hoàn thành thử thách! Thưởng sẽ chốt cuối ca.",
+      "Tuyệt vời! Perfect Brew! Đúng vị của buổi sáng!"
+    ],
+    "save": {
+      "version": 2,
+      "day": 4,
+      "balance": 112400,
+      "ratingSum": 51,
+      "ratingCount": 13,
+      "tutorialDone": false,
+      "upgrades": {
+        "phins": 2,
+        "seats": 3,
+        "premium": false,
+        "fan": false,
+        "decor": false
+      },
+      "dayPlan": null,
+      "lastCommittedDay": 3,
+      "achievements": [
+        "first",
+        "rush"
+      ],
+      "stories": {
+        "driver": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "office": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        },
+        "student": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        }
+      },
+      "mastery": {
+        "den": 1,
+        "sua": 1,
+        "bac": 1,
+        "trung": 1
+      },
+      "stats": {
+        "served": 4,
+        "lost": 3,
+        "perfect": 4,
+        "bestCombo": 4,
+        "lifetimeRevenue": 70000,
+        "lifetimeTips": 19400,
+        "lifetimeBonuses": 23000,
+        "lifetimeEarnings": 112400,
+        "upgradeExpenses": 0,
+        "bestDay": 112400,
+        "sessions": 1
+      },
+      "settings": {
+        "sound": false,
+        "music": false,
+        "reducedMotion": false
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  "shop": {
+    "result": "PASS: Retina production shop, repeated purchase, three phins/two pages, next day, book, notebook and reload",
+    "before": {
+      "version": 2,
+      "day": 4,
+      "balance": 112400,
+      "ratingSum": 51,
+      "ratingCount": 13,
+      "tutorialDone": false,
+      "upgrades": {
+        "phins": 2,
+        "seats": 3,
+        "premium": false,
+        "fan": false,
+        "decor": false
+      },
+      "dayPlan": null,
+      "lastCommittedDay": 3,
+      "achievements": [
+        "first",
+        "rush"
+      ],
+      "stories": {
+        "driver": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "office": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        },
+        "student": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        }
+      },
+      "mastery": {
+        "den": 1,
+        "sua": 1,
+        "bac": 1,
+        "trung": 1
+      },
+      "stats": {
+        "served": 4,
+        "lost": 3,
+        "perfect": 4,
+        "bestCombo": 4,
+        "lifetimeRevenue": 70000,
+        "lifetimeTips": 19400,
+        "lifetimeBonuses": 23000,
+        "lifetimeEarnings": 112400,
+        "upgradeExpenses": 0,
+        "bestDay": 112400,
+        "sessions": 1
+      },
+      "settings": {
+        "sound": false,
+        "music": false,
+        "reducedMotion": false
+      }
+    },
+    "bought": {
+      "version": 2,
+      "day": 4,
+      "balance": 62400,
+      "ratingSum": 51,
+      "ratingCount": 13,
+      "tutorialDone": false,
+      "upgrades": {
+        "phins": 3,
+        "seats": 3,
+        "premium": false,
+        "fan": false,
+        "decor": false
+      },
+      "dayPlan": null,
+      "lastCommittedDay": 3,
+      "achievements": [
+        "first",
+        "rush"
+      ],
+      "stories": {
+        "driver": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "office": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        },
+        "student": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        }
+      },
+      "mastery": {
+        "den": 1,
+        "sua": 1,
+        "bac": 1,
+        "trung": 1
+      },
+      "stats": {
+        "served": 4,
+        "lost": 3,
+        "perfect": 4,
+        "bestCombo": 4,
+        "lifetimeRevenue": 70000,
+        "lifetimeTips": 19400,
+        "lifetimeBonuses": 23000,
+        "lifetimeEarnings": 112400,
+        "upgradeExpenses": 50000,
+        "bestDay": 112400,
+        "sessions": 1
+      },
+      "settings": {
+        "sound": false,
+        "music": false,
+        "reducedMotion": false
+      }
+    },
+    "after": {
+      "version": 2,
+      "day": 4,
+      "balance": 62400,
+      "ratingSum": 51,
+      "ratingCount": 13,
+      "tutorialDone": false,
+      "upgrades": {
+        "phins": 3,
+        "seats": 3,
+        "premium": false,
+        "fan": false,
+        "decor": false
+      },
+      "dayPlan": {
+        "day": 4,
+        "seed": 3056226422,
+        "event": "reviewer",
+        "vip": "reviewer",
+        "vipAt": 1,
+        "expectedOrders": 6,
+        "challenge": {
+          "kind": "combo",
+          "target": 4,
+          "label": "Đạt combo ×4",
+          "reward": 10000
+        }
+      },
+      "lastCommittedDay": 3,
+      "achievements": [
+        "first",
+        "rush"
+      ],
+      "stories": {
+        "driver": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "office": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        },
+        "student": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        }
+      },
+      "mastery": {
+        "den": 1,
+        "sua": 1,
+        "bac": 1,
+        "trung": 1
+      },
+      "stats": {
+        "served": 4,
+        "lost": 3,
+        "perfect": 4,
+        "bestCombo": 4,
+        "lifetimeRevenue": 70000,
+        "lifetimeTips": 19400,
+        "lifetimeBonuses": 23000,
+        "lifetimeEarnings": 112400,
+        "upgradeExpenses": 50000,
+        "bestDay": 112400,
+        "sessions": 2
+      },
+      "settings": {
+        "sound": false,
+        "music": false,
+        "reducedMotion": false
+      }
+    },
+    "errors": []
+  }
+}

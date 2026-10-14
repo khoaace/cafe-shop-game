@@ -1,0 +1,350 @@
+
+> tiem-ca-phe-phin-via-he@1.0.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: brewing rejects out-of-order actions and progresses from actual elapsed time
+ok 1 - brewing rejects out-of-order actions and progresses from actual elapsed time
+  ---
+  duration_ms: 1.777041
+  type: 'test'
+  ...
+# Subtest: den: correct physical preparation is PERFECT
+ok 2 - den: correct physical preparation is PERFECT
+  ---
+  duration_ms: 0.256083
+  type: 'test'
+  ...
+# Subtest: den: harmless ingredient order does not invalidate recipe
+ok 3 - den: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 0.067042
+  type: 'test'
+  ...
+# Subtest: sua: correct physical preparation is PERFECT
+ok 4 - sua: correct physical preparation is PERFECT
+  ---
+  duration_ms: 0.189583
+  type: 'test'
+  ...
+# Subtest: sua: harmless ingredient order does not invalidate recipe
+ok 5 - sua: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 0.061708
+  type: 'test'
+  ...
+# Subtest: bac: correct physical preparation is PERFECT
+ok 6 - bac: correct physical preparation is PERFECT
+  ---
+  duration_ms: 0.056584
+  type: 'test'
+  ...
+# Subtest: bac: harmless ingredient order does not invalidate recipe
+ok 7 - bac: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 0.110375
+  type: 'test'
+  ...
+# Subtest: trung: correct physical preparation is PERFECT
+ok 8 - trung: correct physical preparation is PERFECT
+  ---
+  duration_ms: 0.097083
+  type: 'test'
+  ...
+# Subtest: trung: harmless ingredient order does not invalidate recipe
+ok 9 - trung: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 0.284583
+  type: 'test'
+  ...
+# Subtest: too much milk reduces quality rather than invalidating the correct drink
+ok 10 - too much milk reduces quality rather than invalidating the correct drink
+  ---
+  duration_ms: 0.362959
+  type: 'test'
+  ...
+# Subtest: wrong ingredient, insufficient ice and insufficient stirring report actionable feedback
+ok 11 - wrong ingredient, insufficient ice and insufficient stirring report actionable feedback
+  ---
+  duration_ms: 2.55425
+  type: 'test'
+  ...
+# Subtest: adding milk after stirring requires another real stir
+ok 12 - adding milk after stirring requires another real stir
+  ---
+  duration_ms: 0.0985
+  type: 'test'
+  ...
+# Subtest: independent stations brew without overwriting each other and discard frees a station
+ok 13 - independent stations brew without overwriting each other and discard frees a station
+  ---
+  duration_ms: 1.213666
+  type: 'test'
+  ...
+# Subtest: movement is required for whisking; teleport jumps do not count
+ok 14 - movement is required for whisking; teleport jumps do not count
+  ---
+  duration_ms: 0.236
+  type: 'test'
+  ...
+# Subtest: stirring recognizes circles across angle wrap and rejects holding/straight center jitter
+ok 15 - stirring recognizes circles across angle wrap and rejects holding/straight center jitter
+  ---
+  duration_ms: 0.509083
+  type: 'test'
+  ...
+# Subtest: customer states are explicit and resolution is idempotent
+ok 16 - customer states are explicit and resolution is idempotent
+  ---
+  duration_ms: 0.133459
+  type: 'test'
+  ...
+# Subtest: correct serving grants menu price and tip exactly once
+ok 17 - correct serving grants menu price and tip exactly once
+  ---
+  duration_ms: 0.513
+  type: 'test'
+  ...
+# Subtest: wrong orders reset combo but retain cup and waiting customer for correction
+ok 18 - wrong orders reset combo but retain cup and waiting customer for correction
+  ---
+  duration_ms: 0.277292
+  type: 'test'
+  ...
+# Subtest: combo milestone rewards 3 / 5 / 10 are applied once per reached streak
+ok 19 - combo milestone rewards 3 / 5 / 10 are applied once per reached streak
+  ---
+  duration_ms: 1.260958
+  type: 'test'
+  ...
+# Subtest: independent patience expiry does not duplicate customer exits or ratings
+ok 20 - independent patience expiry does not duplicate customer exits or ratings
+  ---
+  duration_ms: 1.213125
+  type: 'test'
+  ...
+# Subtest: day has rush hour, last call and one closing settlement
+ok 21 - day has rush hour, last call and one closing settlement
+  ---
+  duration_ms: 0.133541
+  type: 'test'
+  ...
+# Subtest: tutorial is untimed and ends after three customers
+ok 22 - tutorial is untimed and ends after three customers
+  ---
+  duration_ms: 0.108334
+  type: 'test'
+  ...
+# Subtest: difficulty unlocks recipes gradually and limits pending orders
+ok 23 - difficulty unlocks recipes gradually and limits pending orders
+  ---
+  duration_ms: 0.547791
+  type: 'test'
+  ...
+# Subtest: 06:00–10:00 clock mapping is correct
+ok 24 - 06:00–10:00 clock mapping is correct
+  ---
+  duration_ms: 0.074625
+  type: 'test'
+  ...
+# Subtest: summary totals separate revenue, tips and bonuses
+ok 25 - summary totals separate revenue, tips and bonuses
+  ---
+  duration_ms: 0.312917
+  type: 'test'
+  ...
+# Subtest: day save persists, prevents duplicate settlement and smooths reputation
+ok 26 - day save persists, prevents duplicate settlement and smooths reputation
+  ---
+  duration_ms: 1.531417
+  type: 'test'
+  ...
+# Subtest: tutorial cannot inflate the main economy
+ok 27 - tutorial cannot inflate the main economy
+  ---
+  duration_ms: 0.08325
+  type: 'test'
+  ...
+# Subtest: midday reload retains the start-of-day checkpoint
+ok 28 - midday reload retains the start-of-day checkpoint
+  ---
+  duration_ms: 0.061708
+  type: 'test'
+  ...
+# Subtest: corrupt, unsupported and partially malformed saves recover safely
+ok 29 - corrupt, unsupported and partially malformed saves recover safely
+  ---
+  duration_ms: 0.243708
+  type: 'test'
+  ...
+# Subtest: blocked storage keeps the session usable with an honest warning
+ok 30 - blocked storage keeps the session usable with an honest warning
+  ---
+  duration_ms: 0.134917
+  type: 'test'
+  ...
+# Subtest: settings and reset persist without changing a running economy
+ok 31 - settings and reset persist without changing a running economy
+  ---
+  duration_ms: 0.165417
+  type: 'test'
+  ...
+# Subtest: v1 migrates once, preserves economy and two phins without inventing recipe history
+ok 32 - v1 migrates once, preserves economy and two phins without inventing recipe history
+  ---
+  duration_ms: 2.147125
+  type: 'test'
+  ...
+# Subtest: failed migration keeps v1 intact and remains playable in memory
+ok 33 - failed migration keeps v1 intact and remains playable in memory
+  ---
+  duration_ms: 0.465958
+  type: 'test'
+  ...
+# Subtest: corrupt v2 can recover from v1; malformed v2 fields are bounded
+ok 34 - corrupt v2 can recover from v1; malformed v2 fields are bounded
+  ---
+  duration_ms: 0.372916
+  type: 'test'
+  ...
+# Subtest: new progress starts with one phin and three chairs
+ok 35 - new progress starts with one phin and three chairs
+  ---
+  duration_ms: 0.102584
+  type: 'test'
+  ...
+# Subtest: purchase atomically deducts exact price, upgrades and persists once
+ok 36 - purchase atomically deducts exact price, upgrades and persists once
+  ---
+  duration_ms: 0.416
+  type: 'test'
+  ...
+# Subtest: all upgrade prices, max levels, stale taps, insufficient funds and in-shift purchases
+ok 37 - all upgrade prices, max levels, stale taps, insufficient funds and in-shift purchases
+  ---
+  duration_ms: 4.01125
+  type: 'test'
+  ...
+# Subtest: blocked persistence still applies an upgrade only once within the live session
+ok 38 - blocked persistence still applies an upgrade only once within the live session
+  ---
+  duration_ms: 0.618458
+  type: 'test'
+  ...
+# Subtest: day plans and optional challenges stay identical across reload and purchases
+ok 39 - day plans and optional challenges stay identical across reload and purchases
+  ---
+  duration_ms: 0.388125
+  type: 'test'
+  ...
+# Subtest: event eligibility, 35% sampling, VIP limits and feasible challenges across 3000 seeds
+ok 40 - event eligibility, 35% sampling, VIP limits and feasible challenges across 3000 seeds
+  ---
+  duration_ms: 30.989333
+  type: 'test'
+  ...
+# Subtest: hidden stations advance continuously and switching pages preserves unique cup IDs
+ok 41 - hidden stations advance continuously and switching pages preserves unique cup IDs
+  ---
+  duration_ms: 0.786333
+  type: 'test'
+  ...
+# Subtest: all six chairs have separate hit regions and resolve the assigned customer only
+ok 42 - all six chairs have separate hit regions and resolve the assigned customer only
+  ---
+  duration_ms: 1.012125
+  type: 'test'
+  ...
+# Subtest: capacity obeys seats, twice phins and day tiers; initial timing stays unchanged
+ok 43 - capacity obeys seats, twice phins and day tiers; initial timing stays unchanged
+  ---
+  duration_ms: 0.119167
+  type: 'test'
+  ...
+# Subtest: rain, festival and lucky morning apply arrival and tip modifiers
+ok 44 - rain, festival and lucky morning apply arrival and tip modifiers
+  ---
+  duration_ms: 0.178041
+  type: 'test'
+  ...
+# Subtest: premium only changes relevant tips and stacks with rain/VIP
+ok 45 - premium only changes relevant tips and stacks with rain/VIP
+  ---
+  duration_ms: 0.419166
+  type: 'test'
+  ...
+# Subtest: fan drains 85%; outage disables it for exactly 30 seconds without touching coffee
+ok 46 - fan drains 85%; outage disables it for exactly 30 seconds without touching coffee
+  ---
+  duration_ms: 0.195625
+  type: 'test'
+  ...
+# Subtest: decor adds 0.1 star to a correct order but cannot exceed five
+ok 47 - decor adds 0.1 star to a correct order but cannot exceed five
+  ---
+  duration_ms: 0.118
+  type: 'test'
+  ...
+# Subtest: reviewer Perfect grants bonus and separate five-star review only once; max one VIP
+ok 48 - reviewer Perfect grants bonus and separate five-star review only once; max one VIP
+  ---
+  duration_ms: 0.05775
+  type: 'test'
+  ...
+# Subtest: story gates use both day and distinct successful encounter days
+ok 49 - story gates use both day and distinct successful encounter days
+  ---
+  duration_ms: 0.050625
+  type: 'test'
+  ...
+# Subtest: repeated same-day character service counts once and tutorial creates no story
+ok 50 - repeated same-day character service counts once and tutorial creates no story
+  ---
+  duration_ms: 0.112834
+  type: 'test'
+  ...
+# Subtest: challenge rewards and achievements settle once with revenue separate from expenses
+ok 51 - challenge rewards and achievements settle once with revenue separate from expenses
+  ---
+  duration_ms: 1.898042
+  type: 'test'
+  ...
+# Subtest: no-loss challenge requires closing, sufficient service and no abandoned customers
+ok 52 - no-loss challenge requires closing, sufficient service and no abandoned customers
+  ---
+  duration_ms: 0.769333
+  type: 'test'
+  ...
+# Subtest: all six achievements enforce thresholds, including real rush service and five guests
+ok 53 - all six achievements enforce thresholds, including real rush service and five guests
+  ---
+  duration_ms: 0.124167
+  type: 'test'
+  ...
+# Subtest: mastery thresholds are exact and do not perform any gesture
+ok 54 - mastery thresholds are exact and do not perform any gesture
+  ---
+  duration_ms: 0.294375
+  type: 'test'
+  ...
+# Subtest: contextual reviews consider wrong orders and long waits; consecutive lines differ
+ok 55 - contextual reviews consider wrong orders and long waits; consecutive lines differ
+  ---
+  duration_ms: 1.306583
+  type: 'test'
+  ...
+# Subtest: tutorial completion cannot affect upgrades, challenges, mastery, achievements or stories
+ok 56 - tutorial completion cannot affect upgrades, challenges, mastery, achievements or stories
+  ---
+  duration_ms: 0.669458
+  type: 'test'
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 184.778083

@@ -1,0 +1,17 @@
+{
+  "result": "PASS: production root, 21 assets, frozen artwork and full procedural fallback after blocked world requests",
+  "results": [
+    {
+      "blocked": false,
+      "loaded": 21,
+      "pausePixelsIdentical": true,
+      "errors": []
+    },
+    {
+      "blocked": true,
+      "loaded": 0,
+      "pausePixelsIdentical": true,
+      "errors": []
+    }
+  ]
+}

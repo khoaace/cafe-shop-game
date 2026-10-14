@@ -1,0 +1,1063 @@
+{
+  "result": "PASS: pages, resize, lifecycle, all trays/book/shop captures",
+  "pages": {
+    "result": "PASS: four independent IDs, hidden brewing, pointer/page cancellation, serving/discarding and pause",
+    "frameMs": {
+      "median": 13.299999999999272,
+      "p95": 14.299999999999272
+    },
+    "snapshot": {
+      "scene": "Game",
+      "render": {
+        "factor": 2,
+        "canvas": [
+          960,
+          1600
+        ],
+        "textCount": 54,
+        "textResolution": 2,
+        "textPixels": [
+          486,
+          60
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 89
+      },
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 1000000,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 12000,
+        "tips": 3000,
+        "bonuses": 0,
+        "earnings": 15000,
+        "served": 1,
+        "lost": 0,
+        "perfect": 1,
+        "bestCombo": 1,
+        "elapsed": 21.642996666666466,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 5,
+        "ratings": [
+          5
+        ],
+        "review": "Cà phê ngon, ghế nhựa hơi thấp mà lòng vui quá!",
+        "rush": false,
+        "powerOut": false,
+        "fanActive": true
+      },
+      "customers": [
+        {
+          "id": "customer-1",
+          "name": "Chị Lan",
+          "recipe": "den",
+          "state": "LEAVING",
+          "ratio": 0.8235338000000005,
+          "seat": 0,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "SEATED",
+          "ratio": 1,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 82,
+        "tweens": 0,
+        "timers": 2,
+        "fps": 74,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    },
+    "errors": []
+  },
+  "resize": {
+    "result": "PASS: live resize, logical hit areas, DPR changes, exact cup identity, overlays, stable texture/text counts",
+    "rows": [
+      {
+        "cycle": 0,
+        "width": 1366,
+        "height": 768,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 68,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 1920,
+        "height": 1080,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 70,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 2560,
+        "height": 1440,
+        "dpr": 2,
+        "render": {
+          "factor": 4,
+          "canvas": [
+            1920,
+            3200
+          ],
+          "textCount": 36,
+          "textResolution": 4,
+          "textPixels": [
+            972,
+            121
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 66,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 360,
+        "height": 800,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 68,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 71,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 430,
+        "height": 932,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 73,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 480,
+        "height": 800,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 74,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 74,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 1366,
+        "height": 768,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 74,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 1920,
+        "height": 1080,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 70,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 2560,
+        "height": 1440,
+        "dpr": 2,
+        "render": {
+          "factor": 4,
+          "canvas": [
+            1920,
+            3200
+          ],
+          "textCount": 36,
+          "textResolution": 4,
+          "textPixels": [
+            972,
+            121
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 65,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 360,
+        "height": 800,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 64,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 68,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 430,
+        "height": 932,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 70,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 480,
+        "height": 800,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 72,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 71
+        },
+        "diagnostics": {
+          "objects": 40,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 73,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      }
+    ],
+    "errors": []
+  },
+  "lifecycle": {
+    "result": "PASS: eight scene cycles, stable objects/timers/input and resize listeners, notebook five pages",
+    "rows": [
+      {
+        "iteration": 1,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 59,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 63,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 2,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 70,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 70,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 3,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 73,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 74,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 4,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 74,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 74,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 5,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 74,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 6,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 7,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 8,
+        "active": {
+          "objects": 61,
+          "tweens": 0,
+          "timers": 1,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 22,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      }
+    ]
+  },
+  "errors": []
+}

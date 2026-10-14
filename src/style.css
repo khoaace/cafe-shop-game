@@ -1,0 +1,7 @@
+:root { font-family: 'Trebuchet MS', Arial, sans-serif; color: #f7eedb; background: #1d3029; color-scheme: dark; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; overscroll-behavior: none; }
+body { position: relative; background: radial-gradient(ellipse at 50% 40%, #3d5544, #1d3029 75%); }
+#game { position: absolute; inset: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); min-width: 0; min-height: 0; overflow: hidden; touch-action: none; }
+canvas { display: block; touch-action: none; -webkit-user-select: none; user-select: none; box-shadow: 0 18px 80px #081a2366; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }

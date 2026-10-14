@@ -1,0 +1,56 @@
+### Result
+{"result":"PASS: full production cycle at persistent DPR 2","day":{"result":"PASS: production subpath, four physically prepared recipes, reviewer Perfect bonus, optional challenge, end-day settlement and reload","pixels":[1440,2400],"statuses":["Tuyệt vời! Perfect Brew! Tỉnh cả buổi sáng luôn!","Reviewer tặng 5 sao · Thưởng 10.000đ!","Hoàn thành thử thách! Thưởng sẽ chốt cuối ca.","Tuyệt vời! Perfect Brew! Đúng vị của buổi sáng!"],"save":{"version":2,"day":4,"balance":112400,"ratingSum":51,"ratingCount":13,"tutorialDone":false,"upgrades":{"phins":2,"seats":3,"premium":false,"fan":false,"decor":false},"dayPlan":null,"lastCommittedDay":3,"achievements":["first","rush"],"stories":{"driver":{"encounters":0,"chapter":0,"lastDay":0},"office":{"encounters":1,"chapter":1,"lastDay":3},"student":{"encounters":1,"chapter":1,"lastDay":3}},"mastery":{"den":1,"sua":1,"bac":1,"trung":1},"stats":{"served":4,"lost":3,"perfect":4,"bestCombo":4,"lifetimeRevenue":70000,"lifetimeTips":19400,"lifetimeBonuses":23000,"lifetimeEarnings":112400,"upgradeExpenses":0,"bestDay":112400,"sessions":1},"settings":{"sound":false,"music":false,"reducedMotion":false}},"errors":[],"failed":[]},"shop":{"result":"PASS: Retina production shop, repeated purchase, three phins/two pages, next day, book, notebook and reload","before":{"version":2,"day":4,"balance":112400,"ratingSum":51,"ratingCount":13,"tutorialDone":false,"upgrades":{"phins":2,"seats":3,"premium":false,"fan":false,"decor":false},"dayPlan":null,"lastCommittedDay":3,"achievements":["first","rush"],"stories":{"driver":{"encounters":0,"chapter":0,"lastDay":0},"office":{"encounters":1,"chapter":1,"lastDay":3},"student":{"encounters":1,"chapter":1,"lastDay":3}},"mastery":{"den":1,"sua":1,"bac":1,"trung":1},"stats":{"served":4,"lost":3,"perfect":4,"bestCombo":4,"lifetimeRevenue":70000,"lifetimeTips":19400,"lifetimeBonuses":23000,"lifetimeEarnings":112400,"upgradeExpenses":0,"bestDay":112400,"sessions":1},"settings":{"sound":false,"music":false,"reducedMotion":false}},"bought":{"version":2,"day":4,"balance":62400,"ratingSum":51,"ratingCount":13,"tutorialDone":false,"upgrades":{"phins":3,"seats":3,"premium":false,"fan":false,"decor":false},"dayPlan":null,"lastCommittedDay":3,"achievements":["first","rush"],"stories":{"driver":{"encounters":0,"chapter":0,"lastDay":0},"office":{"encounters":1,"chapter":1,"lastDay":3},"student":{"encounters":1,"chapter":1,"lastDay":3}},"mastery":{"den":1,"sua":1,"bac":1,"trung":1},"stats":{"served":4,"lost":3,"perfect":4,"bestCombo":4,"lifetimeRevenue":70000,"lifetimeTips":19400,"lifetimeBonuses":23000,"lifetimeEarnings":112400,"upgradeExpenses":50000,"bestDay":112400,"sessions":1},"settings":{"sound":false,"music":false,"reducedMotion":false}},"after":{"version":2,"day":4,"balance":62400,"ratingSum":51,"ratingCount":13,"tutorialDone":false,"upgrades":{"phins":3,"seats":3,"premium":false,"fan":false,"decor":false},"dayPlan":{"day":4,"seed":2545321183,"event":null,"vip":null,"vipAt":1,"expectedOrders":6,"challenge":{"kind":"perfect","target":3,"label":"Pha 3 ly Perfect","reward":10000}},"lastCommittedDay":3,"achievements":["first","rush"],"stories":{"driver":{"encounters":0,"chapter":0,"lastDay":0},"office":{"encounters":1,"chapter":1,"lastDay":3},"student":{"encounters":1,"chapter":1,"lastDay":3}},"mastery":{"den":1,"sua":1,"bac":1,"trung":1},"stats":{"served":4,"lost":3,"perfect":4,"bestCombo":4,"lifetimeRevenue":70000,"lifetimeTips":19400,"lifetimeBonuses":23000,"lifetimeEarnings":112400,"upgradeExpenses":50000,"bestDay":112400,"sessions":2},"settings":{"sound":false,"music":false,"reducedMotion":false}},"errors":[]}}
+### Ran Playwright code
+```js
+await (async (page) => {
+  const context=await page.context().browser().newContext({viewport:{width:1920,height:1080},deviceScaleFactor:2});
+  const testPage=await context.newPage();
+  try { const day=await (async(page)=>{
+  const errors=[],failed=[];page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});page.on('response',r=>{if(r.status()>=400)failed.push(r.url());});
+  await page.goto('http://127.0.0.1:4174/phin-goc-pho/');await page.setViewportSize({width:1920,height:1080});
+  const cdp = await page.context().newCDPSession(page);
+  await cdp.send('Emulation.setDeviceMetricsOverride',{width:1920,height:1080,deviceScaleFactor:2,mobile:false});
+  const rect = await page.locator('canvas').boundingBox();
+  const mouseMove=(x,y,options)=>page.mouse.move(rect.x+x*rect.width/480,rect.y+y*rect.height/800,options);
+  const mouseClick=(x,y,options)=>page.mouse.click(rect.x+x*rect.width/480,rect.y+y*rect.height/800,options);
+  await page.evaluate(()=>{localStorage.removeItem('phin-goc-pho:v1');localStorage.setItem('phin-goc-pho:v2',JSON.stringify({version:2,day:3,balance:0,upgrades:{phins:2,seats:3},settings:{sound:false,music:false,reducedMotion:false},dayPlan:{day:3,seed:15,event:'reviewer',vip:'reviewer',vipAt:1,expectedOrders:6,challenge:{kind:'perfect',target:3,label:'Pha 3 ly Perfect',reward:10000}}}));});await page.reload();await page.waitForTimeout(600);
+  const pixels=await page.evaluate(()=>[document.querySelector('canvas').width,document.querySelector('canvas').height]);if(pixels[0]!==1440||pixels[1]!==2400)throw Error('Production HiDPI backing pixels');
+  const click=(x,y)=>mouseClick(x,y),drag=async(x,y,tx,ty,hold=60)=>{await mouseMove(x,y);await page.mouse.down();await mouseMove(tx,ty,{steps:10});await page.waitForTimeout(hold);await page.mouse.up();await page.waitForTimeout(80);};
+  await click(240,679);const started=Date.now(),statuses=[];
+  for(let i=0;i<4;i++){
+    await page.waitForTimeout(Math.max(1,[2500,31500,60500,86500][i]-(Date.now()-started)));const x=i%2?354:126;
+    await click(80,656);await click(x,433);await click(80+107*i,231);await click(240,615);
+    await drag(40,715,x,517);await drag(120,715,x,517);await mouseMove(200,715);await page.mouse.down();await mouseMove(280,715,{steps:8});await mouseMove(x,517,{steps:8});await page.mouse.up();await drag(360,715,x,517,750);await drag(440,715,x,517,i===2?940:1980);const brew=Date.now();
+    if(i<3){await click(242,656);if(i>0)await drag(56,715,x,517,1510);if(i===2)await drag(148,715,x,517,3210);await drag(240,715,x,517);}
+    else{await click(401,656);await mouseMove(280,715);await page.mouse.down();await mouseMove(140,715,{steps:8});await page.waitForTimeout(600);for(let j=0;j<27;j++){await mouseMove(j%2?166:114,715+(j%3-1)*7,{steps:3});await page.waitForTimeout(16);}await page.mouse.up();await drag(140,715,x,517);}
+    await page.waitForTimeout(Math.max(1,8300-(Date.now()-brew)));
+    if(i===1||i===2){await mouseMove(332,715);await page.mouse.down();await mouseMove(x+30,517,{steps:8});for(let j=0;j<=80;j++){const a=j/80*Math.PI*4;await mouseMove(x+Math.cos(a)*30,517+Math.sin(a)*26);await page.waitForTimeout(12);}await page.mouse.up();}
+    await page.screenshot({path:`output/playwright/sharp-production-recipe-${i}.png`});
+    await drag(x,517,90,218);let status=await page.locator('#accessible-status').textContent();if(!/Perfect Brew|GOOD|COMBO|Reviewer|thử thách/.test(status)){await drag(x,517,240,218);status=await page.locator('#accessible-status').textContent();}
+    if(!/Perfect Brew|GOOD|COMBO|Reviewer|thử thách/.test(status))throw Error(`Recipe ${i}: ${status}`);statuses.push(status);
+  }
+  await page.waitForFunction(()=>JSON.parse(localStorage.getItem('phin-goc-pho:v2')||'{}').day===4,null,{timeout:120000});const save=await page.evaluate(()=>JSON.parse(localStorage.getItem('phin-goc-pho:v2')));
+  if(Object.values(save.mastery).some(n=>n!==1))throw Error('Four recipes not all served: '+JSON.stringify(save.mastery));if(save.stats.lifetimeBonuses<23000)throw Error('Reviewer + combo + challenge rewards missing');
+  await page.screenshot({path:'output/playwright/sharp-reviewer-summary.png'});await page.reload();await page.waitForTimeout(600);const after=await page.evaluate(()=>JSON.parse(localStorage.getItem('phin-goc-pho:v2')));if(after.balance!==save.balance||after.day!==4)throw Error('Reload changed settlement');
+  if(errors.length||failed.length)throw Error(JSON.stringify({errors,failed}));return{result:'PASS: production subpath, four physically prepared recipes, reviewer Perfect bonus, optional challenge, end-day settlement and reload',pixels,statuses,save,errors,failed};
+})(testPage); const shop=await (async(page)=>{
+  const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+  await page.reload();await page.waitForTimeout(500);
+  const point=async(x,y)=>{const r=await page.locator('canvas').boundingBox();return {x:r.x+x*r.width/480,y:r.y+y*r.height/800};};
+  const click=async(x,y)=>{const p=await point(x,y);await page.mouse.click(p.x,p.y);await page.waitForTimeout(150);};
+  const drag=async(x,y,tx,ty)=>{const a=await point(x,y),b=await point(tx,ty);await page.mouse.move(a.x,a.y);await page.mouse.down();await page.mouse.move(b.x,b.y,{steps:8});await page.mouse.up();await page.waitForTimeout(300);};
+  const read=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('phin-goc-pho:v2')));
+  const before=await read();if(before.day!==4||before.upgrades.phins!==2)throw Error('Run after four-recipe production day');
+  await click(106,735);const p=await point(385,220);await page.mouse.dblclick(p.x,p.y,{delay:40});await page.waitForTimeout(500);
+  const bought=await read();if(bought.upgrades.phins!==3||bought.balance!==before.balance-50000)throw Error('Purchase changed wrong amount/level');
+  await page.screenshot({path:'output/playwright/sharp-shop.png'});await click(351,731);await page.waitForTimeout(2200);
+  await drag(40,715,126,517);await click(298,385);await drag(40,715,126,517);await page.screenshot({path:'output/playwright/sharp-next-day.png'});
+  await click(375,34);await page.screenshot({path:'output/playwright/sharp-production-book.png'});await click(419,145);
+  await click(445,34);await click(240,551);await click(240,551);await click(245,735);await click(241,180);
+  await page.screenshot({path:'output/playwright/sharp-notebook.png'});await page.reload();await page.waitForTimeout(300);
+  const after=await read();if(after.balance!==bought.balance||after.upgrades.phins!==3||after.day!==4)throw Error('Reload economic regression');
+  if(errors.length)throw Error(errors.join('\n'));return {result:'PASS: Retina production shop, repeated purchase, three phins/two pages, next day, book, notebook and reload',before,bought,after,errors};
+})(testPage); return {result:'PASS: full production cycle at persistent DPR 2',day,shop}; }
+  finally {await context.close();}
+})(page);
+```

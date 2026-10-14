@@ -1,0 +1,23 @@
+### Result
+{"result":"PASS: rain/lucky visuals, three-phin layout, real 30-second outage with uninterrupted brewing and restored fan, fixed plan after reload","events":["rain","lucky","outage"]}
+### Ran Playwright code
+```js
+await (async(page)=>{
+  const snap=()=>page.evaluate(()=>window.__PHIN_QA__.snapshot()),check=(v,m)=>{if(!v)throw Error(m);},events=[];
+  await page.goto('http://127.0.0.1:5173');await page.setViewportSize({width:480,height:800});
+  for(const [event,seed]of[['rain',0],['lucky',8],['outage',9]]){
+    await page.evaluate(({event,seed})=>localStorage.setItem('phin-goc-pho:v2',JSON.stringify({version:2,day:3,upgrades:{phins:3,seats:4,fan:true},settings:{sound:true,music:true},dayPlan:{day:3,seed,event,vip:null,vipAt:1,expectedOrders:event==='rain'?5:6,challenge:{kind:'served',target:4,label:'Phục vụ 4 khách',reward:10000}}})),{event,seed});await page.reload();await page.waitForTimeout(500);await page.mouse.click(240,679);await page.waitForTimeout(2200);check((await snap()).session.event===event,event+' active');await page.screenshot({path:`output/playwright/phase08-event-${event}.png`});events.push((await snap()).session.event);
+    if(event==='outage'){
+      await page.mouse.click(298,385);check((await snap()).stations.length===3,'Three models, no fourth phantom station');check((await snap()).stations[2].visible,'Third phin accessible');await page.screenshot({path:'output/playwright/phase08-three-phins.png'});await page.mouse.click(66,385);
+      await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().session.elapsed>=39,null,{timeout:45000});
+      const drag=async(x,y,tx,ty,hold=60)=>{await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(tx,ty,{steps:8});await page.waitForTimeout(hold);await page.mouse.up();await page.waitForTimeout(80);};
+      await drag(40,715,126,517);await drag(120,715,126,517);await page.mouse.move(200,715);await page.mouse.down();await page.mouse.move(280,715,{steps:8});await page.mouse.move(126,517,{steps:8});await page.mouse.up();await drag(360,715,126,517,750);await drag(440,715,126,517,1980);
+      await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().session.powerOut,null,{timeout:10000});check(!(await snap()).session.fanActive,'Fan really stopped');await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().stations[0].drink.state==='BREWED');check((await snap()).session.powerOut,'Coffee completes during outage');await page.screenshot({path:'output/playwright/phase08-outage-brew.png'});
+      await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().session.elapsed>=75,null,{timeout:35000});check((await snap()).session.fanActive,'Fan returns after 30 active seconds');const before=(await snap()).save.dayPlan;await page.reload();await page.waitForTimeout(500);check(JSON.stringify((await snap()).save.dayPlan)===JSON.stringify(before),'Event/challenge retained after abandoned shift reload');
+    }
+  }
+  return{result:'PASS: rain/lucky visuals, three-phin layout, real 30-second outage with uninterrupted brewing and restored fan, fixed plan after reload',events};
+})(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-10T04-28-01-474Z.log#L19-L24

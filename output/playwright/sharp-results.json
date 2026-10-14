@@ -1,0 +1,2913 @@
+{
+  "sharp-before": {
+    "phase": "before",
+    "reports": [
+      {
+        "width": 1366,
+        "height": 768,
+        "dpr": 1,
+        "pixels": [
+          480,
+          800
+        ],
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.700000000000273
+        }
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1,
+        "pixels": [
+          480,
+          800
+        ],
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.799999999999727
+        }
+      },
+      {
+        "width": 2560,
+        "height": 1440,
+        "dpr": 1,
+        "pixels": [
+          480,
+          800
+        ],
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.800000000000182
+        }
+      },
+      {
+        "width": 1366,
+        "height": 768,
+        "dpr": 2,
+        "pixels": [
+          480,
+          800
+        ],
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.700000000000728
+        }
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "dpr": 2,
+        "pixels": [
+          480,
+          800
+        ],
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.800000000000182
+        }
+      },
+      {
+        "width": 2560,
+        "height": 1440,
+        "dpr": 2,
+        "pixels": [
+          480,
+          800
+        ],
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.700000000000273
+        }
+      }
+    ]
+  },
+  "sharp-after": {
+    "result": "PASS: native-resolution screenshots and measurements with persistent DPR",
+    "phase": "after",
+    "reports": [
+      {
+        "width": 1366,
+        "height": 768,
+        "dpr": 1,
+        "pixels": [
+          480,
+          800
+        ],
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 58,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.800000000000182
+        }
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "dpr": 1,
+        "pixels": [
+          960,
+          1600
+        ],
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 57,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.800000000000182
+        }
+      },
+      {
+        "width": 2560,
+        "height": 1440,
+        "dpr": 1,
+        "pixels": [
+          960,
+          1600
+        ],
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 57,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.800000000000182
+        }
+      },
+      {
+        "width": 1366,
+        "height": 768,
+        "dpr": 2,
+        "pixels": [
+          960,
+          1600
+        ],
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 58,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.800000000000182
+        }
+      },
+      {
+        "width": 1920,
+        "height": 1080,
+        "dpr": 2,
+        "pixels": [
+          1440,
+          2400
+        ],
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 58,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.700000000000728
+        }
+      },
+      {
+        "width": 2560,
+        "height": 1440,
+        "dpr": 2,
+        "pixels": [
+          1920,
+          3200
+        ],
+        "render": {
+          "factor": 4,
+          "canvas": [
+            1920,
+            3200
+          ],
+          "textCount": 36,
+          "textResolution": 4,
+          "textPixels": [
+            972,
+            121
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 58,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "frame": {
+          "median": 16.699999999999818,
+          "p95": 16.799999999999727
+        }
+      }
+    ]
+  },
+  "sharp-tutorial": {
+    "result": "PASS: three physical brews, book pause, tutorial summary, save isolation",
+    "final": {
+      "scene": "Summary",
+      "render": {
+        "factor": 1,
+        "canvas": [
+          480,
+          800
+        ],
+        "textCount": 22,
+        "textResolution": 1,
+        "textPixels": [
+          114,
+          12
+        ],
+        "textLogical": [
+          114,
+          12.9609375
+        ],
+        "textureCount": 22
+      },
+      "save": {
+        "version": 2,
+        "day": 1,
+        "balance": 0,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": true,
+        "upgrades": {
+          "phins": 1,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": null,
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 0
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": false,
+      "session": null,
+      "customers": [],
+      "stations": [],
+      "diagnostics": {
+        "objects": 23,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 60,
+        "inputListeners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scaleListeners": 9
+      },
+      "gesture": null
+    }
+  },
+  "sharp-pages": {
+    "result": "PASS: four independent IDs, hidden brewing, pointer/page cancellation, serving/discarding and pause",
+    "frameMs": {
+      "median": 16.700000000000728,
+      "p95": 16.700000000000728
+    },
+    "snapshot": {
+      "scene": "Game",
+      "render": {
+        "factor": 1,
+        "canvas": [
+          480,
+          800
+        ],
+        "textCount": 54,
+        "textResolution": 1,
+        "textPixels": [
+          243,
+          30
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 54
+      },
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 1000000,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 12000,
+        "tips": 3000,
+        "bonuses": 0,
+        "earnings": 15000,
+        "served": 1,
+        "lost": 0,
+        "perfect": 1,
+        "bestCombo": 1,
+        "elapsed": 23.9866766666668,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 5,
+        "ratings": [
+          5
+        ],
+        "review": "Cà phê ngon, ghế nhựa hơi thấp mà lòng vui quá!",
+        "rush": false,
+        "powerOut": false,
+        "fanActive": true
+      },
+      "customers": [
+        {
+          "id": "customer-1",
+          "name": "Chị Lan",
+          "recipe": "den",
+          "state": "LEAVING",
+          "ratio": 0.8045076000000021,
+          "seat": 0,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.98591873,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 80,
+        "tweens": 0,
+        "timers": 2,
+        "fps": 60,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    },
+    "errors": []
+  },
+  "sharp-six-seats": {
+    "result": "PASS: six real scheduled guests, five viewport sizes, fourth seat served using third phin",
+    "full": {
+      "scene": "Game",
+      "render": {
+        "factor": 1,
+        "canvas": [
+          480,
+          800
+        ],
+        "textCount": 59,
+        "textResolution": 1,
+        "textPixels": [
+          243,
+          30
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 59
+      },
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 1000000,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 12000,
+        "tips": 3000,
+        "bonuses": 0,
+        "earnings": 15000,
+        "served": 1,
+        "lost": 0,
+        "perfect": 1,
+        "bestCombo": 1,
+        "elapsed": 111.66647666667454,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 5,
+        "ratings": [
+          5
+        ],
+        "review": "Cà phê ngon, ghế nhựa hơi thấp mà lòng vui quá!",
+        "rush": true,
+        "powerOut": false,
+        "fanActive": true
+      },
+      "customers": [
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.24064042999998436,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        },
+        {
+          "id": "customer-3",
+          "name": "Minh",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.3832528842104942,
+          "seat": 0,
+          "vip": false,
+          "type": "student"
+        },
+        {
+          "id": "customer-4",
+          "name": "Bác Tư",
+          "recipe": "trung",
+          "state": "WAITING",
+          "ratio": 0.5876248799999864,
+          "seat": 2,
+          "vip": false,
+          "type": "uncle"
+        },
+        {
+          "id": "customer-5",
+          "name": "Alex",
+          "recipe": "den",
+          "state": "WAITING",
+          "ratio": 0.6331169933333336,
+          "seat": 3,
+          "vip": false,
+          "type": "tourist"
+        },
+        {
+          "id": "customer-6",
+          "name": "Chị Lan",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.8380068000000014,
+          "seat": 4,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-7",
+          "name": "Chú Ba",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.9996852166666667,
+          "seat": 5,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 87,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 60,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    },
+    "layouts": [
+      {
+        "width": 360,
+        "height": 800,
+        "box": {
+          "x": 0,
+          "y": 100,
+          "width": 360,
+          "height": 600
+        }
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "box": {
+          "x": 0,
+          "y": 97,
+          "width": 390,
+          "height": 650
+        }
+      },
+      {
+        "width": 430,
+        "height": 932,
+        "box": {
+          "x": 0,
+          "y": 107,
+          "width": 430,
+          "height": 716.65625
+        }
+      },
+      {
+        "width": 480,
+        "height": 800,
+        "box": {
+          "x": 0,
+          "y": 0,
+          "width": 480,
+          "height": 800
+        }
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "box": {
+          "x": 450,
+          "y": 0,
+          "width": 540,
+          "height": 900
+        }
+      }
+    ],
+    "after": {
+      "scene": "Game",
+      "render": {
+        "factor": 1,
+        "canvas": [
+          480,
+          800
+        ],
+        "textCount": 53,
+        "textResolution": 1,
+        "textPixels": [
+          243,
+          30
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 53
+      },
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 1000000,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": false,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 24000,
+        "tips": 6000,
+        "bonuses": 0,
+        "earnings": 30000,
+        "served": 2,
+        "lost": 0,
+        "perfect": 2,
+        "bestCombo": 2,
+        "elapsed": 127.74915666667708,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 2,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 5,
+        "ratings": [
+          5,
+          5
+        ],
+        "review": "Phin nhỏ từng giọt, niềm vui đầy cả ly.",
+        "rush": false,
+        "powerOut": false,
+        "fanActive": true
+      },
+      "customers": [
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.10393765000000343,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        },
+        {
+          "id": "customer-3",
+          "name": "Minh",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.23935522105260798,
+          "seat": 0,
+          "vip": false,
+          "type": "student"
+        },
+        {
+          "id": "customer-4",
+          "name": "Bác Tư",
+          "recipe": "trung",
+          "state": "WAITING",
+          "ratio": 0.4509220999999767,
+          "seat": 2,
+          "vip": false,
+          "type": "uncle"
+        },
+        {
+          "id": "customer-5",
+          "name": "Alex",
+          "recipe": "den",
+          "state": "SERVED",
+          "ratio": 0.4516019866666573,
+          "seat": 3,
+          "vip": false,
+          "type": "tourist"
+        },
+        {
+          "id": "customer-6",
+          "name": "Chị Lan",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.6771800000000008,
+          "seat": 4,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-7",
+          "name": "Chú Ba",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.8477932388888905,
+          "seat": 5,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 88,
+        "tweens": 13,
+        "timers": 1,
+        "fps": 60,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    }
+  },
+  "sharp-resize": {
+    "result": "PASS: live resize, logical hit areas, DPR changes, exact cup identity, overlays, stable texture/text counts",
+    "rows": [
+      {
+        "cycle": 0,
+        "width": 1366,
+        "height": 768,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 1920,
+        "height": 1080,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 59,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 2560,
+        "height": 1440,
+        "dpr": 2,
+        "render": {
+          "factor": 4,
+          "canvas": [
+            1920,
+            3200
+          ],
+          "textCount": 36,
+          "textResolution": 4,
+          "textPixels": [
+            972,
+            121
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 59,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 360,
+        "height": 800,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 56,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 59,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 430,
+        "height": 932,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 480,
+        "height": 800,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 0,
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 1366,
+        "height": 768,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 1920,
+        "height": 1080,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 2560,
+        "height": 1440,
+        "dpr": 2,
+        "render": {
+          "factor": 4,
+          "canvas": [
+            1920,
+            3200
+          ],
+          "textCount": 36,
+          "textResolution": 4,
+          "textPixels": [
+            972,
+            121
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 360,
+        "height": 800,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 390,
+        "height": 844,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 430,
+        "height": 932,
+        "dpr": 2,
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 36,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 480,
+        "height": 800,
+        "dpr": 1,
+        "render": {
+          "factor": 1,
+          "canvas": [
+            480,
+            800
+          ],
+          "textCount": 36,
+          "textResolution": 1,
+          "textPixels": [
+            243,
+            30
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      },
+      {
+        "cycle": 1,
+        "width": 1440,
+        "height": 900,
+        "dpr": 2,
+        "render": {
+          "factor": 3,
+          "canvas": [
+            1440,
+            2400
+          ],
+          "textCount": 36,
+          "textResolution": 3,
+          "textPixels": [
+            729,
+            91
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 36
+        },
+        "diagnostics": {
+          "objects": 44,
+          "tweens": 1,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        }
+      }
+    ],
+    "errors": []
+  },
+  "sharp-lifecycle": {
+    "result": "PASS: eight scene cycles, stable objects/timers/input and resize listeners, notebook five pages",
+    "rows": [
+      {
+        "iteration": 1,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 2,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 3,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 4,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 5,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 6,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 7,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 8,
+        "active": {
+          "objects": 43,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 61,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      }
+    ]
+  },
+  "sharp-invalid": {
+    "result": "PASS: genuine under/over-pouring, incomplete circular stirring rejected, resize during drag preserves cup",
+    "under": 0.20238240000000002,
+    "short": 2.0773644880291364,
+    "after": {
+      "scene": "Game",
+      "render": {
+        "factor": 1,
+        "canvas": [
+          480,
+          800
+        ],
+        "textCount": 43,
+        "textResolution": 1,
+        "textPixels": [
+          243,
+          30
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 43
+      },
+      "save": {
+        "version": 2,
+        "day": 1,
+        "balance": 0,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 1,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": {
+          "day": 1,
+          "seed": 4271245635,
+          "event": null,
+          "vip": null,
+          "vipAt": 1,
+          "expectedOrders": 6,
+          "challenge": {
+            "kind": "perfect",
+            "target": 2,
+            "label": "Pha 2 ly Perfect",
+            "reward": 5000
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 1,
+        "tutorial": false,
+        "revenue": 12000,
+        "tips": 400,
+        "bonuses": 0,
+        "earnings": 12400,
+        "served": 1,
+        "lost": 0,
+        "perfect": 0,
+        "bestCombo": 1,
+        "elapsed": 47.979109999999984,
+        "ended": false,
+        "event": null,
+        "challenge": {
+          "kind": "perfect",
+          "target": 2,
+          "label": "Pha 2 ly Perfect",
+          "reward": 5000
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 1,
+        "rating": 3.4,
+        "ratings": [
+          3.4
+        ],
+        "review": "Gọi một món, đưa một món khác. Quán xem lại sổ nha!",
+        "rush": true,
+        "powerOut": false,
+        "fanActive": false
+      },
+      "customers": [
+        {
+          "id": "customer-2",
+          "name": "Chú Ba",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.8214886666666663,
+          "seat": 0,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": true,
+          "page": 0,
+          "x": 240,
+          "y": 517,
+          "recipeId": "sua",
+          "drink": {
+            "id": "cup-3",
+            "recipeId": "sua",
+            "state": "BREWED",
+            "grounds": 1,
+            "press": 0.65,
+            "water": 1.0087487999999993,
+            "brewElapsed": 8,
+            "coffee": 1.0087487999999993,
+            "condensed": 0.9399780000000009,
+            "milk": 0,
+            "foam": 0,
+            "ice": 3,
+            "stir": 2.0773644880291364,
+            "consumed": false
+          }
+        }
+      ],
+      "diagnostics": {
+        "objects": 62,
+        "tweens": 0,
+        "timers": 1,
+        "fps": 60,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    }
+  },
+  "sharp-touch-suite": {
+    "result": "PASS: both touch suites at persistent DPR 2",
+    "basic": {
+      "result": "PASS: touch brewing, wrong drop, cancel, incomplete serve, discard, no page scroll",
+      "state": {
+        "scene": "Tutorial",
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 40,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 40
+        },
+        "save": {
+          "version": 2,
+          "day": 1,
+          "balance": 0,
+          "ratingSum": 20,
+          "ratingCount": 5,
+          "tutorialDone": false,
+          "upgrades": {
+            "phins": 1,
+            "seats": 3,
+            "premium": false,
+            "fan": false,
+            "decor": false
+          },
+          "dayPlan": null,
+          "lastCommittedDay": 0,
+          "achievements": [],
+          "stories": {
+            "driver": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            },
+            "office": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            },
+            "student": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            }
+          },
+          "mastery": {
+            "den": 0,
+            "sua": 0,
+            "bac": 0,
+            "trung": 0
+          },
+          "stats": {
+            "served": 0,
+            "lost": 0,
+            "perfect": 0,
+            "bestCombo": 0,
+            "lifetimeRevenue": 0,
+            "lifetimeTips": 0,
+            "lifetimeBonuses": 0,
+            "lifetimeEarnings": 0,
+            "upgradeExpenses": 0,
+            "bestDay": 0,
+            "sessions": 0
+          },
+          "settings": {
+            "sound": true,
+            "music": true,
+            "reducedMotion": false
+          }
+        },
+        "paused": false,
+        "session": {
+          "day": 1,
+          "tutorial": true,
+          "revenue": 12000,
+          "tips": 3000,
+          "bonuses": 0,
+          "earnings": 15000,
+          "served": 1,
+          "lost": 0,
+          "perfect": 1,
+          "bestCombo": 1,
+          "elapsed": 21.76452000000008,
+          "ended": false,
+          "event": null,
+          "challengeComplete": false,
+          "recipes": {
+            "den": 1,
+            "sua": 0,
+            "bac": 0,
+            "trung": 0
+          },
+          "storyEncounters": [],
+          "rushServed": 0,
+          "rushLost": 0,
+          "wrongOrders": 1,
+          "rating": 4.8,
+          "ratings": [
+            4.8
+          ],
+          "review": "Pha lại đúng rồi! Nhớ nhìn đơn trước nha quán.",
+          "rush": false,
+          "powerOut": false,
+          "fanActive": false
+        },
+        "customers": [
+          {
+            "id": "customer-1",
+            "name": "Chị Lan",
+            "recipe": "den",
+            "state": "LEAVING",
+            "ratio": 1,
+            "seat": 0,
+            "vip": false,
+            "type": "office"
+          },
+          {
+            "id": "customer-2",
+            "name": "Chú Ba",
+            "recipe": "den",
+            "state": "ORDERING",
+            "ratio": 1,
+            "seat": 1,
+            "vip": false,
+            "type": "driver"
+          }
+        ],
+        "stations": [
+          {
+            "id": "station-1",
+            "visible": true,
+            "page": 0,
+            "x": 240,
+            "y": 517,
+            "recipeId": "den",
+            "drink": null
+          }
+        ],
+        "diagnostics": {
+          "objects": 59,
+          "tweens": 2,
+          "timers": 1,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "gesture": {
+          "active": null,
+          "foam": 0,
+          "loaded": 0
+        }
+      }
+    },
+    "advanced": {
+      "result": "PASS: touch milk pouring, circular stirring, stationary whisk rejection, foam preparation and transfer",
+      "state": {
+        "scene": "Tutorial",
+        "render": {
+          "factor": 2,
+          "canvas": [
+            960,
+            1600
+          ],
+          "textCount": 33,
+          "textResolution": 2,
+          "textPixels": [
+            486,
+            60
+          ],
+          "textLogical": [
+            243,
+            30.48046875
+          ],
+          "textureCount": 33
+        },
+        "save": {
+          "version": 2,
+          "day": 1,
+          "balance": 0,
+          "ratingSum": 20,
+          "ratingCount": 5,
+          "tutorialDone": false,
+          "upgrades": {
+            "phins": 1,
+            "seats": 3,
+            "premium": false,
+            "fan": false,
+            "decor": false
+          },
+          "dayPlan": null,
+          "lastCommittedDay": 0,
+          "achievements": [],
+          "stories": {
+            "driver": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            },
+            "office": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            },
+            "student": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            }
+          },
+          "mastery": {
+            "den": 0,
+            "sua": 0,
+            "bac": 0,
+            "trung": 0
+          },
+          "stats": {
+            "served": 0,
+            "lost": 0,
+            "perfect": 0,
+            "bestCombo": 0,
+            "lifetimeRevenue": 0,
+            "lifetimeTips": 0,
+            "lifetimeBonuses": 0,
+            "lifetimeEarnings": 0,
+            "upgradeExpenses": 0,
+            "bestDay": 0,
+            "sessions": 0
+          },
+          "settings": {
+            "sound": true,
+            "music": true,
+            "reducedMotion": false
+          }
+        },
+        "paused": false,
+        "session": {
+          "day": 1,
+          "tutorial": true,
+          "revenue": 0,
+          "tips": 0,
+          "bonuses": 0,
+          "earnings": 0,
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "elapsed": 29.23044333333359,
+          "ended": false,
+          "event": null,
+          "challengeComplete": false,
+          "recipes": {
+            "den": 0,
+            "sua": 0,
+            "bac": 0,
+            "trung": 0
+          },
+          "storyEncounters": [],
+          "rushServed": 0,
+          "rushLost": 0,
+          "wrongOrders": 0,
+          "rating": 0,
+          "ratings": [],
+          "review": "Một buổi sáng yên tĩnh. Ngày mai mình thử lại nhé!",
+          "rush": false,
+          "powerOut": false,
+          "fanActive": false
+        },
+        "customers": [
+          {
+            "id": "customer-1",
+            "name": "Chị Lan",
+            "recipe": "den",
+            "state": "WAITING",
+            "ratio": 1,
+            "seat": 0,
+            "vip": false,
+            "type": "office"
+          }
+        ],
+        "stations": [
+          {
+            "id": "station-1",
+            "visible": true,
+            "page": 0,
+            "x": 240,
+            "y": 517,
+            "recipeId": "sua",
+            "drink": {
+              "id": "cup-1",
+              "recipeId": "sua",
+              "state": "BREWED",
+              "grounds": 1,
+              "press": 0.6499999999999995,
+              "water": 1.085544,
+              "brewElapsed": 8,
+              "coffee": 1.085544,
+              "condensed": 1.0599600000000007,
+              "milk": 0,
+              "foam": 1,
+              "ice": 3,
+              "stir": 9.42477796076938,
+              "consumed": false
+            }
+          }
+        ],
+        "diagnostics": {
+          "objects": 54,
+          "tweens": 2,
+          "timers": 0,
+          "fps": 60,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "gesture": {
+          "active": null,
+          "foam": 0,
+          "loaded": 0
+        }
+      }
+    }
+  },
+  "sharp-production-suite": {
+    "result": "PASS: full production cycle at persistent DPR 2",
+    "day": {
+      "result": "PASS: production subpath, four physically prepared recipes, reviewer Perfect bonus, optional challenge, end-day settlement and reload",
+      "pixels": [
+        1440,
+        2400
+      ],
+      "statuses": [
+        "Tuyệt vời! Perfect Brew! Tỉnh cả buổi sáng luôn!",
+        "Reviewer tặng 5 sao · Thưởng 10.000đ!",
+        "Hoàn thành thử thách! Thưởng sẽ chốt cuối ca.",
+        "Tuyệt vời! Perfect Brew! Đúng vị của buổi sáng!"
+      ],
+      "save": {
+        "version": 2,
+        "day": 4,
+        "balance": 112400,
+        "ratingSum": 51,
+        "ratingCount": 13,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 2,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": null,
+        "lastCommittedDay": 3,
+        "achievements": [
+          "first",
+          "rush"
+        ],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          },
+          "student": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          }
+        },
+        "mastery": {
+          "den": 1,
+          "sua": 1,
+          "bac": 1,
+          "trung": 1
+        },
+        "stats": {
+          "served": 4,
+          "lost": 3,
+          "perfect": 4,
+          "bestCombo": 4,
+          "lifetimeRevenue": 70000,
+          "lifetimeTips": 19400,
+          "lifetimeBonuses": 23000,
+          "lifetimeEarnings": 112400,
+          "upgradeExpenses": 0,
+          "bestDay": 112400,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "errors": [],
+      "failed": []
+    },
+    "shop": {
+      "result": "PASS: Retina production shop, repeated purchase, three phins/two pages, next day, book, notebook and reload",
+      "before": {
+        "version": 2,
+        "day": 4,
+        "balance": 112400,
+        "ratingSum": 51,
+        "ratingCount": 13,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 2,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": null,
+        "lastCommittedDay": 3,
+        "achievements": [
+          "first",
+          "rush"
+        ],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          },
+          "student": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          }
+        },
+        "mastery": {
+          "den": 1,
+          "sua": 1,
+          "bac": 1,
+          "trung": 1
+        },
+        "stats": {
+          "served": 4,
+          "lost": 3,
+          "perfect": 4,
+          "bestCombo": 4,
+          "lifetimeRevenue": 70000,
+          "lifetimeTips": 19400,
+          "lifetimeBonuses": 23000,
+          "lifetimeEarnings": 112400,
+          "upgradeExpenses": 0,
+          "bestDay": 112400,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "bought": {
+        "version": 2,
+        "day": 4,
+        "balance": 62400,
+        "ratingSum": 51,
+        "ratingCount": 13,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 3,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": null,
+        "lastCommittedDay": 3,
+        "achievements": [
+          "first",
+          "rush"
+        ],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          },
+          "student": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          }
+        },
+        "mastery": {
+          "den": 1,
+          "sua": 1,
+          "bac": 1,
+          "trung": 1
+        },
+        "stats": {
+          "served": 4,
+          "lost": 3,
+          "perfect": 4,
+          "bestCombo": 4,
+          "lifetimeRevenue": 70000,
+          "lifetimeTips": 19400,
+          "lifetimeBonuses": 23000,
+          "lifetimeEarnings": 112400,
+          "upgradeExpenses": 50000,
+          "bestDay": 112400,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "after": {
+        "version": 2,
+        "day": 4,
+        "balance": 62400,
+        "ratingSum": 51,
+        "ratingCount": 13,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 3,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": {
+          "day": 4,
+          "seed": 2545321183,
+          "event": null,
+          "vip": null,
+          "vipAt": 1,
+          "expectedOrders": 6,
+          "challenge": {
+            "kind": "perfect",
+            "target": 3,
+            "label": "Pha 3 ly Perfect",
+            "reward": 10000
+          }
+        },
+        "lastCommittedDay": 3,
+        "achievements": [
+          "first",
+          "rush"
+        ],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          },
+          "student": {
+            "encounters": 1,
+            "chapter": 1,
+            "lastDay": 3
+          }
+        },
+        "mastery": {
+          "den": 1,
+          "sua": 1,
+          "bac": 1,
+          "trung": 1
+        },
+        "stats": {
+          "served": 4,
+          "lost": 3,
+          "perfect": 4,
+          "bestCombo": 4,
+          "lifetimeRevenue": 70000,
+          "lifetimeTips": 19400,
+          "lifetimeBonuses": 23000,
+          "lifetimeEarnings": 112400,
+          "upgradeExpenses": 50000,
+          "bestDay": 112400,
+          "sessions": 2
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "errors": []
+    }
+  },
+  "sharp-production-root": {
+    "result": "PASS: production loads local assets, complete physical brew and serve, no dev observer or console errors",
+    "status": "Tuyệt vời! Perfect Brew! Tỉnh cả buổi sáng luôn!",
+    "errors": [],
+    "failed": []
+  }
+}

@@ -1,0 +1,23 @@
+### Result
+{"result":"PASS: native-resolution screenshots and measurements with persistent DPR","phase":"after","reports":[{"width":1366,"height":768,"dpr":1,"pixels":[480,800],"render":{"factor":1,"canvas":[480,800],"textCount":36,"textResolution":1,"textPixels":[243,30],"textLogical":[243,30.48046875],"textureCount":36},"diagnostics":{"objects":43,"tweens":0,"timers":0,"fps":58,"inputListeners":[1,1,1,1],"scaleListeners":10},"frame":{"median":16.699999999999818,"p95":16.800000000000182}},{"width":1920,"height":1080,"dpr":1,"pixels":[960,1600],"render":{"factor":2,"canvas":[960,1600],"textCount":36,"textResolution":2,"textPixels":[486,60],"textLogical":[243,30.48046875],"textureCount":36},"diagnostics":{"objects":43,"tweens":0,"timers":0,"fps":57,"inputListeners":[1,1,1,1],"scaleListeners":10},"frame":{"median":16.699999999999818,"p95":16.800000000000182}},{"width":2560,"height":1440,"dpr":1,"pixels":[960,1600],"render":{"factor":2,"canvas":[960,1600],"textCount":36,"textResolution":2,"textPixels":[486,60],"textLogical":[243,30.48046875],"textureCount":36},"diagnostics":{"objects":43,"tweens":0,"timers":0,"fps":57,"inputListeners":[1,1,1,1],"scaleListeners":10},"frame":{"median":16.699999999999818,"p95":16.800000000000182}},{"width":1366,"height":768,"dpr":2,"pixels":[960,1600],"render":{"factor":2,"canvas":[960,1600],"textCount":36,"textResolution":2,"textPixels":[486,60],"textLogical":[243,30.48046875],"textureCount":36},"diagnostics":{"objects":43,"tweens":0,"timers":0,"fps":58,"inputListeners":[1,1,1,1],"scaleListeners":10},"frame":{"median":16.699999999999818,"p95":16.800000000000182}},{"width":1920,"height":1080,"dpr":2,"pixels":[1440,2400],"render":{"factor":3,"canvas":[1440,2400],"textCount":36,"textResolution":3,"textPixels":[729,91],"textLogical":[243,30.48046875],"textureCount":36},"diagnostics":{"objects":43,"tweens":0,"timers":0,"fps":58,"inputListeners":[1,1,1,1],"scaleListeners":10},"frame":{"median":16.699999999999818,"p95":16.700000000000728}},{"width":2560,"height":1440,"dpr":2,"pixels":[1920,3200],"render":{"factor":4,"canvas":[1920,3200],"textCount":36,"textResolution":4,"textPixels":[972,121],"textLogical":[243,30.48046875],"textureCount":36},"diagnostics":{"objects":43,"tweens":0,"timers":0,"fps":58,"inputListeners":[1,1,1,1],"scaleListeners":10},"frame":{"median":16.699999999999818,"p95":16.799999999999727}}]}
+### Ran Playwright code
+```js
+await (async (page) => {
+  const reports=[];
+  for(const dpr of [1,2]) for(const [width,height] of [[1366,768],[1920,1080],[2560,1440]]) {
+    const context=await page.context().browser().newContext({viewport:{width,height},deviceScaleFactor:dpr});
+    const shot=await context.newPage();
+    try {
+      await shot.goto('http://localhost:5175');await shot.waitForTimeout(400);
+      const box=await shot.locator('canvas').boundingBox();await shot.mouse.click(box.x+384/480*box.width,box.y+735/800*box.height);await shot.waitForTimeout(2500);
+      const metrics=await shot.evaluate(()=>({dpr:devicePixelRatio,pixels:[document.querySelector('canvas').width,document.querySelector('canvas').height],render:window.__PHIN_QA__.snapshot().render,diagnostics:window.__PHIN_QA__.snapshot().diagnostics}));
+      const frame=await shot.evaluate(()=>new Promise(resolve=>{const a=[];let last=performance.now();const tick=t=>{a.push(t-last);last=t;if(a.length<90)requestAnimationFrame(tick);else{a.sort((a,b)=>a-b);resolve({median:a[45],p95:a[85]});}};requestAnimationFrame(tick);}));
+      await shot.screenshot({path:`output/playwright/sharp-after-${width}x${height}-dpr${dpr}.png`});
+      if(await shot.evaluate(()=>devicePixelRatio)!==dpr)throw Error('Screenshot changed DPR');reports.push({width,height,...metrics,frame});
+    } finally { await context.close(); }
+  }
+  return {result:'PASS: native-resolution screenshots and measurements with persistent DPR',phase:'after',reports};
+})(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-10T04-59-29-403Z.log#L11

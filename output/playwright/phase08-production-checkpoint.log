@@ -1,0 +1,11 @@
+### Result
+{"balance":91400,"day":2,"phins":2,"stats":{"served":6,"lost":0,"perfect":6,"bestCombo":6,"lifetimeRevenue":81000,"lifetimeTips":20400,"lifetimeBonuses":15000,"lifetimeEarnings":116400,"upgradeExpenses":25000,"bestDay":116400,"sessions":2},"achievements":["first","rush","five"],"devObserver":"undefined"}
+### Ran Playwright code
+```js
+await (async(page)=>{await page.goto("http://127.0.0.1:4173");await page.waitForTimeout(500);const save=await page.evaluate(()=>JSON.parse(localStorage.getItem("phin-goc-pho:v2")));return {balance:save.balance,day:save.day,phins:save.upgrades.phins,stats:save.stats,achievements:save.achievements,devObserver:await page.evaluate(()=>typeof window.__PHIN_QA__)};})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:4173/
+- Page Title: Phin góc phố · Tiệm Cà Phê Phin Vỉa Hè
+### Events
+- New console entries: .playwright-cli/console-2026-10-10T04-31-29-952Z.log#L9

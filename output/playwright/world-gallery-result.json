@@ -1,0 +1,41 @@
+{
+  "checks": {
+    "rigs": 9,
+    "expressions": "idle/blink/happy/angry",
+    "joints": "walking/seated/ordering",
+    "reducedMotion": "PASS"
+  },
+  "seats": [
+    {
+      "seat": 0,
+      "own": true,
+      "other": 0
+    },
+    {
+      "seat": 1,
+      "own": true,
+      "other": 0
+    },
+    {
+      "seat": 2,
+      "own": true,
+      "other": 0
+    },
+    {
+      "seat": 3,
+      "own": true,
+      "other": 0
+    },
+    {
+      "seat": 4,
+      "own": true,
+      "other": 0
+    },
+    {
+      "seat": 5,
+      "own": true,
+      "other": 0
+    }
+  ],
+  "errors": []
+}

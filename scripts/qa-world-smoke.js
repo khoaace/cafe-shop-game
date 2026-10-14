@@ -1,0 +1,16 @@
+async (page) => {
+ const results=[];
+ for(const blocked of [false,true]){
+  const ctx=await page.context().browser().newContext({viewport:{width:480,height:800},deviceScaleFactor:2});const p=await ctx.newPage(),errors=[],loaded=[];
+  p.on('pageerror',e=>errors.push(String(e)));p.on('response',r=>{if(r.url().includes('/assets/world/')&&r.ok())loaded.push(r.url());});
+  if(blocked)await p.route('**/assets/world/*.png',route=>route.abort());
+  await p.goto('http://localhost:4173');await p.waitForFunction(()=>document.querySelector('#accessible-status')?.textContent.includes('Mở quán hoặc học'));
+  await p.screenshot({path:`output/playwright/world-${blocked?'fallback':'production-root'}-menu.png`});
+  await p.mouse.click(240,679);await p.waitForTimeout(2400);
+  await p.mouse.click(445,34);await p.waitForTimeout(500);const first=await p.screenshot();await p.waitForTimeout(600);const second=await p.screenshot({path:`output/playwright/world-${blocked?'fallback':'production-root'}-paused.png`});
+  if(!first.equals(second))throw Error('Paused artwork keeps moving');if(errors.length)throw Error(errors.join('\n'));
+  if(!blocked&&new Set(loaded).size!==21)throw Error('Missing world assets '+loaded.length);
+  results.push({blocked,loaded:new Set(loaded).size,pausePixelsIdentical:true,errors});await ctx.close();
+ }
+ return {result:'PASS: production root, 21 assets, frozen artwork and full procedural fallback after blocked world requests',results};
+}

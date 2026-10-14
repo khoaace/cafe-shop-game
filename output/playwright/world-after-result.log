@@ -1,0 +1,23 @@
+### Result
+{"phase":"after","results":[{"width":1366,"height":768,"dpr":1,"median":13.300000000000182,"p95":14.800000000000182,"render":{"factor":1,"canvas":[480,800],"textCount":45,"textResolution":1,"textPixels":[243,30],"textLogical":[243,30.48046875],"textureCount":80},"diagnostics":{"objects":61,"tweens":0,"timers":1,"fps":66,"inputListeners":[1,1,1,1],"scaleListeners":10},"errors":[]},{"width":1920,"height":1080,"dpr":1,"median":13.300000000000182,"p95":14.5,"render":{"factor":2,"canvas":[960,1600],"textCount":42,"textResolution":2,"textPixels":[486,60],"textLogical":[243,30.48046875],"textureCount":77},"diagnostics":{"objects":60,"tweens":0,"timers":0,"fps":65,"inputListeners":[1,1,1,1],"scaleListeners":10},"errors":[]},{"width":2560,"height":1440,"dpr":1,"median":16.699999999999818,"p95":18.5,"render":{"factor":2,"canvas":[960,1600],"textCount":42,"textResolution":2,"textPixels":[486,60],"textLogical":[243,30.48046875],"textureCount":77},"diagnostics":{"objects":60,"tweens":0,"timers":0,"fps":56,"inputListeners":[1,1,1,1],"scaleListeners":10},"errors":[]},{"width":1366,"height":768,"dpr":2,"median":13.300000000000182,"p95":15.099999999999454,"render":{"factor":2,"canvas":[960,1600],"textCount":42,"textResolution":2,"textPixels":[486,60],"textLogical":[243,30.48046875],"textureCount":77},"diagnostics":{"objects":60,"tweens":0,"timers":0,"fps":66,"inputListeners":[1,1,1,1],"scaleListeners":10},"errors":[]},{"width":1920,"height":1080,"dpr":2,"median":13.300000000000182,"p95":15.200000000000273,"render":{"factor":3,"canvas":[1440,2400],"textCount":42,"textResolution":3,"textPixels":[729,91],"textLogical":[243,30.48046875],"textureCount":77},"diagnostics":{"objects":60,"tweens":0,"timers":0,"fps":66,"inputListeners":[1,1,1,1],"scaleListeners":10},"errors":[]},{"width":2560,"height":1440,"dpr":2,"median":16.699999999999818,"p95":18.599999999999454,"render":{"factor":4,"canvas":[1920,3200],"textCount":42,"textResolution":4,"textPixels":[972,121],"textLogical":[243,30.48046875],"textureCount":77},"diagnostics":{"objects":60,"tweens":0,"timers":0,"fps":56,"inputListeners":[1,1,1,1],"scaleListeners":10},"errors":[]}]}
+### Ran Playwright code
+```js
+await (async (page) => {
+ const phase='after', results=[];
+ for(const dpr of [1,2]) for(const [width,height] of [[1366,768],[1920,1080],[2560,1440]]) {
+  const ctx=await page.context().browser().newContext({viewport:{width,height},deviceScaleFactor:dpr});
+  const p=await ctx.newPage(); const errors=[]; p.on('pageerror',e=>errors.push(String(e)));
+  await p.goto('http://localhost:5175');
+  await p.waitForFunction(()=>window.__PHIN_QA__?.snapshot().scene==='Menu');
+  await p.evaluate(()=>localStorage.setItem('phin-goc-pho:v2',JSON.stringify({version:2,day:10,balance:1000000,upgrades:{phins:4,seats:6,fan:true,premium:true,decor:true},settings:{sound:false,music:false,reducedMotion:false}})));
+  await p.reload();await p.waitForFunction(()=>window.__PHIN_QA__?.snapshot().scene==='Menu');
+  const r=await p.locator('canvas').boundingBox();await p.mouse.click(r.x+r.width/2,r.y+r.height*679/800);
+  await p.waitForTimeout(2400);
+  const times=await p.evaluate(()=>new Promise(resolve=>{const ts=[];let last;function f(t){if(last)ts.push(t-last);last=t;if(ts.length===120)resolve(ts.sort((a,b)=>a-b));else requestAnimationFrame(f);}requestAnimationFrame(f);}));
+  const snapshot=await p.evaluate(()=>window.__PHIN_QA__.snapshot());
+  await p.screenshot({path:`output/playwright/world-${phase}-${width}x${height}-dpr${dpr}.png`});
+  results.push({width,height,dpr,median:times[60],p95:times[114],render:snapshot.render,diagnostics:snapshot.diagnostics,errors});await ctx.close();
+ }
+ return {phase,results};
+})(page);
+```

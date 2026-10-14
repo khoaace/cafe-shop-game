@@ -1,0 +1,2258 @@
+{
+  "phase08-pages": {
+    "result": "PASS: four independent IDs, hidden brewing, pointer/page cancellation, serving/discarding and pause",
+    "frameMs": {
+      "median": 13.30000000000291,
+      "p95": 14.200000000000728
+    },
+    "snapshot": {
+      "scene": "Game",
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 1000000,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 12000,
+        "tips": 3000,
+        "bonuses": 0,
+        "earnings": 15000,
+        "served": 1,
+        "lost": 0,
+        "perfect": 1,
+        "bestCombo": 1,
+        "elapsed": 21.94465666666645,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 5,
+        "ratings": [
+          5
+        ],
+        "review": "Cà phê ngon, ghế nhựa hơi thấp mà lòng vui quá!",
+        "rush": false
+      },
+      "customers": [
+        {
+          "id": "customer-1",
+          "name": "Chị Lan",
+          "recipe": "den",
+          "state": "LEAVING",
+          "ratio": 0.8196671000000016,
+          "seat": 0,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "ORDERING",
+          "ratio": 1,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 87,
+        "tweens": 2,
+        "timers": 2,
+        "fps": 75
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    },
+    "errors": []
+  },
+  "phase08-lifecycle": {
+    "result": "PASS: pause, simulated visibility events, audio setting, reduced motion, repeated scene transitions",
+    "final": {
+      "scene": "Menu",
+      "save": {
+        "version": 2,
+        "day": 2,
+        "balance": 0,
+        "ratingSum": 28,
+        "ratingCount": 9,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 2,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": {
+          "day": 2,
+          "seed": 4150548207,
+          "event": null,
+          "vip": null,
+          "vipAt": 1,
+          "expectedOrders": 6,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 5000,
+            "label": "Phục vụ 2 đen đá",
+            "recipe": "den"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 5
+        },
+        "settings": {
+          "sound": false,
+          "music": true,
+          "reducedMotion": true
+        }
+      },
+      "paused": false,
+      "session": null,
+      "customers": [],
+      "stations": [],
+      "diagnostics": {
+        "objects": 24,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 60
+      },
+      "gesture": null
+    }
+  },
+  "phase08-production-checkpoint": {
+    "balance": 91400,
+    "day": 2,
+    "phins": 2,
+    "stats": {
+      "served": 6,
+      "lost": 0,
+      "perfect": 6,
+      "bestCombo": 6,
+      "lifetimeRevenue": 81000,
+      "lifetimeTips": 20400,
+      "lifetimeBonuses": 15000,
+      "lifetimeEarnings": 116400,
+      "upgradeExpenses": 25000,
+      "bestDay": 116400,
+      "sessions": 2
+    },
+    "achievements": [
+      "first",
+      "rush",
+      "five"
+    ],
+    "devObserver": "undefined"
+  },
+  "phase08-invalid": {
+    "result": "PASS: genuine under/over-pouring, incomplete circular stirring rejected, resize during drag preserves cup",
+    "under": 0.19907999999999984,
+    "short": 2.0773644880291364,
+    "after": {
+      "scene": "Game",
+      "save": {
+        "version": 2,
+        "day": 1,
+        "balance": 0,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 1,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": {
+          "day": 1,
+          "seed": 719316240,
+          "event": null,
+          "vip": null,
+          "vipAt": 1,
+          "expectedOrders": 6,
+          "challenge": {
+            "kind": "perfect",
+            "target": 2,
+            "label": "Pha 2 ly Perfect",
+            "reward": 5000
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 1,
+        "tutorial": false,
+        "revenue": 12000,
+        "tips": 400,
+        "bonuses": 0,
+        "earnings": 12400,
+        "served": 1,
+        "lost": 0,
+        "perfect": 0,
+        "bestCombo": 1,
+        "elapsed": 47.3415966666662,
+        "ended": false,
+        "event": null,
+        "challenge": {
+          "kind": "perfect",
+          "target": 2,
+          "label": "Pha 2 ly Perfect",
+          "reward": 5000
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 1,
+        "rating": 3.4,
+        "ratings": [
+          3.4
+        ],
+        "review": "Gọi một món, đưa một món khác. Quán xem lại sổ nha!",
+        "rush": true,
+        "powerOut": false,
+        "fanActive": false
+      },
+      "customers": [
+        {
+          "id": "customer-2",
+          "name": "Chú Ba",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.8282238888888891,
+          "seat": 0,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": true,
+          "page": 0,
+          "x": 240,
+          "y": 517,
+          "recipeId": "sua",
+          "drink": {
+            "id": "cup-3",
+            "recipeId": "sua",
+            "state": "BREWED",
+            "grounds": 1,
+            "press": 0.65,
+            "water": 1.0109184000000002,
+            "brewElapsed": 8,
+            "coffee": 1.0109184000000002,
+            "condensed": 0.9283019999999997,
+            "milk": 0,
+            "foam": 0,
+            "ice": 3,
+            "stir": 2.0773644880291364,
+            "consumed": false
+          }
+        }
+      ],
+      "diagnostics": {
+        "objects": 63,
+        "tweens": 1,
+        "timers": 1,
+        "fps": 70,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    }
+  },
+  "phase08-events": {
+    "result": "PASS: rain/lucky visuals, three-phin layout, real 30-second outage with uninterrupted brewing and restored fan, fixed plan after reload",
+    "events": [
+      "rain",
+      "lucky",
+      "outage"
+    ]
+  },
+  "phase08-audio": {
+    "result": "PASS: gesture unlock, independent music/SFX, paused loop silence and interrupted-context recovery",
+    "state": {
+      "audio": [
+        "suspended",
+        "suspended"
+      ],
+      "game": {
+        "scene": "Game",
+        "save": {
+          "version": 2,
+          "day": 2,
+          "balance": 0,
+          "ratingSum": 28,
+          "ratingCount": 9,
+          "tutorialDone": false,
+          "upgrades": {
+            "phins": 2,
+            "seats": 3,
+            "premium": false,
+            "fan": false,
+            "decor": false
+          },
+          "dayPlan": {
+            "day": 2,
+            "seed": 4150548207,
+            "event": null,
+            "vip": null,
+            "vipAt": 1,
+            "expectedOrders": 6,
+            "challenge": {
+              "kind": "recipe",
+              "target": 2,
+              "reward": 5000,
+              "label": "Phục vụ 2 đen đá",
+              "recipe": "den"
+            }
+          },
+          "lastCommittedDay": 0,
+          "achievements": [],
+          "stories": {
+            "driver": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            },
+            "office": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            },
+            "student": {
+              "encounters": 0,
+              "chapter": 0,
+              "lastDay": 0
+            }
+          },
+          "mastery": {
+            "den": 0,
+            "sua": 0,
+            "bac": 0,
+            "trung": 0
+          },
+          "stats": {
+            "served": 0,
+            "lost": 0,
+            "perfect": 0,
+            "bestCombo": 0,
+            "lifetimeRevenue": 0,
+            "lifetimeTips": 0,
+            "lifetimeBonuses": 0,
+            "lifetimeEarnings": 0,
+            "upgradeExpenses": 0,
+            "bestDay": 0,
+            "sessions": 6
+          },
+          "settings": {
+            "sound": false,
+            "music": true,
+            "reducedMotion": false
+          }
+        },
+        "paused": true,
+        "session": {
+          "day": 2,
+          "tutorial": false,
+          "revenue": 0,
+          "tips": 0,
+          "bonuses": 0,
+          "earnings": 0,
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "elapsed": 2.111066666666666,
+          "ended": false,
+          "event": null,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 5000,
+            "label": "Phục vụ 2 đen đá",
+            "recipe": "den"
+          },
+          "challengeComplete": false,
+          "recipes": {
+            "den": 0,
+            "sua": 0,
+            "bac": 0,
+            "trung": 0
+          },
+          "storyEncounters": [],
+          "rushServed": 0,
+          "rushLost": 0,
+          "wrongOrders": 0,
+          "rating": 0,
+          "ratings": [],
+          "review": "Một buổi sáng yên tĩnh. Ngày mai mình thử lại nhé!",
+          "rush": false
+        },
+        "customers": [
+          {
+            "id": "customer-1",
+            "name": "Chị Lan",
+            "recipe": "den",
+            "state": "WAITING",
+            "ratio": 0.9973342352941177,
+            "seat": 0,
+            "vip": false,
+            "type": "office"
+          }
+        ],
+        "stations": [
+          {
+            "id": "station-1",
+            "visible": true,
+            "page": 0,
+            "x": 126,
+            "y": 517,
+            "recipeId": "den",
+            "drink": null
+          },
+          {
+            "id": "station-2",
+            "visible": true,
+            "page": 0,
+            "x": 354,
+            "y": 517,
+            "recipeId": "den",
+            "drink": null
+          }
+        ],
+        "diagnostics": {
+          "objects": 50,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 68,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "gesture": {
+          "active": null,
+          "foam": 0,
+          "loaded": 0
+        }
+      }
+    }
+  },
+  "phase08-six": {
+    "result": "PASS: six real scheduled guests, five viewport sizes, fourth seat served using third phin",
+    "full": {
+      "scene": "Game",
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 1000000,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 12000,
+        "tips": 3000,
+        "bonuses": 0,
+        "earnings": 15000,
+        "served": 1,
+        "lost": 0,
+        "perfect": 1,
+        "bestCombo": 1,
+        "elapsed": 111.5905266666654,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 5,
+        "ratings": [
+          5
+        ],
+        "review": "Cà phê ngon, ghế nhựa hơi thấp mà lòng vui quá!",
+        "rush": true
+      },
+      "customers": [
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.2409595200000274,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        },
+        {
+          "id": "customer-3",
+          "name": "Minh",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.3836004000000123,
+          "seat": 0,
+          "vip": false,
+          "type": "student"
+        },
+        {
+          "id": "customer-4",
+          "name": "Bác Tư",
+          "recipe": "trung",
+          "state": "WAITING",
+          "ratio": 0.5878858300000036,
+          "seat": 2,
+          "vip": false,
+          "type": "uncle"
+        },
+        {
+          "id": "customer-5",
+          "name": "Alex",
+          "recipe": "den",
+          "state": "WAITING",
+          "ratio": 0.6335771266666643,
+          "seat": 3,
+          "vip": false,
+          "type": "tourist"
+        },
+        {
+          "id": "customer-6",
+          "name": "Chị Lan",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.8382116999999998,
+          "seat": 4,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-7",
+          "name": "Chú Ba",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.9997478333333333,
+          "seat": 5,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 92,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 75
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    },
+    "layouts": [
+      {
+        "width": 360,
+        "height": 800,
+        "box": {
+          "x": 0,
+          "y": 100,
+          "width": 360,
+          "height": 600
+        }
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "box": {
+          "x": 0,
+          "y": 97,
+          "width": 390,
+          "height": 650
+        }
+      },
+      {
+        "width": 430,
+        "height": 932,
+        "box": {
+          "x": 0,
+          "y": 107,
+          "width": 430,
+          "height": 716.65625
+        }
+      },
+      {
+        "width": 480,
+        "height": 800,
+        "box": {
+          "x": 0,
+          "y": 0,
+          "width": 480,
+          "height": 800
+        }
+      },
+      {
+        "width": 1440,
+        "height": 900,
+        "box": {
+          "x": 450,
+          "y": 0,
+          "width": 540,
+          "height": 900
+        }
+      }
+    ],
+    "after": {
+      "scene": "Game",
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 1000000,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": false,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 24000,
+        "tips": 6000,
+        "bonuses": 0,
+        "earnings": 30000,
+        "served": 2,
+        "lost": 0,
+        "perfect": 2,
+        "bestCombo": 2,
+        "elapsed": 125.32851666666494,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 2,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 5,
+        "ratings": [
+          5,
+          5
+        ],
+        "review": "Phin nhỏ từng giọt, niềm vui đầy cả ly.",
+        "rush": false
+      },
+      "customers": [
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.12418660500004164,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        },
+        {
+          "id": "customer-3",
+          "name": "Minh",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.2606815421052856,
+          "seat": 0,
+          "vip": false,
+          "type": "student"
+        },
+        {
+          "id": "customer-4",
+          "name": "Bác Tư",
+          "recipe": "trung",
+          "state": "WAITING",
+          "ratio": 0.4711129150000075,
+          "seat": 2,
+          "vip": false,
+          "type": "uncle"
+        },
+        {
+          "id": "customer-5",
+          "name": "Alex",
+          "recipe": "den",
+          "state": "SERVED",
+          "ratio": 0.4786373133333328,
+          "seat": 3,
+          "vip": false,
+          "type": "tourist"
+        },
+        {
+          "id": "customer-6",
+          "name": "Chị Lan",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.7008317999999978,
+          "seat": 4,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-7",
+          "name": "Chú Ba",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.8700001500000002,
+          "seat": 5,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 93,
+        "tweens": 13,
+        "timers": 1,
+        "fps": 75
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    }
+  },
+  "phase08-production-recipes": {
+    "result": "PASS: production subpath, four physically prepared recipes, reviewer Perfect bonus, optional challenge, end-day settlement and reload",
+    "statuses": [
+      "Tuyệt vời! Perfect Brew! Tỉnh cả buổi sáng luôn!",
+      "COMBO ×2 · Thưởng 10.000đ!",
+      "Hoàn thành thử thách! Thưởng sẽ chốt cuối ca.",
+      "Tuyệt vời! Perfect Brew! Đúng vị của buổi sáng!"
+    ],
+    "save": {
+      "version": 2,
+      "day": 4,
+      "balance": 112400,
+      "ratingSum": 51,
+      "ratingCount": 13,
+      "tutorialDone": false,
+      "upgrades": {
+        "phins": 2,
+        "seats": 3,
+        "premium": false,
+        "fan": false,
+        "decor": false
+      },
+      "dayPlan": null,
+      "lastCommittedDay": 3,
+      "achievements": [
+        "first",
+        "rush"
+      ],
+      "stories": {
+        "driver": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "office": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        },
+        "student": {
+          "encounters": 1,
+          "chapter": 1,
+          "lastDay": 3
+        }
+      },
+      "mastery": {
+        "den": 1,
+        "sua": 1,
+        "bac": 1,
+        "trung": 1
+      },
+      "stats": {
+        "served": 4,
+        "lost": 3,
+        "perfect": 4,
+        "bestCombo": 4,
+        "lifetimeRevenue": 70000,
+        "lifetimeTips": 19400,
+        "lifetimeBonuses": 23000,
+        "lifetimeEarnings": 112400,
+        "upgradeExpenses": 0,
+        "bestDay": 112400,
+        "sessions": 1
+      },
+      "settings": {
+        "sound": false,
+        "music": false,
+        "reducedMotion": false
+      }
+    },
+    "errors": [],
+    "failed": []
+  },
+  "phase08-extra-seats": {
+    "result": "PASS: live six-guest frame sample, purchased seats 5/6 served independently with phins 4/3",
+    "frameMs": {
+      "median": 13.30000000000291,
+      "p95": 14.30000000000291,
+      "max": 14.400000000008731
+    },
+    "six": {
+      "scene": "Game",
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 0,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "paused": false,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 0,
+        "tips": 0,
+        "bonuses": 0,
+        "earnings": 0,
+        "served": 0,
+        "lost": 0,
+        "perfect": 0,
+        "bestCombo": 0,
+        "elapsed": 97.03798666666533,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 0,
+        "ratings": [],
+        "review": "Một buổi sáng yên tĩnh. Ngày mai mình thử lại nhé!",
+        "rush": true
+      },
+      "customers": [
+        {
+          "id": "customer-1",
+          "name": "Chị Lan",
+          "recipe": "den",
+          "state": "WAITING",
+          "ratio": 0.048452900000037546,
+          "seat": 0,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.3646489700000164,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        },
+        {
+          "id": "customer-3",
+          "name": "Minh",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.5138028631579035,
+          "seat": 2,
+          "vip": false,
+          "type": "student"
+        },
+        {
+          "id": "customer-4",
+          "name": "Bác Tư",
+          "recipe": "trung",
+          "state": "WAITING",
+          "ratio": 0.7115751100000014,
+          "seat": 3,
+          "vip": false,
+          "type": "uncle"
+        },
+        {
+          "id": "customer-5",
+          "name": "Alex",
+          "recipe": "den",
+          "state": "WAITING",
+          "ratio": 0.7984937866666661,
+          "seat": 4,
+          "vip": false,
+          "type": "tourist"
+        },
+        {
+          "id": "customer-6",
+          "name": "Chị Lan",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.9837277,
+          "seat": 5,
+          "vip": false,
+          "type": "office"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": true,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": true,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": false,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": false,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 80,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 75,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    },
+    "after": {
+      "scene": "Game",
+      "save": {
+        "version": 2,
+        "day": 10,
+        "balance": 0,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 4,
+          "seats": 6,
+          "premium": true,
+          "fan": true,
+          "decor": true
+        },
+        "dayPlan": {
+          "day": 10,
+          "seed": 9,
+          "event": "festival",
+          "vip": "creator",
+          "vipAt": 1,
+          "expectedOrders": 8,
+          "challenge": {
+            "kind": "recipe",
+            "target": 2,
+            "reward": 15000,
+            "label": "Phục vụ 2 bạc xỉu",
+            "recipe": "bac"
+          }
+        },
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 1
+        },
+        "settings": {
+          "sound": false,
+          "music": false,
+          "reducedMotion": false
+        }
+      },
+      "paused": true,
+      "session": {
+        "day": 10,
+        "tutorial": false,
+        "revenue": 27000,
+        "tips": 7500,
+        "bonuses": 0,
+        "earnings": 34500,
+        "served": 2,
+        "lost": 1,
+        "perfect": 2,
+        "bestCombo": 2,
+        "elapsed": 124.94160666666393,
+        "ended": false,
+        "event": "festival",
+        "challenge": {
+          "kind": "recipe",
+          "target": 2,
+          "reward": 15000,
+          "label": "Phục vụ 2 bạc xỉu",
+          "recipe": "bac"
+        },
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 1,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [
+          "office"
+        ],
+        "rushServed": 1,
+        "rushLost": 1,
+        "wrongOrders": 0,
+        "rating": 4,
+        "ratings": [
+          2,
+          5,
+          5
+        ],
+        "review": "Cà phê ngon, ghế nhựa hơi thấp mà lòng vui quá!",
+        "rush": false
+      },
+      "customers": [
+        {
+          "id": "customer-2",
+          "name": "Vy · Sáng tạo",
+          "recipe": "sua",
+          "state": "WAITING",
+          "ratio": 0.12746820000003667,
+          "seat": 1,
+          "vip": true,
+          "type": "creator"
+        },
+        {
+          "id": "customer-3",
+          "name": "Minh",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.26413889473686347,
+          "seat": 2,
+          "vip": false,
+          "type": "student"
+        },
+        {
+          "id": "customer-4",
+          "name": "Bác Tư",
+          "recipe": "trung",
+          "state": "WAITING",
+          "ratio": 0.4743943400000089,
+          "seat": 3,
+          "vip": false,
+          "type": "uncle"
+        },
+        {
+          "id": "customer-6",
+          "name": "Chị Lan",
+          "recipe": "sua",
+          "state": "SERVED",
+          "ratio": 0.7061601000000004,
+          "seat": 5,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-7",
+          "name": "Chú Ba",
+          "recipe": "bac",
+          "state": "WAITING",
+          "ratio": 0.8737135166666667,
+          "seat": 0,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": false,
+          "page": 0,
+          "x": 126,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-2",
+          "visible": false,
+          "page": 0,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        },
+        {
+          "id": "station-3",
+          "visible": true,
+          "page": 1,
+          "x": 126,
+          "y": 517,
+          "recipeId": "sua",
+          "drink": null
+        },
+        {
+          "id": "station-4",
+          "visible": true,
+          "page": 1,
+          "x": 354,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 88,
+        "tweens": 13,
+        "timers": 2,
+        "fps": 75,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    }
+  },
+  "phase08-final-production-smoke": {
+    "result": "PASS: production loads local assets, complete physical brew and serve, no dev observer or console errors",
+    "status": "Tuyệt vời! Perfect Brew! Tỉnh cả buổi sáng luôn!",
+    "errors": [],
+    "failed": []
+  },
+  "phase08-lifecycle-counts": {
+    "result": "PASS: eight scene cycles, stable objects/timers/input and resize listeners, notebook five pages",
+    "rows": [
+      {
+        "iteration": 1,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 66,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 69,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 2,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 73,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 73,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 3,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 74,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 74,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 4,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 5,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 6,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 7,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      },
+      {
+        "iteration": 8,
+        "active": {
+          "objects": 49,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaleListeners": 10
+        },
+        "menu": {
+          "objects": 24,
+          "tweens": 0,
+          "timers": 0,
+          "fps": 75,
+          "inputListeners": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaleListeners": 9
+        }
+      }
+    ]
+  },
+  "phase08-touch-basic": {
+    "result": "PASS: touch brewing, wrong drop, cancel, incomplete serve, discard, no page scroll",
+    "state": {
+      "scene": "Tutorial",
+      "save": {
+        "version": 2,
+        "day": 1,
+        "balance": 0,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 1,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": null,
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 0
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": false,
+      "session": {
+        "day": 1,
+        "tutorial": true,
+        "revenue": 12000,
+        "tips": 3000,
+        "bonuses": 0,
+        "earnings": 15000,
+        "served": 1,
+        "lost": 0,
+        "perfect": 1,
+        "bestCombo": 1,
+        "elapsed": 21.608149999999814,
+        "ended": false,
+        "event": null,
+        "challengeComplete": false,
+        "recipes": {
+          "den": 1,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 1,
+        "rating": 4.8,
+        "ratings": [
+          4.8
+        ],
+        "review": "Hơi lộn món lúc đầu, nhưng quán sửa rất dễ thương.",
+        "rush": false
+      },
+      "customers": [
+        {
+          "id": "customer-1",
+          "name": "Chị Lan",
+          "recipe": "den",
+          "state": "LEAVING",
+          "ratio": 1,
+          "seat": 0,
+          "vip": false,
+          "type": "office"
+        },
+        {
+          "id": "customer-2",
+          "name": "Chú Ba",
+          "recipe": "den",
+          "state": "WAITING",
+          "ratio": 1,
+          "seat": 1,
+          "vip": false,
+          "type": "driver"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": true,
+          "page": 0,
+          "x": 240,
+          "y": 517,
+          "recipeId": "den",
+          "drink": null
+        }
+      ],
+      "diagnostics": {
+        "objects": 59,
+        "tweens": 1,
+        "timers": 0,
+        "fps": 75
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    }
+  },
+  "phase08-touch": {
+    "result": "PASS: touch milk pouring, circular stirring, stationary whisk rejection, foam preparation and transfer",
+    "state": {
+      "scene": "Tutorial",
+      "save": {
+        "version": 2,
+        "day": 1,
+        "balance": 0,
+        "ratingSum": 20,
+        "ratingCount": 5,
+        "tutorialDone": false,
+        "upgrades": {
+          "phins": 1,
+          "seats": 3,
+          "premium": false,
+          "fan": false,
+          "decor": false
+        },
+        "dayPlan": null,
+        "lastCommittedDay": 0,
+        "achievements": [],
+        "stories": {
+          "driver": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "office": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          },
+          "student": {
+            "encounters": 0,
+            "chapter": 0,
+            "lastDay": 0
+          }
+        },
+        "mastery": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "stats": {
+          "served": 0,
+          "lost": 0,
+          "perfect": 0,
+          "bestCombo": 0,
+          "lifetimeRevenue": 0,
+          "lifetimeTips": 0,
+          "lifetimeBonuses": 0,
+          "lifetimeEarnings": 0,
+          "upgradeExpenses": 0,
+          "bestDay": 0,
+          "sessions": 0
+        },
+        "settings": {
+          "sound": true,
+          "music": true,
+          "reducedMotion": false
+        }
+      },
+      "paused": false,
+      "session": {
+        "day": 1,
+        "tutorial": true,
+        "revenue": 0,
+        "tips": 0,
+        "bonuses": 0,
+        "earnings": 0,
+        "served": 0,
+        "lost": 0,
+        "perfect": 0,
+        "bestCombo": 0,
+        "elapsed": 26.145426666666328,
+        "ended": false,
+        "event": null,
+        "challengeComplete": false,
+        "recipes": {
+          "den": 0,
+          "sua": 0,
+          "bac": 0,
+          "trung": 0
+        },
+        "storyEncounters": [],
+        "rushServed": 0,
+        "rushLost": 0,
+        "wrongOrders": 0,
+        "rating": 0,
+        "ratings": [],
+        "review": "Một buổi sáng yên tĩnh. Ngày mai mình thử lại nhé!",
+        "rush": false
+      },
+      "customers": [
+        {
+          "id": "customer-1",
+          "name": "Chị Lan",
+          "recipe": "den",
+          "state": "WAITING",
+          "ratio": 1,
+          "seat": 0,
+          "vip": false,
+          "type": "office"
+        }
+      ],
+      "stations": [
+        {
+          "id": "station-1",
+          "visible": true,
+          "page": 0,
+          "x": 240,
+          "y": 517,
+          "recipeId": "sua",
+          "drink": {
+            "id": "cup-1",
+            "recipeId": "sua",
+            "state": "BREWED",
+            "grounds": 1,
+            "press": 0.65,
+            "water": 1.0827551999999987,
+            "brewElapsed": 8,
+            "coffee": 1.0827551999999987,
+            "condensed": 1.0643280000000006,
+            "milk": 0,
+            "foam": 1,
+            "ice": 3,
+            "stir": 9.42477796076938,
+            "consumed": false
+          }
+        }
+      ],
+      "diagnostics": {
+        "objects": 54,
+        "tweens": 2,
+        "timers": 0,
+        "fps": 75
+      },
+      "gesture": {
+        "active": null,
+        "foam": 0,
+        "loaded": 0
+      }
+    }
+  }
+}

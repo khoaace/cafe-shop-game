@@ -1,0 +1,6 @@
+### Result
+{"result":"PASS: root production, 14 sprite assets loaded","errors":[],"paths":14}
+### Ran Playwright code
+```js
+await (async (page) => { const context=await page.context().browser().newContext({viewport:{width:1366,height:768},deviceScaleFactor:1}); const p=await context.newPage(); const errors=[];p.on("pageerror",e=>errors.push(String(e)));p.on("response",r=>{if(r.status()>=400)errors.push(r.url());});await p.goto("http://localhost:4173");await p.waitForTimeout(1800);await p.screenshot({path:"output/playwright/items-production-root.png"});const paths=await p.evaluate(()=>performance.getEntriesByType("resource").filter(e=>e.name.includes("assets/items/")).length);await context.close();if(errors.length||paths!==14)throw Error(JSON.stringify({errors,paths}));return {result:"PASS: root production, 14 sprite assets loaded",errors,paths}; })(page);
+```

@@ -1,0 +1,632 @@
+
+> tiem-ca-phe-phin-via-he@1.0.0 test
+> node --test tests/*.test.js
+
+TAP version 13
+# Subtest: audio stays silent until a gesture unlocks it
+ok 1 - audio stays silent until a gesture unlocks it
+  ---
+  duration_ms: 1.125625
+  type: 'test'
+  ...
+# Subtest: sound and music toggles stay independent
+ok 2 - sound and music toggles stay independent
+  ---
+  duration_ms: 0.188083
+  type: 'test'
+  ...
+# Subtest: a running shift schedules a melody and a continuous pour
+ok 3 - a running shift schedules a melody and a continuous pour
+  ---
+  duration_ms: 12.812458
+  type: 'test'
+  ...
+# Subtest: every brew action has its own sound
+ok 4 - every brew action has its own sound
+  ---
+  duration_ms: 4.224292
+  type: 'test'
+  ...
+# Subtest: muted music does not schedule tones
+ok 5 - muted music does not schedule tones
+  ---
+  duration_ms: 0.3735
+  type: 'test'
+  ...
+# Subtest: salted cream sound effects share the audio lifecycle and respect muting
+ok 6 - salted cream sound effects share the audio lifecycle and respect muting
+  ---
+  duration_ms: 0.503208
+  type: 'test'
+  ...
+# Subtest: planned drinks are metadata only; schema rejects units and invalid dependencies
+ok 7 - planned drinks are metadata only; schema rejects units and invalid dependencies
+  ---
+  duration_ms: 1.721083
+  type: 'test'
+  ...
+# Subtest: tilt, accepted volume, pointer release and per-pointer pour sessions
+ok 8 - tilt, accepted volume, pointer release and per-pointer pour sessions
+  ---
+  duration_ms: 0.370833
+  type: 'test'
+  ...
+# Subtest: whisk and stir require motion; circular, W and back-and-forth gestures earn progress
+ok 9 - whisk and stir require motion; circular, W and back-and-forth gestures earn progress
+  ---
+  duration_ms: 0.880708
+  type: 'test'
+  ...
+# Subtest: fruit slicing must cross center; squeezed juice is finite and survives gesture release
+ok 10 - fruit slicing must cross center; squeezed juice is finite and survives gesture release
+  ---
+  duration_ms: 0.293583
+  type: 'test'
+  ...
+# Subtest: blender needs ingredients, lid and held switch; manual transfer conserves each ingredient
+ok 11 - blender needs ingredients, lid and held switch; manual transfer conserves each ingredient
+  ---
+  duration_ms: 0.41275
+  type: 'test'
+  ...
+# Subtest: ice and garnish quantity limits preserve independent cup state
+ok 12 - ice and garnish quantity limits preserve independent cup state
+  ---
+  duration_ms: 0.473
+  type: 'test'
+  ...
+# Subtest: slightly incomplete original stirring reduces quality while preserving recipe correctness
+ok 13 - slightly incomplete original stirring reduces quality while preserving recipe correctness
+  ---
+  duration_ms: 1.3465
+  type: 'test'
+  ...
+# Subtest: registered structured recipe integrates with unlocks, orders, money, stats and old saves
+ok 14 - registered structured recipe integrates with unlocks, orders, money, stats and old saves
+  ---
+  duration_ms: 9.594542
+  type: 'test'
+  ...
+# Subtest: inventory pays for accepted amount only when a legacy cup reaches capacity
+ok 15 - inventory pays for accepted amount only when a legacy cup reaches capacity
+  ---
+  duration_ms: 1.390083
+  type: 'test'
+  ...
+# Subtest: router owns separate pointers/stations without listeners; cancellation returns tools and stops flow
+ok 16 - router owns separate pointers/stations without listeners; cancellation returns tools and stops flow
+  ---
+  duration_ms: 39.523125
+  type: 'test'
+  ...
+# Subtest: declared ingredient units convert to container volume without changing quantity scoring
+ok 17 - declared ingredient units convert to container volume without changing quantity scoring
+  ---
+  duration_ms: 1.01525
+  type: 'test'
+  ...
+# Subtest: brewing rejects out-of-order actions and progresses from actual elapsed time
+ok 18 - brewing rejects out-of-order actions and progresses from actual elapsed time
+  ---
+  duration_ms: 11.959666
+  type: 'test'
+  ...
+# Subtest: den: correct physical preparation is PERFECT
+ok 19 - den: correct physical preparation is PERFECT
+  ---
+  duration_ms: 0.637334
+  type: 'test'
+  ...
+# Subtest: den: harmless ingredient order does not invalidate recipe
+ok 20 - den: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 0.255583
+  type: 'test'
+  ...
+# Subtest: sua: correct physical preparation is PERFECT
+ok 21 - sua: correct physical preparation is PERFECT
+  ---
+  duration_ms: 0.431542
+  type: 'test'
+  ...
+# Subtest: sua: harmless ingredient order does not invalidate recipe
+ok 22 - sua: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 1.062666
+  type: 'test'
+  ...
+# Subtest: bac: correct physical preparation is PERFECT
+ok 23 - bac: correct physical preparation is PERFECT
+  ---
+  duration_ms: 1.001458
+  type: 'test'
+  ...
+# Subtest: bac: harmless ingredient order does not invalidate recipe
+ok 24 - bac: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 0.232792
+  type: 'test'
+  ...
+# Subtest: trung: correct physical preparation is PERFECT
+ok 25 - trung: correct physical preparation is PERFECT
+  ---
+  duration_ms: 0.219292
+  type: 'test'
+  ...
+# Subtest: trung: harmless ingredient order does not invalidate recipe
+ok 26 - trung: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 9.311833
+  type: 'test'
+  ...
+# Subtest: muoi: correct physical preparation is PERFECT
+ok 27 - muoi: correct physical preparation is PERFECT
+  ---
+  duration_ms: 3.237625
+  type: 'test'
+  ...
+# Subtest: muoi: harmless ingredient order does not invalidate recipe
+ok 28 - muoi: harmless ingredient order does not invalidate recipe
+  ---
+  duration_ms: 0.462833
+  type: 'test'
+  ...
+# Subtest: too much milk reduces quality rather than invalidating the correct drink
+ok 29 - too much milk reduces quality rather than invalidating the correct drink
+  ---
+  duration_ms: 1.240459
+  type: 'test'
+  ...
+# Subtest: wrong ingredient, insufficient ice and insufficient stirring report actionable feedback
+ok 30 - wrong ingredient, insufficient ice and insufficient stirring report actionable feedback
+  ---
+  duration_ms: 2.1615
+  type: 'test'
+  ...
+# Subtest: adding milk after stirring requires another real stir
+ok 31 - adding milk after stirring requires another real stir
+  ---
+  duration_ms: 0.621208
+  type: 'test'
+  ...
+# Subtest: independent stations brew without overwriting each other and discard frees a station
+ok 32 - independent stations brew without overwriting each other and discard frees a station
+  ---
+  duration_ms: 0.565208
+  type: 'test'
+  ...
+# Subtest: movement is required for whisking; teleport jumps do not count
+ok 33 - movement is required for whisking; teleport jumps do not count
+  ---
+  duration_ms: 0.580792
+  type: 'test'
+  ...
+# Subtest: stirring recognizes circles across angle wrap and rejects holding/straight center jitter
+ok 34 - stirring recognizes circles across angle wrap and rejects holding/straight center jitter
+  ---
+  duration_ms: 0.971958
+  type: 'test'
+  ...
+# Subtest: customer states are explicit and resolution is idempotent
+ok 35 - customer states are explicit and resolution is idempotent
+  ---
+  duration_ms: 0.290875
+  type: 'test'
+  ...
+# Subtest: correct serving grants menu price and tip exactly once
+ok 36 - correct serving grants menu price and tip exactly once
+  ---
+  duration_ms: 1.453417
+  type: 'test'
+  ...
+# Subtest: wrong orders reset combo but retain cup and waiting customer for correction
+ok 37 - wrong orders reset combo but retain cup and waiting customer for correction
+  ---
+  duration_ms: 1.0185
+  type: 'test'
+  ...
+# Subtest: combo milestone rewards 3 / 5 / 10 are applied once per reached streak
+ok 38 - combo milestone rewards 3 / 5 / 10 are applied once per reached streak
+  ---
+  duration_ms: 1.012333
+  type: 'test'
+  ...
+# Subtest: independent patience expiry does not duplicate customer exits or ratings
+ok 39 - independent patience expiry does not duplicate customer exits or ratings
+  ---
+  duration_ms: 0.412625
+  type: 'test'
+  ...
+# Subtest: day has rush hour, last call and one closing settlement
+ok 40 - day has rush hour, last call and one closing settlement
+  ---
+  duration_ms: 0.401958
+  type: 'test'
+  ...
+# Subtest: tutorial is untimed and ends after three customers
+ok 41 - tutorial is untimed and ends after three customers
+  ---
+  duration_ms: 0.137208
+  type: 'test'
+  ...
+# Subtest: difficulty unlocks recipes gradually and limits pending orders
+ok 42 - difficulty unlocks recipes gradually and limits pending orders
+  ---
+  duration_ms: 0.592666
+  type: 'test'
+  ...
+# Subtest: 06:00–10:00 clock mapping is correct
+ok 43 - 06:00–10:00 clock mapping is correct
+  ---
+  duration_ms: 0.07325
+  type: 'test'
+  ...
+# Subtest: summary totals separate revenue, tips and bonuses
+ok 44 - summary totals separate revenue, tips and bonuses
+  ---
+  duration_ms: 0.414
+  type: 'test'
+  ...
+# Subtest: day save persists, prevents duplicate settlement and smooths reputation
+ok 45 - day save persists, prevents duplicate settlement and smooths reputation
+  ---
+  duration_ms: 9.631709
+  type: 'test'
+  ...
+# Subtest: tutorial cannot inflate the main economy
+ok 46 - tutorial cannot inflate the main economy
+  ---
+  duration_ms: 0.230042
+  type: 'test'
+  ...
+# Subtest: midday reload retains the start-of-day checkpoint
+ok 47 - midday reload retains the start-of-day checkpoint
+  ---
+  duration_ms: 0.12675
+  type: 'test'
+  ...
+# Subtest: corrupt, unsupported and partially malformed saves recover safely
+ok 48 - corrupt, unsupported and partially malformed saves recover safely
+  ---
+  duration_ms: 0.392417
+  type: 'test'
+  ...
+# Subtest: blocked storage keeps the session usable with an honest warning
+ok 49 - blocked storage keeps the session usable with an honest warning
+  ---
+  duration_ms: 0.242208
+  type: 'test'
+  ...
+# Subtest: settings and reset persist without changing a running economy
+ok 50 - settings and reset persist without changing a running economy
+  ---
+  duration_ms: 0.625292
+  type: 'test'
+  ...
+# Subtest: ingredient definitions match all four recipes and fixed pack values
+ok 51 - ingredient definitions match all four recipes and fixed pack values
+  ---
+  duration_ms: 1.686959
+  type: 'test'
+  ...
+# Subtest: inventory normalization supplies safe defaults and clamps corrupt quantities
+ok 52 - inventory normalization supplies safe defaults and clamps corrupt quantities
+  ---
+  duration_ms: 0.547708
+  type: 'test'
+  ...
+# Subtest: forecast cycles unlocked recipes and adds one full mistake buffer
+ok 53 - forecast cycles unlocked recipes and adds one full mistake buffer
+  ---
+  duration_ms: 0.424542
+  type: 'test'
+  ...
+# Subtest: v2 migrates to v3 with starter pantry and keeps the v2 recovery copy
+ok 54 - v2 migrates to v3 with starter pantry and keeps the v2 recovery copy
+  ---
+  duration_ms: 0.856666
+  type: 'test'
+  ...
+# Subtest: single pack purchases are atomic, reject stale taps and stay outside shifts
+ok 55 - single pack purchases are atomic, reject stale taps and stay outside shifts
+  ---
+  duration_ms: 0.540042
+  type: 'test'
+  ...
+# Subtest: quick restock is all-or-nothing and buys the forecast exactly once
+ok 56 - quick restock is all-or-nothing and buys the forecast exactly once
+  ---
+  duration_ms: 25.983583
+  type: 'test'
+  ...
+# Subtest: session consumes only successful physical ingredient actions
+ok 57 - session consumes only successful physical ingredient actions
+  ---
+  duration_ms: 0.966208
+  type: 'test'
+  ...
+# Subtest: out-of-stock orders fall back to a feasible recipe and prepared cups count
+ok 58 - out-of-stock orders fall back to a feasible recipe and prepared cups count
+  ---
+  duration_ms: 2.821042
+  type: 'test'
+  ...
+# Subtest: stockout waits for current guests, then ends once without charging a loss
+ok 59 - stockout waits for current guests, then ends once without charging a loss
+  ---
+  duration_ms: 2.320208
+  type: 'test'
+  ...
+# Subtest: closing settlement subtracts stock with income once; reload during shift keeps checkpoint
+ok 60 - closing settlement subtracts stock with income once; reload during shift keeps checkpoint
+  ---
+  duration_ms: 23.026083
+  type: 'test'
+  ...
+# Subtest: tutorial has unlimited supplies and never changes the main pantry
+ok 61 - tutorial has unlimited supplies and never changes the main pantry
+  ---
+  duration_ms: 0.799625
+  type: 'test'
+  ...
+# Subtest: v1 migrates once, preserves economy and two phins without inventing recipe history
+ok 62 - v1 migrates once, preserves economy and two phins without inventing recipe history
+  ---
+  duration_ms: 2.532792
+  type: 'test'
+  ...
+# Subtest: failed migration keeps v1 intact and remains playable in memory
+ok 63 - failed migration keeps v1 intact and remains playable in memory
+  ---
+  duration_ms: 0.248
+  type: 'test'
+  ...
+# Subtest: corrupt v2 can recover from v1; malformed v2 fields are bounded
+ok 64 - corrupt v2 can recover from v1; malformed v2 fields are bounded
+  ---
+  duration_ms: 0.709958
+  type: 'test'
+  ...
+# Subtest: new progress starts with one phin and three chairs
+ok 65 - new progress starts with one phin and three chairs
+  ---
+  duration_ms: 0.504959
+  type: 'test'
+  ...
+# Subtest: purchase atomically deducts exact price, upgrades and persists once
+ok 66 - purchase atomically deducts exact price, upgrades and persists once
+  ---
+  duration_ms: 2.030375
+  type: 'test'
+  ...
+# Subtest: all upgrade prices, max levels, stale taps, insufficient funds and in-shift purchases
+ok 67 - all upgrade prices, max levels, stale taps, insufficient funds and in-shift purchases
+  ---
+  duration_ms: 2.472292
+  type: 'test'
+  ...
+# Subtest: blocked persistence still applies an upgrade only once within the live session
+ok 68 - blocked persistence still applies an upgrade only once within the live session
+  ---
+  duration_ms: 1.021333
+  type: 'test'
+  ...
+# Subtest: day plans and optional challenges stay identical across reload and purchases
+ok 69 - day plans and optional challenges stay identical across reload and purchases
+  ---
+  duration_ms: 0.820708
+  type: 'test'
+  ...
+# Subtest: event eligibility, 35% sampling, VIP limits and feasible challenges across 3000 seeds
+ok 70 - event eligibility, 35% sampling, VIP limits and feasible challenges across 3000 seeds
+  ---
+  duration_ms: 89.9885
+  type: 'test'
+  ...
+# Subtest: hidden stations advance continuously and switching pages preserves unique cup IDs
+ok 71 - hidden stations advance continuously and switching pages preserves unique cup IDs
+  ---
+  duration_ms: 2.248334
+  type: 'test'
+  ...
+# Subtest: all six chairs have separate hit regions and resolve the assigned customer only
+ok 72 - all six chairs have separate hit regions and resolve the assigned customer only
+  ---
+  duration_ms: 5.431334
+  type: 'test'
+  ...
+# Subtest: capacity obeys seats, twice phins and day tiers; initial timing stays unchanged
+ok 73 - capacity obeys seats, twice phins and day tiers; initial timing stays unchanged
+  ---
+  duration_ms: 0.300625
+  type: 'test'
+  ...
+# Subtest: rain, festival and lucky morning apply arrival and tip modifiers
+ok 74 - rain, festival and lucky morning apply arrival and tip modifiers
+  ---
+  duration_ms: 0.634458
+  type: 'test'
+  ...
+# Subtest: premium only changes relevant tips and stacks with rain/VIP
+ok 75 - premium only changes relevant tips and stacks with rain/VIP
+  ---
+  duration_ms: 1.262542
+  type: 'test'
+  ...
+# Subtest: fan drains 85%; outage disables it for exactly 30 seconds without touching coffee
+ok 76 - fan drains 85%; outage disables it for exactly 30 seconds without touching coffee
+  ---
+  duration_ms: 0.331584
+  type: 'test'
+  ...
+# Subtest: decor adds 0.1 star to a correct order but cannot exceed five
+ok 77 - decor adds 0.1 star to a correct order but cannot exceed five
+  ---
+  duration_ms: 0.336667
+  type: 'test'
+  ...
+# Subtest: reviewer Perfect grants bonus and separate five-star review only once; max one VIP
+ok 78 - reviewer Perfect grants bonus and separate five-star review only once; max one VIP
+  ---
+  duration_ms: 0.707916
+  type: 'test'
+  ...
+# Subtest: story gates use both day and distinct successful encounter days
+ok 79 - story gates use both day and distinct successful encounter days
+  ---
+  duration_ms: 0.197167
+  type: 'test'
+  ...
+# Subtest: repeated same-day character service counts once and tutorial creates no story
+ok 80 - repeated same-day character service counts once and tutorial creates no story
+  ---
+  duration_ms: 0.661208
+  type: 'test'
+  ...
+# Subtest: challenge rewards and achievements settle once with revenue separate from expenses
+ok 81 - challenge rewards and achievements settle once with revenue separate from expenses
+  ---
+  duration_ms: 0.597875
+  type: 'test'
+  ...
+# Subtest: no-loss challenge requires closing, sufficient service and no abandoned customers
+ok 82 - no-loss challenge requires closing, sufficient service and no abandoned customers
+  ---
+  duration_ms: 0.053083
+  type: 'test'
+  ...
+# Subtest: all six achievements enforce thresholds, including real rush service and five guests
+ok 83 - all six achievements enforce thresholds, including real rush service and five guests
+  ---
+  duration_ms: 0.077
+  type: 'test'
+  ...
+# Subtest: mastery thresholds are exact and do not perform any gesture
+ok 84 - mastery thresholds are exact and do not perform any gesture
+  ---
+  duration_ms: 0.052291
+  type: 'test'
+  ...
+# Subtest: contextual reviews consider wrong orders and long waits; consecutive lines differ
+ok 85 - contextual reviews consider wrong orders and long waits; consecutive lines differ
+  ---
+  duration_ms: 0.27025
+  type: 'test'
+  ...
+# Subtest: tutorial completion cannot affect upgrades, challenges, mastery, achievements or stories
+ok 86 - tutorial completion cannot affect upgrades, challenges, mastery, achievements or stories
+  ---
+  duration_ms: 0.279834
+  type: 'test'
+  ...
+# Subtest: render factor follows display fit and capped pixel density
+ok 87 - render factor follows display fit and capped pixel density
+  ---
+  duration_ms: 2.263542
+  type: 'test'
+  ...
+# Subtest: render factor respects GPU maximum dimensions and safe lower bounds
+ok 88 - render factor respects GPU maximum dimensions and safe lower bounds
+  ---
+  duration_ms: 0.480583
+  type: 'test'
+  ...
+# Subtest: pointer mapping delegates to camera transform and keeps input untouched
+ok 89 - pointer mapping delegates to camera transform and keeps input untouched
+  ---
+  duration_ms: 0.967334
+  type: 'test'
+  ...
+# Subtest: mapping includes camera offsets rather than assuming a fixed multiplier
+ok 90 - mapping includes camera offsets rather than assuming a fixed multiplier
+  ---
+  duration_ms: 0.250125
+  type: 'test'
+  ...
+# Subtest: only salted coffee is implemented; unlock and pantry block random locked or unavailable orders
+ok 91 - only salted coffee is implemented; unlock and pantry block random locked or unavailable orders
+  ---
+  duration_ms: 2.038916
+  type: 'test'
+  ...
+# Subtest: brew must finish physically; collecting never creates or duplicates coffee
+ok 92 - brew must finish physically; collecting never creates or duplicates coffee
+  ---
+  duration_ms: 1.947041
+  type: 'test'
+  ...
+# Subtest: salted whisk uses real circular movement; holding, straight strokes, jitter and jumps fail
+ok 93 - salted whisk uses real circular movement; holding, straight strokes, jitter and jumps fail
+  ---
+  duration_ms: 2.334584
+  type: 'test'
+  ...
+# Subtest: five cream stages and wide Perfect zone track actual motion, including overwhipping
+ok 94 - five cream stages and wide Perfect zone track actual motion, including overwhipping
+  ---
+  duration_ms: 4.952042
+  type: 'test'
+  ...
+# Subtest: manual cream transfer conserves salt proportion, amount and earned technique; no stock charged twice
+ok 95 - manual cream transfer conserves salt proportion, amount and earned technique; no stock charged twice
+  ---
+  duration_ms: 1.686625
+  type: 'test'
+  ...
+# Subtest: completed drink is Perfect with distinct layers; wrong salt and imperfect technique remain serveable
+ok 96 - completed drink is Perfect with distinct layers; wrong salt and imperfect technique remain serveable
+  ---
+  duration_ms: 7.937834
+  type: 'test'
+  ...
+# Subtest: multiple cups and batches retain separate progress and cannot borrow another phin
+ok 97 - multiple cups and batches retain separate progress and cannot borrow another phin
+  ---
+  duration_ms: 0.2305
+  type: 'test'
+  ...
+# Subtest: orders, Vietnamese dialogue, price, cream tip, stats, saves and idempotent serving integrate
+ok 98 - orders, Vietnamese dialogue, price, cream tip, stats, saves and idempotent serving integrate
+  ---
+  duration_ms: 2.261917
+  type: 'test'
+  ...
+# Subtest: pour tilt recovers a right-to-left entry and stations cannot switch a prepared cup across salt/legacy flows
+ok 99 - pour tilt recovers a right-to-left entry and stations cannot switch a prepared cup across salt/legacy flows
+  ---
+  duration_ms: 2.889209
+  type: 'test'
+  ...
+# Subtest: combining cream batches weights their actual movement and technique by accepted cream portion
+ok 100 - combining cream batches weights their actual movement and technique by accepted cream portion
+  ---
+  duration_ms: 0.481209
+  type: 'test'
+  ...
+# Subtest: world art has all nine identities and independently animated character parts
+ok 101 - world art has all nine identities and independently animated character parts
+  ---
+  duration_ms: 3.146458
+  type: 'test'
+  ...
+# Subtest: every world frame fits its actual source PNG and has bounded logical size and pivot
+ok 102 - every world frame fits its actual source PNG and has bounded logical size and pivot
+  ---
+  duration_ms: 18.575875
+  type: 'test'
+  ...
+# Subtest: plants have separate pots and leaves; scenery includes all shared shop furnishings
+ok 103 - plants have separate pots and leaves; scenery includes all shared shop furnishings
+  ---
+  duration_ms: 0.153708
+  type: 'test'
+  ...
+1..103
+# tests 103
+# suites 0
+# pass 103
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 314.501708

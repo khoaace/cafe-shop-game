@@ -1,0 +1,239 @@
+{
+  "phase": "after",
+  "results": [
+    {
+      "width": 1366,
+      "height": 768,
+      "dpr": 1,
+      "median": 13.300000000000182,
+      "p95": 14.800000000000182,
+      "render": {
+        "factor": 1,
+        "canvas": [
+          480,
+          800
+        ],
+        "textCount": 45,
+        "textResolution": 1,
+        "textPixels": [
+          243,
+          30
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 80
+      },
+      "diagnostics": {
+        "objects": 61,
+        "tweens": 0,
+        "timers": 1,
+        "fps": 66,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "errors": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "dpr": 1,
+      "median": 13.300000000000182,
+      "p95": 14.5,
+      "render": {
+        "factor": 2,
+        "canvas": [
+          960,
+          1600
+        ],
+        "textCount": 42,
+        "textResolution": 2,
+        "textPixels": [
+          486,
+          60
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 77
+      },
+      "diagnostics": {
+        "objects": 60,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 65,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "errors": []
+    },
+    {
+      "width": 2560,
+      "height": 1440,
+      "dpr": 1,
+      "median": 16.699999999999818,
+      "p95": 18.5,
+      "render": {
+        "factor": 2,
+        "canvas": [
+          960,
+          1600
+        ],
+        "textCount": 42,
+        "textResolution": 2,
+        "textPixels": [
+          486,
+          60
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 77
+      },
+      "diagnostics": {
+        "objects": 60,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 56,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "errors": []
+    },
+    {
+      "width": 1366,
+      "height": 768,
+      "dpr": 2,
+      "median": 13.300000000000182,
+      "p95": 15.099999999999454,
+      "render": {
+        "factor": 2,
+        "canvas": [
+          960,
+          1600
+        ],
+        "textCount": 42,
+        "textResolution": 2,
+        "textPixels": [
+          486,
+          60
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 77
+      },
+      "diagnostics": {
+        "objects": 60,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 66,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "errors": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "dpr": 2,
+      "median": 13.300000000000182,
+      "p95": 15.200000000000273,
+      "render": {
+        "factor": 3,
+        "canvas": [
+          1440,
+          2400
+        ],
+        "textCount": 42,
+        "textResolution": 3,
+        "textPixels": [
+          729,
+          91
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 77
+      },
+      "diagnostics": {
+        "objects": 60,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 66,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "errors": []
+    },
+    {
+      "width": 2560,
+      "height": 1440,
+      "dpr": 2,
+      "median": 16.699999999999818,
+      "p95": 18.599999999999454,
+      "render": {
+        "factor": 4,
+        "canvas": [
+          1920,
+          3200
+        ],
+        "textCount": 42,
+        "textResolution": 4,
+        "textPixels": [
+          972,
+          121
+        ],
+        "textLogical": [
+          243,
+          30.48046875
+        ],
+        "textureCount": 77
+      },
+      "diagnostics": {
+        "objects": 60,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 56,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "errors": []
+    }
+  ]
+}

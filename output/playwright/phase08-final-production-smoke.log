@@ -1,0 +1,26 @@
+### Result
+{"result":"PASS: production loads local assets, complete physical brew and serve, no dev observer or console errors","status":"Tuyệt vời! Perfect Brew! Tỉnh cả buổi sáng luôn!","errors":[],"failed":[]}
+### Ran Playwright code
+```js
+await (async(page)=>{
+  const errors=[];const error=err=>errors.push(String(err));const consoleError=msg=>{if(msg.type()==='error')errors.push(msg.text());};
+  page.on('pageerror',error);page.on('console',consoleError);
+  const failed=[];page.on('response',r=>{if(r.status()>=400)failed.push(r.url());});
+  await page.goto('http://127.0.0.1:4173');await page.setViewportSize({width:480,height:800});await page.waitForTimeout(700);
+  if(await page.evaluate(()=>typeof window.__PHIN_QA__!=='undefined'))throw new Error('Development observer leaked into production');
+  await page.screenshot({path:'output/playwright/production-menu.png'});await page.mouse.click(384,735);await page.waitForTimeout(2200);
+  const drag=async(x,y,tx,ty,hold=50)=>{await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(tx,ty,{steps:8});await page.waitForTimeout(hold);await page.mouse.up();await page.waitForTimeout(80);};
+  await drag(40,715,240,517);await drag(120,715,240,517);await page.mouse.move(200,715);await page.mouse.down();await page.mouse.move(280,715,{steps:8});await page.mouse.move(240,517,{steps:8});await page.mouse.up();
+  await drag(360,715,240,517,750);await drag(440,715,240,517,1980);await page.mouse.click(242,656);await drag(240,715,240,517);await page.waitForTimeout(8100);
+  await drag(240,517,90,280);const status=await page.locator('#accessible-status').textContent();if(!status.includes('Perfect Brew'))throw new Error('Production serve failed: '+status);
+  await page.screenshot({path:'output/playwright/production-play.png'});
+  if(errors.length||failed.length)throw new Error(JSON.stringify({errors,failed}));
+  page.off('pageerror',error);page.off('console',consoleError);
+  return{result:'PASS: production loads local assets, complete physical brew and serve, no dev observer or console errors',status,errors,failed};
+})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:4173/
+- Page Title: Phin góc phố · Tiệm Cà Phê Phin Vỉa Hè
+### Events
+- New console entries: .playwright-cli/console-2026-10-10T04-31-34-632Z.log#L6
