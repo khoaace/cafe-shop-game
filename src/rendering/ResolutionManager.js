@@ -51,7 +51,7 @@ export class ResolutionManager {
     const { width, height } = this.parent.getBoundingClientRect(); if (!width || !height) return;
     this.dpr = window.devicePixelRatio;
     const scene = this.activeScene;
-    const layout = gameLayout(Math.round(width), Math.round(height), ['Game', 'Tutorial'].includes(scene?.sys.settings.key));
+    const layout = gameLayout(Math.round(width), Math.round(height), ['Boot', 'Menu', 'Game', 'Tutorial'].includes(scene?.sys.settings.key));
     const changed = !this.layout || layout.width !== this.layout.width || layout.height !== this.layout.height || layout.desktop !== this.layout.desktop;
     const factor = layout.desktop ? desktopRenderFactor(width, height, this.dpr, this.limit) : renderFactor(width, height, this.dpr, this.limit);
     if (changed || factor !== this.factor) scene?.drag?.cancel();

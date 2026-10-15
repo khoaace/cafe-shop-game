@@ -20,6 +20,9 @@ const game = new Phaser.Game({
   render: { powerPreference: 'low-power' },
   callbacks: { postBoot: (instance) => {
     instance.rendering = new ResolutionManager(instance);
+    // Boot's preload ran before rendering existed: give its loading screen the real camera and text sharpness.
+    const boot = instance.scene.getScene('Boot');
+    if (boot?.loading?.length) { boot.loading.forEach(o => o.type === 'Text' && instance.rendering.text(o)); instance.rendering.attach(boot); boot.relayout?.(); }
     const hidden = () => { if (document.hidden) instance.audio?.pause(); };
     document.addEventListener('visibilitychange', hidden);
     instance.events.once('destroy', () => { document.removeEventListener('visibilitychange', hidden); });
