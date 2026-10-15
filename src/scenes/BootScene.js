@@ -12,10 +12,17 @@ export class BootScene extends Phaser.Scene {
     const track = this.add.rectangle(240, 430, 200, 5, 0x526e5e);
     const progress = this.add.rectangle(140, 430, 1, 5, 0xe0b570).setOrigin(0, 0.5);
     const update = value => progress.width = Math.max(1, value * 200);
+    // Rendering attaches after preload starts (postBoot), so recentre whenever the layout arrives or changes.
+    this.loading = [title, note, track, progress];
+    this.relayout = () => {
+      const { width = 480, height = 800 } = this.layout || {}, x = width / 2, y = height / 2 - 30;
+      title.setPosition(x, y - 21); note.setPosition(x, y + 24); track.setPosition(x, y + 60); progress.setPosition(x - 100, y + 60);
+    };
     this.load.on('progress', update);
     this.load.once('complete', () => {
       this.load.off('progress', update);
-      for (const object of [title, note, track, progress]) object.destroy();
+      for (const object of this.loading) object.destroy();
+      this.loading = []; this.relayout = null;
     });
     loadItemAssets(this);
     loadWorldAssets(this);
