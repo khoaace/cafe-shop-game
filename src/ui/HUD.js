@@ -1,4 +1,5 @@
 import { EVENTS } from '../logic/dayPlan.js';
+import { dayProgress } from '../logic/dayClock.js';
 import { label, round } from '../rendering/art.js';
 import { button } from './widgets.js';
 import { clockText, COLORS as C, RULES, money } from '../config.js';
@@ -12,6 +13,8 @@ export class HUD {
     this.day = label(scene, 20, 54, '', 10, '#b8c8ad').setOrigin(0, 0.5);
     this.clock = label(scene, 267, 29, '', 23, '#ffebc4', { fontFamily: 'Georgia, serif' });
     this.phase = label(scene, 267, 53, '', 9, '#bdcbaa', { letterSpacing: 1 });
+    // Shift progress 06:00 → 10:00 with the rush window and last-call zone, so time is never a surprise.
+    this.dayBar = scene.add.graphics(); this.dayBarX = 207;
     this.book = button(scene, 375, 34, 64, 42, 'Sổ món', () => scene.openBook(), { size: 12, fill: 0x3b5645 });
     this.pause = button(scene, 445, 34, 42, 42, 'Ⅱ', () => scene.openPause(), { size: 18, fill: 0x3b5645 });
     const strip = scene.add.graphics().setDepth(3); round(strip, 67, 83, 345, 79, C.cream, 8);
@@ -41,6 +44,7 @@ export class HUD {
     this.pause.setPosition(desktop ? w - 52 : 445, 34);
     this.clock.setPosition(desktop ? w - 292 : 267, 28);
     this.phase.setPosition(desktop ? w - 292 : 267, 53);
+    this.dayBarX = (desktop ? w - 292 : 267) - 60;
     this.event.setPosition(desktop ? w * 0.43 : 240, desktop ? 26 : 100);
     this.challenge.setPosition(desktop ? w * 0.43 : 240, desktop ? 50 : 123).setWordWrapWidth(desktop ? Math.min(370, w * 0.27) : 325);
     // Desktop: goals sit between the "BÀN PHA" title and the P1–P4 buttons.
@@ -65,6 +69,15 @@ export class HUD {
     const w = this.comboText.width + 18, fill = combo >= 10 ? 0xe0704f : combo >= 5 ? 0xf0a640 : C.gold;
     this.comboBg.clear(); round(this.comboBg, -w / 2, -11, w, 25, 0x1d3029, 12, 0.25); round(this.comboBg, -w / 2, -13, w, 25, fill, 12);
     this.comboText.setColor(combo >= 10 ? '#fff4de' : '#3a2a12');
+  }
+  drawDayBar(session) {
+    const g = this.dayBar.clear(); if (session.tutorial) return;
+    const x = this.dayBarX, y = 64, w = 120, at = t => x + w * t / RULES.daySeconds;
+    round(g, x, y, w, 4, 0x1b3128, 2);
+    g.fillStyle(C.gold, 0.45); g.fillRect(at(RULES.rushStart), y, at(RULES.rushEnd) - at(RULES.rushStart), 4);
+    g.fillStyle(0xd98d6d, 0.5); g.fillRect(at(RULES.lastArrival), y, x + w - at(RULES.lastArrival), 4);
+    round(g, x, y, Math.max(2, w * dayProgress(session.elapsed)), 4, 0xffebc4, 2);
+    g.fillStyle(0xffffff); g.fillCircle(at(Math.min(session.elapsed, RULES.daySeconds)), y + 2, 3);
   }
   updateGoals(session) {
     const progress = session.stars.results;
@@ -107,7 +120,9 @@ export class HUD {
     if (this.shownMoney === target) this.balance.setText(money(target));
     this.day.setText(session.tutorial ? `LÀM QUEN QUÁN  ·  ${session.served}/3 LY` : `NGÀY ${session.day}  ·  ${game.save.reputation.toFixed(1)} ★  ·  ${session.served} KHÁCH`);
     this.clock.setText(session.tutorial ? 'Thong thả' : clockText(session.elapsed)).setFontSize(session.tutorial ? 17 : 23).setColor(closing ? '#ff9f7a' : '#ffebc4');
-    this.phase.setText(session.tutorial ? 'KHÔNG GIỚI HẠN GIỜ' : session.rush ? 'GIỜ CAO ĐIỂM' : closing ? `SẮP ĐÓNG CỬA · ${Math.max(0, Math.ceil(RULES.daySeconds - session.elapsed))}s` : 'BUỔI SÁNG AN LÀNH').setColor(closing ? '#ffb796' : session.rush ? '#f2c66d' : '#bdcbaa');
+    const left = Math.max(0, Math.ceil(RULES.daySeconds - session.elapsed)), remaining = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`;
+    this.phase.setText(session.tutorial ? 'KHÔNG GIỚI HẠN GIỜ' : session.rush ? `GIỜ CAO ĐIỂM · CÒN ${remaining}` : !left ? 'ĐÃ ĐÓNG CỬA' : closing ? `SẮP ĐÓNG CỬA · ${left}s` : `CA CÒN ${remaining}`).setColor(closing ? '#ffb796' : session.rush ? '#f2c66d' : '#bdcbaa');
+    this.drawDayBar(session);
     const ch = session.challenge;
     this.event.setText(session.powerOut ? 'MẤT ĐIỆN · QUẠT TẠM NGHỈ' : EVENTS[session.event]?.name || 'Một sáng ở góc phố');
     this.challenge.setText(session.tutorial ? 'Luyện tay pha phin · không tính vào tiến trình' : `${ch.complete ? '✓ ' : ''}${session.plan.challenge.label}: ${Math.min(ch.value, ch.target)}/${ch.target} · +${money(session.plan.challenge.reward)}`);

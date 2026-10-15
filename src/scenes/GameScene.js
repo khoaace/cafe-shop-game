@@ -5,6 +5,7 @@ import { StationManager } from '../models/StationManager.js';
 import { stationPosition } from '../logic/layout.js';
 import { Environment } from '../rendering/Environment.js';
 import { EVENTS } from '../logic/dayPlan.js';
+import { milestonesCrossed, finalCountdown } from '../logic/dayClock.js';
 import { DaySession } from '../models/DaySession.js';
 import { INGREDIENT_DEFINITIONS } from '../data/drinkEngine.js';
 import { InteractiveDrinkEngine } from '../systems/InteractiveDrinkEngine.js';
@@ -19,7 +20,7 @@ import { DragController } from '../systems/DragController.js';
 import { CustomerView } from '../rendering/CustomerView.js';
 import { StationView } from '../rendering/StationView.js';
 import { street, label, round, toolArt, person } from '../rendering/art.js';
-import { ARCHETYPES, RECIPES, COLORS as C, RULES, money } from '../config.js';
+import { ARCHETYPES, RECIPES, COLORS as C, RULES, money, clockText } from '../config.js';
 import { drinkHasRecipeMaterials } from '../logic/inventory.js';
 import { button, announce } from '../ui/widgets.js';
 import { HUD } from '../ui/HUD.js';
@@ -117,8 +118,8 @@ export class GameScene extends Phaser.Scene {
       this.renderTray();
     };
     this.input.on('wheel', this.onWheel);
-    if (this.session.event) this.time.delayedCall(400, () => this.showDialogue(EVENTS[this.session.event].name, EVENTS[this.session.event].description));
-    this.toast(this.tutorial ? 'Chào bạn! Kéo ly từ khay lên trạm để bắt đầu.' : 'Quán mở rồi! Chạm đơn của khách để xem lượng pha.');
+    if (this.tutorial) this.toast('Chào bạn! Kéo ly từ khay lên trạm để bắt đầu.');
+    else this.openIntro(); // The event and goals are part of the briefing, so no separate dialogue.
     this.onVisibility = () => {
       if (document.hidden) { this.drag.cancel(); this.setPaused('hidden', true); }
       else {
@@ -165,7 +166,8 @@ export class GameScene extends Phaser.Scene {
     if (this.overlay) {
       const old = this.overlay, reason = old.reason, recipe = old.recipeId, index = old.stationIndex;
       old.root.destroy(); this.overlay = new Overlay(this, reason);
-      if (reason === 'book') this.overlay.book(recipe, index); else this.overlay.pause();
+      const onClose = old.onClose; this.overlay.onClose = onClose;
+      if (reason === 'book') this.overlay.book(recipe, index); else if (reason === 'intro') this.overlay.intro(); else this.overlay.pause();
     }
   }
   selectPage(page, selected = page * 2) {
@@ -196,6 +198,11 @@ export class GameScene extends Phaser.Scene {
   openBook(recipe = 'den', stationIndex = null) {
     if (this.overlay || this.finishing) return;
     this.overlay = new Overlay(this, 'book'); this.overlay.book(recipe, stationIndex);
+  }
+  openIntro() {
+    if (this.overlay || this.finishing) return;
+    this.overlay = new Overlay(this, 'intro'); this.overlay.intro();
+    this.overlay.onClose = () => { this.toast(`Quán mở rồi! Ca kéo dài ${Math.round(RULES.daySeconds / 60)} phút — chạm đơn của khách để xem lượng pha.`); this.game.audio.play('arrive'); };
   }
   openPause(hidden = false) {
     if (this.overlay || this.finishing) return;
@@ -289,6 +296,25 @@ export class GameScene extends Phaser.Scene {
     this.tweens.add({ targets: banner, alpha: 0, delay: 2600, duration: 250, onComplete: () => banner.destroy() });
     this.game.audio.play('rush');
   }
+  // Big centred notice for clock moments (closing soon, closed).
+  clockBanner(text, color = C.gold, hold = 2200) {
+    const l = this.layout, root = this.add.container(l.desktop ? l.width / 2 : 240, l.desktop ? l.height * 0.42 : 300).setDepth(200);
+    const title = label(this, 0, 0, text, l.desktop ? 26 : 20, '#fff4de', { fontStyle: 'bold' });
+    const bg = this.add.graphics(), w = title.width + 48;
+    round(bg, -w / 2, -26, w, 52, C.dark, 16, 0.92); round(bg, -w / 2, -26, 8, 52, color, { tl: 16, bl: 16, tr: 0, br: 0 });
+    root.add([bg, title]);
+    const motion = !this.game.save.data.settings.reducedMotion;
+    if (motion) { root.setScale(0.7); this.tweens.add({ targets: root, scale: 1, duration: 300, ease: 'Back.Out' }); }
+    this.tweens.add({ targets: root, alpha: 0, delay: hold, duration: 300, onComplete: () => root.destroy() });
+    return root;
+  }
+  countdown(n) {
+    const l = this.layout, x = l.desktop ? l.board.x + l.board.w / 2 : 240, y = l.desktop ? l.board.y + l.board.h / 2 : 517;
+    const text = label(this, x, y, String(n), l.desktop ? 120 : 90, '#fff4de', { fontStyle: 'bold', stroke: '#be6649', strokeThickness: 10 }).setDepth(190).setAlpha(0.9);
+    this.game.audio.play(n === 1 ? 'ready' : 'ui', 0.05);
+    if (this.game.save.data.settings.reducedMotion) { this.time.delayedCall(800, () => text.destroy()); return; }
+    text.setScale(1.6); this.tweens.add({ targets: text, scale: 1, alpha: 0, duration: 900, ease: 'Cubic.Out', onComplete: () => text.destroy() });
+  }
   celebrate(x, y, result) {
     this.game.audio.play('success'); this.game.audio.play('money', 0.018);
     this.shopkeeper.drawFace('happy'); this.time.delayedCall(1700, () => this.shopkeeper.drawFace('idle'));
@@ -316,6 +342,7 @@ export class GameScene extends Phaser.Scene {
     if (!this.session || this.paused || this.finishing) return;
     // A stalled frame must never consume a customer's entire patience bar.
     const seconds = Math.min(delta / 1000, 0.1); this.visualTime += seconds * 1000;
+    const before = this.session.elapsed;
     for (const event of this.session.update(seconds)) {
       if (event.type === 'arrived') { this.customerViews.set(event.customer.id, new CustomerView(this, event.customer)); this.game.audio.play('arrive'); if (event.customer.vip) { this.showDialogue(event.customer.type.name, event.customer.type.line); this.particles(240, 175, C.gold, 12); } }
       if (event.type === 'lost') { this.toast(`${event.customer.type.name}: “${event.customer.type.angry}”`); this.game.audio.play('error'); this.shopkeeper.drawFace('angry'); this.time.delayedCall(1500, () => this.shopkeeper.drawFace('idle')); }
@@ -326,8 +353,13 @@ export class GameScene extends Phaser.Scene {
       else view.update(this.visualTime);
     }
     if (this.session.rush && !this.wasRush) this.rushBanner();
-    if (!this.tutorial && !this.closingWarned && this.session.elapsed >= RULES.lastArrival) {
-      this.closingWarned = true; this.toast('09:30 · Quán ngừng đón khách mới. Phục vụ nốt những ly cuối nhé!'); this.game.audio.play('rush');
+    if (!this.tutorial) {
+      for (const milestone of milestonesCrossed(before, this.session.elapsed)) {
+        this.appendToast(milestone.message); this.game.audio.play(milestone.id === 'rushEnd' ? 'done' : 'rush');
+        if (milestone.id === 'closingSoon') this.clockBanner('SẮP ĐÓNG CỬA · 15 GIÂY', C.terra);
+      }
+      const count = finalCountdown(this.session.elapsed);
+      if (count && count !== this.lastCount) { this.lastCount = count; this.countdown(count); }
     }
     this.wasRush = this.session.rush;
     this.game.audio.ambient(seconds, this.session.rush, this.session.event);
@@ -389,7 +421,14 @@ export class GameScene extends Phaser.Scene {
     if (this.finishing) return;
     this.finishing = true; this.drag.cancel();
     const summary = this.session.summary(); this.game.save.completeDay(summary);
-    this.scene.start('Summary', summary);
+    if (this.tutorial) { this.scene.start('Summary', summary); return; }
+    this.hud.update(); // show 10:00 · closed while the banner plays
+    // Settle first (saved), then let the player see the shop close before the summary.
+    const stockout = summary.endReason === 'stockout';
+    this.clockBanner(stockout ? 'HẾT NGUYÊN LIỆU · ĐÓNG CỬA SỚM' : `${clockText(RULES.daySeconds)} · ĐÓNG CỬA!`, stockout ? C.terra : C.gold, 1500);
+    this.toast(stockout ? 'Kho đã cạn, quán nghỉ sớm hôm nay.' : 'Cảm ơn một buổi sáng vất vả! Cùng xem kết quả nhé.');
+    this.game.audio.play('success');
+    this.time.delayedCall(1900, () => this.scene.start('Summary', summary));
   }
 }
 export class TutorialScene extends GameScene {

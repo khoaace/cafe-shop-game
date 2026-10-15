@@ -1,9 +1,11 @@
 import { recipePreview } from '../models/recipePreview.js';
 import { INGREDIENT_DEFINITIONS } from '../data/drinkEngine.js';
 import { mastery } from '../logic/progression.js';
-import { RECIPES, unlockedRecipes, COLORS as C, money } from '../config.js';
+import { RECIPES, unlockedRecipes, COLORS as C, RULES, money, clockText } from '../config.js';
 import { label, round, createCupArt, SERIF } from '../rendering/art.js';
 import { button, wrappedLabel } from './widgets.js';
+import { EVENTS } from '../logic/dayPlan.js';
+import { GAME_MINUTES_PER_SECOND } from '../logic/dayClock.js';
 const capitalize = text => text.charAt(0).toLocaleUpperCase('vi') + text.slice(1);
 export class Overlay {
   constructor(scene, reason) {
@@ -21,7 +23,7 @@ export class Overlay {
     const r = this.bounds; round(bg, r.x, r.y, r.w, r.h, C.cream, 22); this.root.add(bg);
   }
   add(...objects) { this.root.add(objects); return objects[0]; }
-  close() { this.root.destroy(); this.scene.overlay = null; this.scene.setPaused(this.reason, false); }
+  close() { this.root.destroy(); this.scene.overlay = null; this.scene.setPaused(this.reason, false); this.onClose?.(); }
   book(initial = 'den', stationIndex = null) {
     this.recipeId = initial; this.stationIndex = stationIndex;
     if (this.scene.layout?.desktop) { this.desktopBook(initial, stationIndex); return; }
@@ -110,6 +112,42 @@ export class Overlay {
       add(label(scene, r.x + 22, r.y + r.h - 24, 'Quán đang tạm dừng.', 11, '#7b8068').setOrigin(0, 0.5));
     };
     render(initial);
+  }
+  // Shift briefing: the clock waits until the player opens the shop, so the fast day never starts unannounced.
+  intro() {
+    const scene = this.scene, session = scene.session;
+    if (scene.layout?.desktop) {
+      const body = scene.add.container((scene.layout.width - 480) / 2, (scene.layout.height - 800) / 2);
+      this.root.add(body); this.add = (...objects) => { body.add(objects); return objects[0]; };
+    }
+    this.add(label(scene, 240, 146, `NGÀY ${session.day} · CA SÁNG`, 10, '#8c7957', { letterSpacing: 2 }));
+    this.add(label(scene, 240, 180, 'Sẵn sàng mở quán?', 28, '#304d3b', { fontFamily: SERIF }));
+    this.add(wrappedLabel(scene, 240, 226, `Ca ${clockText(0)} → ${clockText(RULES.daySeconds)} chỉ dài ${Math.round(RULES.daySeconds / 60)} phút thật.\nĐồng hồ chạy nhanh: 1 giây ≈ ${GAME_MINUTES_PER_SECOND.toFixed(1).replace('.', ',')} phút trong quán.`, 380, 13, '#5b6a4f'));
+    // Timeline of the shift with the moments that will be announced.
+    const g = scene.add.graphics(); this.add(g);
+    const x0 = 66, x1 = 414, y = 300, at = s => x0 + (x1 - x0) * s / RULES.daySeconds;
+    round(g, x0, y - 4, x1 - x0, 8, 0xd9d2b6, 4);
+    round(g, at(RULES.rushStart), y - 4, at(RULES.rushEnd) - at(RULES.rushStart), 8, C.gold, 2);
+    round(g, at(RULES.lastArrival), y - 4, x1 - at(RULES.lastArrival), 8, 0xd98d6d, 2);
+    const marks = [[0, 'Mở cửa', -1], [RULES.rushStart, 'Cao điểm', 1], [RULES.rushEnd, 'Hết cao điểm', -1], [RULES.lastArrival, 'Ngừng đón khách', 1], [RULES.daySeconds, 'Đóng cửa', -1]];
+    for (const [time, name, side] of marks) {
+      const x = at(time); g.fillStyle(0x304d3b); g.fillCircle(x, y, 4);
+      this.add(label(scene, x, y + side * 17, clockText(time), 10, '#304d3b', { fontStyle: 'bold' }));
+      this.add(label(scene, x, y + side * 31, name, 9, '#7b6a49'));
+    }
+    const goals = session.starGoals.map(goal => `☆ ${goal.label}`).join('\n');
+    this.add(label(scene, 240, 368, 'MỤC TIÊU ★ HÔM NAY', 10, '#8c7957', { letterSpacing: 2 }));
+    this.add(wrappedLabel(scene, 240, 410, goals, 360, 14, '#3f5a43'));
+    const event = EVENTS[session.event];
+    const extra = [event ? `${event.name}: ${event.description}` : null, session.plan?.challenge ? `Thử thách: ${session.plan.challenge.label} · +${money(session.plan.challenge.reward)}` : null].filter(Boolean).join('\n');
+    if (extra) this.add(wrappedLabel(scene, 240, 492, extra, 380, 12, '#875937'));
+    this.add(button(scene, 240, 568, 330, 50, 'Mở cửa · Bắt đầu ca', () => this.close(), { size: 16 }));
+    this.add(wrappedLabel(scene, 240, 630, 'Đồng hồ chỉ chạy khi bạn bắt đầu — chạm bất kỳ đâu.\nCần nghỉ? Bấm Ⅱ để tạm dừng bất cứ lúc nào.', 360, 11, '#7b8068'));
+    // A tap anywhere starts the shift; only the clock waited, nothing else to confirm.
+    // Arm on press so the release of the menu's "Mở quán" tap cannot skip the briefing.
+    const shade = this.root.list[0]; let armed = false;
+    shade.on('pointerdown', () => { armed = true; });
+    shade.on('pointerup', () => { if (armed && this.root.active) this.close(); });
   }
   pause(hidden = false) {
     const scene = this.scene;
