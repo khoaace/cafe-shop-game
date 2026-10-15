@@ -156,7 +156,7 @@ export class GameScene extends Phaser.Scene {
         .resize(l.desktop ? 60 : this.tutorial ? 210 : 108, 28); b.title.setFontSize(l.desktop ? 9 : 10);
     });
     this.hint.setPosition(l.desktop ? l.board.x + (l.board.w - 60) / 2 : 211, l.desktop ? l.board.y + l.board.h - 24 : 613)
-      .setColor(l.desktop ? '#d8dfc4' : '#3e5840').setFontSize(l.desktop ? 14 : 12).setWordWrapWidth(l.desktop ? l.board.w - 100 : 368);
+      .setColor(l.desktop ? '#d8dfc4' : '#3e5840').setWordWrapWidth(l.desktop ? l.board.w - 100 : 368).setText(''); // update() re-applies text and size
     const t = l.trash;
     this.discardArt.setPosition(l.desktop ? t.x + t.w / 2 : 441, l.desktop ? t.y + t.h / 2 : 613).setScale(l.desktop ? 0.7 : 0.58);
     this.trashZone.setPosition(l.desktop ? t.x + t.w / 2 : 441, l.desktop ? t.y + t.h / 2 : 613);
@@ -349,7 +349,8 @@ export class GameScene extends Phaser.Scene {
       const s = this.stations[i], d = s?.model.drink;
       const timer = d?.timedSteps?.size ? [...d.timedSteps].map(id => { const step = RECIPES[d.recipeId].steps.find(s => s.id === id); return Math.ceil(step.target - (d.preparation.steps[id]?.amount || 0)); }).join('/') : null;
       const status = timer ? `${timer}s` : !s ? 'Chưa mua' : !d ? 'Trống' : d.state === 'BREWING' ? `${Math.ceil(RULES.brewSeconds - d.brewElapsed)}s` : d.state === 'BREWED' ? 'Xong ✓' : 'Đang làm';
-      button.title.setText(`P${i + 1} · ${status}`); button.setAlpha(s?.visible ? 1 : 0.65);
+      const short = { 'Chưa mua': '🔒', 'Trống': 'Trống', 'Đang làm': 'Làm', 'Xong ✓': '✓' }[status] ?? status;
+      button.title.setText(this.layout?.desktop ? `P${i + 1} ${short}` : `P${i + 1} · ${status}`); button.setAlpha(s?.visible ? 1 : 0.65);
     });
     if (this.session.challenge.complete && !this.challengeCelebrated) {
       this.challengeCelebrated = true; this.appendToast('Xong thử thách! Thưởng chốt cuối ca.'); this.particles(240, 140, C.gold, 12); this.game.audio.play('combo');
@@ -381,7 +382,8 @@ export class GameScene extends Phaser.Scene {
     }
     const selected = this.stations[this.selectedStation]?.model;
     const fallback = selected?.drink?.nextStep(selected?.modifiers) || 'Kéo ly từ khay lên trạm. Chạm đơn khách để chọn gợi ý.';
-    this.hint.setText(this.liveHint || (this.visualTime < this.toastUntil ? this.toastText : this.layout.desktop ? '' : fallback));
+    const hint = this.liveHint || (this.visualTime < this.toastUntil ? this.toastText : this.layout.desktop ? '' : fallback);
+    if (hint !== this.hint.text) this.hint.setText(hint).setFontSize(this.layout.desktop ? (hint.length > 100 ? 12 : 14) : hint.length > 150 ? 9.5 : hint.length > 95 ? 10.5 : 12);
   }
   finishDay() {
     if (this.finishing) return;
