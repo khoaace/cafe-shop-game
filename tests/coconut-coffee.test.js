@@ -176,6 +176,6 @@ test('existing v3 saves gain the blender and coconut cream defaults without losi
   const save = new SaveManager(memory({ [SAVE_KEY]: JSON.stringify(old) }));
   assert.deepEqual(save.data.upgrades, { phins: 3, seats: 5, premium: true, fan: false, decor: true, blender: false });
   assert.equal(save.data.inventory.cream, 80); assert.equal(save.data.inventory.coconutCream, 240);
-  assert.deepEqual(save.data.mastery, { den: 3, sua: 2, bac: 1, trung: 4, muoi: 7, cotdua: 0 });
+  assert.deepEqual(save.data.mastery, { den: 3, sua: 2, bac: 1, trung: 4, muoi: 7, cotdua: 0, tratac: 0, tradao: 0, travai: 0, cacao: 0, matcha: 0 });
   assert.equal(save.data.balance, 77000); assert.equal(save.data.day, 9);
 });

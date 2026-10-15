@@ -17,16 +17,16 @@ export const INGREDIENT_DEFINITIONS = {
   peach: { name: 'đào', unit: 'miếng', color: 0xf3b875, fruit: true },
   lychee: { name: 'vải', unit: 'quả', color: 0xf6e6d8, fruit: true },
   citrusJuice: { name: 'nước quả', unit: 'ml', color: 0xf5c850, liquid: true },
-  lemongrass: { name: 'sả', unit: 'nhánh', color: 0xb3c477 },
+  orangeJuice: { name: 'nước cam', unit: 'ml', color: 0xf49d37, liquid: true, opacity: 0.85 },
+  peachSyrup: { name: 'siro đào', unit: 'ml', color: 0xe68b44, liquid: true, opacity: 0.78 },
+  lycheeSyrup: { name: 'siro vải', unit: 'ml', color: 0xf0c987, liquid: true, opacity: 0.78 },
+  lemongrass: { name: 'sả', unit: 'nhánh', color: 0xb3c477, placeable: true },
   cacao: { name: 'cacao', unit: 'g', color: 0x673b27 },
   matcha: { name: 'matcha', unit: 'g', color: 0x7d9a45 },
 };
 
 // Planning metadata only: no recipe quantities, unlocks or customer orders yet.
-export const PLANNED_DRINKS = Object.freeze([
-  ['tratac', 'Trà tắc'],
-  ['tradao', 'Trà đào cam sả'], ['travai', 'Trà vải'], ['cacao', 'Cacao sữa đá'], ['matcha', 'Matcha latte đá'],
-].map(([id, name]) => Object.freeze({ id, name, status: 'planned' })));
+export const PLANNED_DRINKS = Object.freeze([].map(([id, name]) => Object.freeze({ id, name, status: 'planned' })));
 
 export const GESTURE_ACTIONS = ['place', 'scoop', 'press', 'pour', 'brew', 'whisk', 'slice', 'squeeze', 'blend', 'lid', 'stir', 'ice', 'garnish'];
 export const DEFAULT_THRESHOLDS = { minimumAmount: 0.45, unexpectedAmount: 0.05, perfectError: 0.12, perfectMaxError: 0.25, goodError: 0.30, goodMaxError: 0.60, perfectTechnique: 0.95, goodTechnique: 0.65 };

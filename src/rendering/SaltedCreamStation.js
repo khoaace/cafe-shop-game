@@ -1,3 +1,4 @@
+import { itemSurface } from './ItemSurface.js';
 import { SaltedCream, CREAM_PERFECT, CREAM_TARGET, SALT_TARGET } from '../models/SaltedCream.js';
 import { button } from '../ui/widgets.js';
 import { toolArt, label, round } from './art.js';
@@ -18,7 +19,7 @@ export class SaltedCreamStation {
     this.root = scene.add.container(0, 0).setDepth(45).setVisible(false);
     this.panel = scene.add.graphics(); this.root.add(this.panel);
     this.bowl = scene.add.container(BOWL.x, BOWL.y).setDepth(100);
-    this.body = scene.add.graphics(); this.bowl.add(this.body); this.root.add(this.bowl);
+    this.body = itemSurface(scene); this.bowl.add(this.body); this.root.add(this.bowl);
     this.chip = label(scene, BOWL.x, 684, '', 9, '#fff4de', { fontStyle: 'bold' });
     this.gauge = scene.add.graphics();
     this.root.add([this.chip, this.gauge]);
@@ -70,7 +71,7 @@ export class SaltedCreamStation {
     this.removers.push(scene.drinkEngine.registerTool('salted-bowl-pour', this.bowl, { action: 'pour', ingredient: 'cream', rate: 18, hitSize: 80, sourceTarget: 'salted-cream-bowl', spout: { x: -44, y: -8 }, pourOffset: { x: 18, y: -78 }, sourceState: () => this.state.whipping >= Math.PI * 0.6 ? this.state : null, emptyHint: 'Kem chưa bông; vẽ vòng tròn trong tô trước khi rót.', canTarget: cupOnly,
       hint: state => `Kem ${(state.amounts.cream || 0).toFixed(0)}/${CREAM_TARGET} ml · rót chậm giữ lớp trắng trên mặt`,
       onPour: () => { scene.game.audio.play('creamPour'); scene.game.audio.play('creamLanding', 0.015); } }));
-    this.reset = button(scene, 182, 758, 88, 20, 'Dọn tô', () => { scene.drag.cancel(); this.state = new SaltedCream(); scene.toast('Đã dọn tô; nguyên liệu đã dùng không hoàn lại.'); }, { size: 9, fill: 0x4c6a5a, color: '#f6efd9', radius: 6 });
+    this.reset = button(scene, 182, 758, 88, 20, 'Dọn tô', () => { scene.drag.cancel(); scene.session.discardSaltedCream(this.state); this.state = new SaltedCream(); scene.toast('Đã dọn tô; nguyên liệu đã dùng không hoàn lại.'); }, { size: 9, fill: 0x4c6a5a, color: '#f6efd9', radius: 6 });
     this.root.add(this.reset);
   }
   setVisible(visible) { this.root.setVisible(visible); this.bowl.setVisible(visible); this.toolObjects.forEach(tool => tool.setVisible(visible)); this.reset.input.enabled = visible; }
@@ -143,16 +144,7 @@ export class SaltedCreamStation {
   drawBowl(time, reduced, perfect, over) {
     const s = this.state, g = this.body, amount = s.amounts.cream || 0, foam = s.foam; g.clear();
     if (perfect) { g.lineStyle(3, 0xbfe59a, 0.35 + (reduced ? 0 : 0.2 * Math.sin(time / 200))); g.strokeEllipse(0, 4, 104, 50); }
-    g.fillStyle(0x142e26, 0.3); g.fillEllipse(0, 25, 82, 12);
-    round(g, -17, 19, 34, 7, 0x3c6758, 3);
-    g.fillStyle(0x3f6b5d); g.fillEllipse(0, 7, 94, 42);
-    g.fillStyle(0x7fae9b); g.fillEllipse(0, 5, 92, 39);
-    g.fillStyle(0xa9cfbf, 0.6); g.fillEllipse(-18, 9, 36, 20);
-    // Hand-painted band, like a Bát Tràng bowl.
-    for (let i = 0; i < 7; i++) { g.fillStyle(0x2f5a4e, 0.55); g.fillCircle(-30 + i * 10, 13 + Math.abs(i - 3) * -0.8, 1.6); }
-    g.fillStyle(0xeef3e6); g.fillEllipse(0, -4, 96, 30);
-    g.fillStyle(0x2f5148); g.fillEllipse(0, -3, 86, 23);
-    g.fillStyle(0x557a6c); g.fillEllipse(0, -1, 80, 18);
+    g.item('mixing-bowl', 0, 6, 96, 49);
     if (amount > 0) {
       const fill = Math.min(1, amount / 40), color = (255 << 16) | (Math.round(239 + 16 * foam) << 8) | Math.round(221 + 34 * foam);
       const level = -1 - fill * (2 + foam * 7), width = 64 + fill * 16;
@@ -165,8 +157,6 @@ export class SaltedCreamStation {
       if (over) { g.fillStyle(0xd9cdb0); for (let i = 0; i < 5; i++) g.fillCircle(-22 + i * 11, level + 1, 2.6); }
       if ((s.amounts.salt || 0) > 0) for (let i = 0; i < Math.min(8, Math.round(s.amounts.salt / 0.05)); i++) { g.fillStyle(0xf4f7ff, 0.9); g.fillRect(-12 + i * 7 % 26, level - 2 + i * 5 % 6, 1.6, 1.6); }
     }
-    g.lineStyle(2, 0xf8f8ec, 0.95); g.strokeEllipse(0, -4, 94, 29);
-    g.lineStyle(1.5, 0xc3dfc9, 0.6); g.beginPath(); g.moveTo(-36, 12); g.lineTo(-24, 18); g.lineTo(-10, 21); g.strokePath();
   }
   drawMeter(s, whisking, pulse) {
     const g = this.gauge; g.clear();

@@ -19,7 +19,7 @@ const fixture = () => ({ id: 'fixture', name: 'Ly kiểm tra', price: 10000, equ
   steps: [{ id: 'fill', action: 'pour', ingredient: 'milk', target: 1, instruction: 'Rót sữa.' }, { id: 'mix', action: 'stir', target: 10, after: ['fill'], instruction: 'Khuấy.' }] });
 
 test('planned drinks are metadata only; schema rejects units and invalid dependencies', () => {
-  assert.equal(PLANNED_DRINKS.length, 5);
+  assert.equal(PLANNED_DRINKS.length, 0);
   for (const planned of PLANNED_DRINKS) assert.equal(RECIPES[planned.id], undefined);
   const bad = fixture(); bad.ingredients[0].unit = 'ml'; assert.throws(() => defineRecipe(bad));
   const dependency = fixture(); dependency.steps[0].after = ['mix']; assert.throws(() => defineRecipe(dependency));
@@ -132,6 +132,19 @@ test('router owns separate pointers/stations without listeners; cancellation ret
   scene.drag = { active: { source: { model: { id: 'a' } }, x: 400, y: 400 } };
   assert.equal(engine.targetAt({ x: 100, y: 100 }, engine.tools.get('first')), undefined, 'Carried cups cannot receive ingredients at an empty coaster'); scene.drag.active = null;
   carrier.parentContainer = { visible: false, active: true }; assert.equal(engine.down(pointer(5, 80, 0)), false, 'Hidden ancestor tools cannot steal input');
+  // A non-fruit preparation ingredient must reach the same board placement route.
+  const { TraDaoPrep } = await import('../src/models/TraDaoPrep.js');
+  const prep = new TraDaoPrep(), session = new DaySession(4);
+  const stockBefore = session.inventory.lemongrass;
+  engine.registerTarget('lemongrass-board', { accepts: ['place'], getState: () => prep,
+    center: () => ({ x: 400, y: 100 }), contains: (x, y) => Math.abs(x - 400) < 30 && Math.abs(y - 100) < 30,
+    takeIngredient: () => session.stageLemongrass(prep) });
+  engine.registerTool('lemongrass-stalk', tool(300, 0), { action: 'place', ingredient: 'lemongrass' });
+  engine.down(pointer(6, 300, 0)); engine.move(pointer(6, 400, 100)); engine.cancel();
+  assert.equal(prep.lemongrassOnBoard, false, 'Cancelled stalk placement leaves the board empty');
+  engine.down(pointer(6, 300, 0)); engine.move(pointer(6, 400, 100)); engine.up(pointer(6, 400, 100));
+  assert.equal(prep.lemongrassOnBoard, true, 'Dropping the stalk stages it for rolling');
+  assert.equal(session.inventory.lemongrass, stockBefore, 'Staging charges no stock before the roll gesture');
   engine.destroy();
 });
 

@@ -1,3 +1,4 @@
+import { itemSurface } from './ItemSurface.js';
 import { CoconutBlend, BLEND, BLEND_STAGES, COCONUT_TARGET, CONDENSED_ML, ICE_SCOOP, ICE_GRAMS } from '../models/CoconutBlend.js';
 import { button } from '../ui/widgets.js';
 import { toolArt, label, round, line } from './art.js';
@@ -23,7 +24,7 @@ export class CoconutBlenderStation {
     this.speed = 0; this.bladeAngle = 0; this.motorUntil = 0; this.lastTime = null; this.announced = '';
     const engine = scene.drinkEngine;
     this.root = scene.add.container(0, 0).setDepth(45).setVisible(false);
-    this.panel = scene.add.graphics(); this.base = scene.add.graphics(); this.gauge = scene.add.graphics();
+    this.panel = scene.add.graphics(); this.base = itemSurface(scene); this.gauge = scene.add.graphics();
     this.root.add([this.panel, this.base, this.gauge]);
     this.chip = label(scene, 150, 684, '', 9, '#fff4de', { fontStyle: 'bold' });
     this.stageText = label(scene, METER.x + METER.w, 774, '', 9, '#e9e4c7', { fontStyle: 'bold' }).setOrigin(1, 0.5);
@@ -32,8 +33,8 @@ export class CoconutBlenderStation {
     this.root.add([this.chip, this.stageText, this.meterName, this.locked]);
     // Switch, lid and jar draw above the panel so the jar can be carried over the cups.
     this.switch = scene.add.container(SWITCH.x, SWITCH.y); this.switchArt = scene.add.graphics(); this.switch.add(this.switchArt);
-    this.jar = scene.add.container(SHELF.x, SHELF.y); this.jarArt = scene.add.graphics(); this.jar.add(this.jarArt);
-    this.lid = scene.add.container(LID_HOME.x, LID_HOME.y); this.lidArt = scene.add.graphics(); this.lid.add(this.lidArt); this.drawLid();
+    this.jar = scene.add.container(SHELF.x, SHELF.y); this.jarArt = itemSurface(scene); this.jar.add(this.jarArt);
+    this.lid = scene.add.container(LID_HOME.x, LID_HOME.y); this.lidArt = itemSurface(scene); this.lid.add(this.lidArt); this.drawLid();
     this.root.add([this.switch, this.jar, this.lid]);
 
     const jarOnly = t => t.id === 'coconut-blender';
@@ -216,13 +217,8 @@ export class CoconutBlenderStation {
   }
   drawBase(time, running, pulse, highlight) {
     const g = this.base; g.clear();
-    g.fillStyle(0x122f29, 0.35); g.fillEllipse(DOCK.x, 792, 70, 8);
-    round(g, DOCK.x - 31, 752, 62, 39, 0x23403a, 9);
-    round(g, DOCK.x - 29, 753, 58, 35, 0x8fa9a0, 8);
-    round(g, DOCK.x - 26, 755, 10, 30, 0xc4d6ce, 4);
-    round(g, DOCK.x - 22, 748, 44, 8, 0x2b4741, 3); // Coupling plate the jar locks onto.
-    g.fillStyle(running ? 0x9fe07c : 0x5a6e66); g.fillCircle(DOCK.x + 20, 760, 2.6);
-    if (running) { g.fillStyle(0x9fe07c, 0.3); g.fillCircle(DOCK.x + 20, 760, 5); }
+    g.item('blender-base', DOCK.x, 770, 64, 44);
+    if (running) { g.fillStyle(0x9fe07c, 0.6); g.fillCircle(DOCK.x + 20, 760, 2.6); }
     const sw = this.switchArt; sw.clear();
     if (highlight) { sw.lineStyle(2, 0xe8b46b, pulse); sw.strokeCircle(0, 0, 15); }
     sw.fillStyle(0x1d3530); sw.fillCircle(0, 1, 11);
@@ -239,8 +235,6 @@ export class CoconutBlenderStation {
     }
     const h = this.fillHeight(), top = 26 - h, crush = s.crush || 0, blendT = s.blendTime;
     const over = s.stage === 'OVERBLENDED' && blendT > 0;
-    // Collar and blade assembly.
-    round(g, -19, 24, 38, 10, 0x2f4a44, 3); round(g, -17, 25, 34, 4, 0x6d8780, 2);
     if (h > 0.5) {
       const poly = (y0, y1) => [{ x: -halfWidth(y0), y: y0 }, { x: halfWidth(y0), y: y0 }, { x: halfWidth(y1), y: y1 }, { x: -halfWidth(y1), y: y1 }];
       const fresh = 0xfff8ec, slush = over ? 0xe9e3d3 : 0xf3e9d6;
@@ -296,21 +290,12 @@ export class CoconutBlenderStation {
       line(g, [[-Math.cos(a) * 12, bladeY - Math.sin(a) * 2.5 + (i ? -1 : 1)], [Math.cos(a) * 12, bladeY + Math.sin(a) * 2.5 + (i ? -1 : 1)]], 0x6f8780, 2.2, speed > 0.35 ? 0.5 : 1);
     }
     g.fillStyle(0x4b625c); g.fillCircle(0, bladeY, 2.5);
-    // Clear tapered jar, measuring marks, handle and spout.
-    const outline = [{ x: -25, y: -32 }, { x: 25, y: -32 }, { x: 19, y: 26 }, { x: -19, y: 26 }];
-    g.fillStyle(0xd6ece3, 0.12); g.fillPoints(outline, true);
-    g.lineStyle(1.8, 0x5d8a80, 0.95); g.strokePoints(outline, true);
-    g.lineStyle(1, 0xffffff, 0.35); g.beginPath(); g.moveTo(-19, -26); g.lineTo(-15, 20); g.strokePath();
-    for (const [ml, y] of [[100, 26 - 100 * 0.27], [200, 26 - 200 * 0.27]]) { g.lineStyle(1, 0x5d8a80, 0.8); g.beginPath(); g.moveTo(halfWidth(y) - 7, y); g.lineTo(halfWidth(y) - 1, y); g.strokePath(); if (ml === 200) { g.lineStyle(1, 0x5d8a80, 0.5); g.beginPath(); g.moveTo(halfWidth(y) - 5, y + 6.75); g.lineTo(halfWidth(y) - 1, y + 6.75); g.strokePath(); } }
-    g.lineStyle(4, 0x3f6b62); g.strokeRoundedRect(23, -22, 11, 34, 4);
-    g.lineStyle(1.5, 0xc4dbcc, 0.8); g.strokeRoundedRect(24, -21, 9, 32, 3);
-    g.fillStyle(0xd6ece3, 0.5); g.fillTriangle(-25, -32, -31, -36, -22, -28);
+    // Transparent foreground leaves the measured contents and moving blades visible.
+    g.item('blender-jar', 3, -1, 67, 74, 'jar', { front: true });
   }
   drawLid() {
-    const g = this.lidArt; g.clear();
-    g.fillStyle(0x122f29, 0.2); g.fillEllipse(1, 6, 52, 8);
-    round(g, -27, -5, 54, 10, 0x2f5240, 4); round(g, -25, -5, 50, 6, 0x3f6b52, 3);
-    round(g, -7, -11, 14, 7, 0x2a4a3a, 3); g.fillStyle(0xffffff, 0.2); g.fillRect(-22, -4, 16, 1.5);
+    this.lidArt.clear();
+    this.lidArt.item('blender-lid', 0, -4, 54, 19);
   }
   drawMeter(s, running, pulse) {
     const g = this.gauge; g.clear();

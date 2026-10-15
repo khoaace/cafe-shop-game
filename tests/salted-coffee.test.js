@@ -24,7 +24,7 @@ const ready = (salt, movement, water, portion = 100) => {
 };
 
 test('only salted coffee is implemented; unlock and pantry block random locked or unavailable orders', () => {
-  assert.equal(RECIPES.muoi.price, 22000); assert.equal(Object.keys(RECIPES).length, 6);
+  assert.equal(RECIPES.muoi.price, 22000); assert.equal(Object.keys(RECIPES).length, 11);
   assert.ok(!unlockedRecipes(3).includes('muoi')); assert.ok(unlockedRecipes(4).includes('muoi'));
   assert.ok(canPrepareRecipe(INITIAL_INVENTORY, 'muoi'));
   assert.equal(canPrepareRecipe({ ...INITIAL_INVENTORY, salt: 0 }, 'muoi'), false);

@@ -9,14 +9,21 @@ export class Overlay {
     this.scene = scene; this.reason = reason;
     scene.setPaused(reason, true);
     this.root = scene.add.container(0, 0).setDepth(300);
-    const shade = scene.add.rectangle(240, 400, 480, 800, C.dark, 0.75).setInteractive();
+    const l = scene.layout || { width: 480, height: 800 };
+    const shade = scene.add.rectangle(l.width / 2, l.height / 2, l.width, l.height, C.dark, 0.75).setInteractive();
     shade.on('pointerdown', (p, x, y, event) => event.stopPropagation());
     this.root.add(shade);
-    const bg = scene.add.graphics(); round(bg, 24, 113, 432, 581, C.cream, 22); this.root.add(bg);
+    const bg = scene.add.graphics();
+    this.bounds = l.desktop ? { x: (l.width - Math.min(1060, l.width - 64)) / 2, y: 24, w: Math.min(1060, l.width - 64), h: Math.min(720, l.height - 48) } : { x: 24, y: 113, w: 432, h: 581 };
+    if (l.desktop && reason !== 'book') { this.bounds.w = Math.min(540, l.width - 64); this.bounds.h = Math.min(620, l.height - 48); this.bounds.x = (l.width - this.bounds.w) / 2; }
+    this.bounds.y = l.desktop ? (l.height - this.bounds.h) / 2 : 113;
+    const r = this.bounds; round(bg, r.x, r.y, r.w, r.h, C.cream, 22); this.root.add(bg);
   }
   add(...objects) { this.root.add(objects); return objects[0]; }
   close() { this.root.destroy(); this.scene.overlay = null; this.scene.setPaused(this.reason, false); }
   book(initial = 'den', stationIndex = null) {
+    this.recipeId = initial; this.stationIndex = stationIndex;
+    if (this.scene.layout?.desktop) { this.desktopBook(initial, stationIndex); return; }
     const scene = this.scene;
     this.add(label(scene, 52, 147, 'SỔ TAY CỦA QUÁN', 10, '#8c7957', { letterSpacing: 2 }).setOrigin(0, 0.5));
     this.add(button(scene, 419, 145, 42, 38, '×', () => this.close(), { fill: C.paper, color: '#425744', size: 24 }));
@@ -26,6 +33,7 @@ export class Overlay {
     const render = id => {
       if (guideId !== id) { guidePage = 0; guideId = id; }
       this.content.removeAll(true);
+      this.recipeId = id;
       const recipe = RECIPES[id];
       const page = (obj) => { this.content.add(obj); return obj; };
       const recipes = Object.values(RECIPES), selectedPage = Math.floor(recipes.findIndex(r => r.id === id) / 4);
@@ -63,8 +71,49 @@ export class Overlay {
     };
     render(initial);
   }
+  desktopBook(initial, stationIndex) {
+    const scene = this.scene, r = this.bounds, unlocked = unlockedRecipes(scene.session.day, scene.session.upgrades);
+    this.add(label(scene, r.x + 26, r.y + 28, 'SỔ CÔNG THỨC', 16, '#6b7055', { fontStyle: 'bold', letterSpacing: 2 }).setOrigin(0, 0.5));
+    this.add(button(scene, r.x + r.w - 32, r.y + 29, 40, 36, '×', () => this.close(), { fill: C.paper, color: '#425744', size: 24 }));
+    this.content = scene.add.container(); this.root.add(this.content);
+    const recipes = Object.values(RECIPES), listW = 215;
+    const render = id => {
+      this.recipeId = id; this.content.removeAll(true);
+      const add = object => { this.content.add(object); return object; }, recipe = RECIPES[id];
+      const rowH = Math.min(46, (r.h - 110) / recipes.length);
+      recipes.forEach((item, i) => add(button(scene, r.x + 20 + listW / 2, r.y + 70 + i * rowH, listW, rowH - 5, `${unlocked.includes(item.id) ? '' : '🔒 '}${item.short}`, () => render(item.id), { fill: item.id === id ? C.green : C.paper, color: item.id === id ? '#fff4de' : '#4a604c', size: 14, radius: 8 })));
+      const left = r.x + listW + 52, width = r.w - listW - 80;
+      add(label(scene, left, r.y + 76, recipe.name, 25, '#304d3b', { fontFamily: SERIF }).setOrigin(0, 0.5));
+      add(label(scene, left, r.y + 108, `${money(recipe.price)} · ${mastery(scene.game.save.data.mastery[id])}`, 14, '#a46a3d').setOrigin(0, 0.5));
+      add(createCupArt(scene, recipePreview(recipe), left + 85, r.y + 214, 1.45));
+      const ingredients = recipe.ingredients.map(i => `${INGREDIENT_DEFINITIONS[i.id].name}: ${i.label || `${i.target} ${i.unit}`}`).join('\n');
+      add(label(scene, left + 185, r.y + 145, 'ĐỊNH LƯỢNG', 14, '#526b50', { fontStyle: 'bold' }).setOrigin(0, 0));
+      add(label(scene, left + 185, r.y + 172, ingredients, 14, '#56644c', { wordWrap: { width: width - 185 }, lineSpacing: 5 }).setOrigin(0, 0));
+      add(label(scene, left, r.y + 310, 'CÁCH PHA', 14, '#526b50', { fontStyle: 'bold' }).setOrigin(0, 0));
+      const colW = (width - 20) / 2, split = Math.ceil(recipe.steps.length / 2);
+      for (let col = 0; col < 2; col++) {
+        const steps = recipe.steps.slice(col * split, (col + 1) * split).map((step, i) => `${col * split + i + 1}. ${step.instruction}`).join('\n\n');
+        add(label(scene, left + col * (colW + 20), r.y + 338, steps, 14, '#56644c', { wordWrap: { width: colW }, lineSpacing: 4 }).setOrigin(0, 0));
+      }
+      const available = unlocked.includes(id);
+      add(button(scene, left + width / 2, r.y + r.h - 48, Math.min(420, width), 42, !available ? `Chưa mở · từ ngày ${recipe.unlock.day || 1}` : stationIndex !== null ? `Dùng cho trạm ${stationIndex + 1}` : 'Về bàn pha', () => {
+        if (!available) return;
+        if (stationIndex !== null) {
+          if (!scene.stations[stationIndex].model.chooseRecipe(id)) { scene.toast('Dọn ly cũ trước khi đổi loại dụng cụ.'); return; }
+          scene.selectedStation = stationIndex;
+        }
+        this.close();
+      }, { size: 15 }));
+      add(label(scene, r.x + 22, r.y + r.h - 24, 'Quán đang tạm dừng.', 11, '#7b8068').setOrigin(0, 0.5));
+    };
+    render(initial);
+  }
   pause(hidden = false) {
     const scene = this.scene;
+    if (scene.layout?.desktop) {
+      const body = scene.add.container((scene.layout.width - 480) / 2, (scene.layout.height - 800) / 2);
+      this.root.add(body); this.add = (...objects) => { body.add(objects); return objects[0]; };
+    }
     this.add(label(scene, 240, 175, hidden ? 'Mừng bạn trở lại.' : 'Nghỉ một chút nhé.', 29, '#304d3b', { fontFamily: SERIF }));
     this.add(wrappedLabel(scene, 240, 241, 'Quán đang tạm nghỉ. Khách sẽ chờ, cà phê cũng vậy.', 330, 16));
     this.add(button(scene, 240, 312, 330, 49, 'Tiếp tục buổi sáng', () => this.close()));

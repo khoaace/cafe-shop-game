@@ -1,0 +1,146 @@
+{
+  "result": "PASS",
+  "rows": [
+    {
+      "cycle": 0,
+      "game": {
+        "itemSprites": 20,
+        "textures": 248,
+        "displayObjects": 514,
+        "objects": 56,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 49,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "menu": {
+        "itemSprites": 0,
+        "textures": 82,
+        "displayObjects": 81,
+        "objects": 23,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 52,
+        "inputListeners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scaleListeners": 9
+      }
+    },
+    {
+      "cycle": 1,
+      "game": {
+        "itemSprites": 20,
+        "textures": 248,
+        "displayObjects": 514,
+        "objects": 56,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 56,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "menu": {
+        "itemSprites": 0,
+        "textures": 82,
+        "displayObjects": 81,
+        "objects": 23,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 56,
+        "inputListeners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scaleListeners": 9
+      }
+    },
+    {
+      "cycle": 2,
+      "game": {
+        "itemSprites": 20,
+        "textures": 248,
+        "displayObjects": 514,
+        "objects": 56,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 60,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "menu": {
+        "itemSprites": 0,
+        "textures": 82,
+        "displayObjects": 81,
+        "objects": 23,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 60,
+        "inputListeners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scaleListeners": 9
+      }
+    },
+    {
+      "cycle": 3,
+      "game": {
+        "itemSprites": 20,
+        "textures": 248,
+        "displayObjects": 514,
+        "objects": 56,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 62,
+        "inputListeners": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scaleListeners": 10
+      },
+      "menu": {
+        "itemSprites": 0,
+        "textures": 82,
+        "displayObjects": 81,
+        "objects": 23,
+        "tweens": 0,
+        "timers": 0,
+        "fps": 62,
+        "inputListeners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "scaleListeners": 9
+      }
+    }
+  ],
+  "errors": []
+}

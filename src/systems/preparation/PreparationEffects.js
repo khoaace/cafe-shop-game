@@ -11,6 +11,7 @@ export class PreparationEffects {
   }
   particles(x, y, color, count = 6) {
     if (this.reduced) return;
+    if (this.layoutSpace && x <= this.layoutSpace.width && y >= 674) { const p = this.layoutSpace.toWorld({ x, y }); x = p.x; y = p.y; }
     for (let i = 0; i < Math.min(12, count); i++) {
       const p = this.acquire(x, y, color); if (!p) break;
       this.scene.tweens.add({ targets: p, x: x + Math.cos(i * 2.4) * 23, y: y + Math.sin(i * 2.4) * 18 - 8, alpha: 0, scale: 0.2, duration: 350 + i * 20, onComplete: () => p.setVisible(false) });

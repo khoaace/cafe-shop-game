@@ -13,7 +13,14 @@ export function button(scene, x, y, width, height, title, action, options = {}) 
   root.on('pointerdown', (pointer, lx, ly, event) => { event.stopPropagation(); scene.game.audio.unlock(); scene.game.audio.play('ui'); action(); });
   root.on('pointerover', () => bg.setAlpha(0.87)); root.on('pointerout', () => bg.setAlpha(1));
   root.input.cursor = 'pointer';
-  root.title = text; return root;
+  root.title = text;
+  root.resize = (w, h) => {
+    root.setSize(w, h); root.input.hitArea.setTo(0, (h - Math.max(44, h)) / 2, w, Math.max(44, h));
+    bg.clear(); round(bg, -w / 2, -h / 2 + 3, w, h, 0x102e22, options.radius ?? 10, 0.13);
+    round(bg, -w / 2, -h / 2, w, h, options.fill ?? C.dark, options.radius ?? 10);
+    return root;
+  };
+  return root;
 }
 export function announce(text) {
   const node = document.getElementById('accessible-status'); if (node) node.textContent = text;

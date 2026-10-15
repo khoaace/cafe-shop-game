@@ -19,16 +19,21 @@ export class SummaryScene extends Phaser.Scene {
     round(g, 29, 185, 422, 476, C.cream, 20);
     label(this, 240, 225, r.tutorial ? 'TIỀN THƯỞNG LUYỆN TẬP' : 'TIỀN THU TRONG CA', 10, '#8e815d', { letterSpacing: 2 });
     label(this, 240, 271, money(r.earnings), 43, '#31523e', { fontFamily: SERIF, fontStyle: 'bold' });
+    const ingredientCost = r.ingredientCost ?? r.ingredients?.cost ?? 0;
+    const wasteCost = r.wasteCost ?? r.ingredients?.wasteCost ?? 0;
+    const grossProfit = r.grossProfit ?? (r.earnings - ingredientCost);
     const rows = [
       ['Tiền bán cà phê', money(r.revenue)], ['Khách gửi thêm', money(r.tips)], ['Thưởng combo / VIP / thử thách', money(r.bonuses + (r.challengeReward || 0))],
-      ['Giá trị nguyên liệu đã dùng', `${money(r.ingredientCost || r.ingredients?.cost || 0)}${r.ingredients?.wasteCost ? ` · bỏ ${money(r.ingredients.wasteCost)}` : ''}`], ['Khách vui / khách bỏ về', `${r.served} / ${r.lost}`], ['Ly Perfect / combo tốt nhất', `${r.perfect} / ×${r.bestCombo}`],
+      ['Giá trị nguyên liệu đã dùng', `${money(ingredientCost)}${wasteCost ? ` · bỏ ${money(wasteCost)}` : ''}`],
+      ['Lợi nhuận gộp trong ca', money(grossProfit)],
+      ['Khách vui / khách bỏ về', `${r.served} / ${r.lost}`], ['Ly Perfect / combo tốt nhất', `${r.perfect} / ×${r.bestCombo}`],
       ['Đánh giá trong ngày', r.ratings.length ? `${r.rating.toFixed(1)} / 5 ★` : 'Chưa có đánh giá'],
     ];
     for (let i = 0; i < rows.length; i++) {
-      const y = 318 + i * 31;
+      const y = 312 + i * 27;
       label(this, 55, y, rows[i][0], 13, '#6a735a').setOrigin(0, 0.5);
       label(this, 424, y, rows[i][1], 14, '#334d39', { fontStyle: 'bold' }).setOrigin(1, 0.5);
-      if (i < rows.length - 1) { g.lineStyle(1, 0xe6ddc1); g.lineBetween(55, y + 15, 425, y + 15); }
+      if (i < rows.length - 1) { g.lineStyle(1, 0xe6ddc1); g.lineBetween(55, y + 13, 425, y + 13); }
     }
     wrappedLabel(this, 240, 565, `“${r.review}”`, 345, 17, '#8e633f', { fontFamily: SERIF, fontStyle: 'italic' });
     if (r.challengeReward) label(this, 240, 604, `✓ Thử thách hoàn thành · +${money(r.challengeReward)}`, 12, '#5d7b46', { fontStyle: 'bold' });

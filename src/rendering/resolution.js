@@ -10,3 +10,6 @@ export function renderFactor(width, height, dpr = 1, maxDimension = 4096) {
 export function pointerToWorld(pointer, camera, out = {}) {
   return camera.getWorldPoint(pointer.x, pointer.y, out);
 }
+export function desktopRenderFactor(width, height, dpr = 1, maxDimension = 4096) {
+  return Math.min(2, Math.max(1, dpr || 1), maxDimension / Math.max(1, width, height));
+}

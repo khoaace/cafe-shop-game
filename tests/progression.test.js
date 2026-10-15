@@ -18,7 +18,7 @@ test('v1 migrates once, preserves economy and two phins without inventing recipe
   const old = { version: 1, day: 7, balance: 123456, ratingSum: 81, ratingCount: 20, tutorialDone: true, stats: { served: 33, perfect: 12, bestCombo: 8, lifetimeRevenue: 345000, bestDay: 85000 }, settings: { sound: false } };
   const storage = memory({ [LEGACY_KEY]: JSON.stringify(old) }), save = new SaveManager(storage);
   assert.equal(save.data.version, 3); assert.equal(save.data.upgrades.phins, 2); assert.equal(save.data.day, 7); assert.equal(save.data.balance, 123456); assert.equal(save.data.stats.served, 33);
-  assert.deepEqual(Object.values(save.data.mastery), [0, 0, 0, 0, 0, 0]); assert.ok(storage.map.has(LEGACY_KEY)); assert.ok(storage.map.has(SAVE_KEY));
+  assert.deepEqual(Object.values(save.data.mastery), [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); assert.ok(storage.map.has(LEGACY_KEY)); assert.ok(storage.map.has(SAVE_KEY));
   assert.equal(new SaveManager(storage).data.balance, 123456); assert.equal(storage.writes, 1);
 });
 test('failed migration keeps v1 intact and remains playable in memory', () => { const storage = memory({ [LEGACY_KEY]: JSON.stringify({ version: 1, balance: 42000 }) }); storage.setItem = () => { throw Error('quota'); }; const save = new SaveManager(storage); assert.equal(save.data.balance, 42000); assert.equal(save.available, false); assert.ok(storage.map.has(LEGACY_KEY)); });

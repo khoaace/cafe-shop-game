@@ -3,7 +3,7 @@ import { COLORS as C, money } from '../config.js';
 import { label, round, toolArt, stool, plant, fanArt, SERIF } from '../rendering/art.js';
 import { button, wrappedLabel } from '../ui/widgets.js';
 import { UPGRADES, quoteUpgrade } from '../logic/upgrades.js';
-import { INGREDIENTS, inventoryShortage } from '../logic/inventory.js';
+import { INGREDIENTS, inventoryShortage, standardServingsAvailable } from '../logic/inventory.js';
 
 const amountText = value => Number.isInteger(value) ? String(value) : value.toFixed(1);
 
@@ -71,9 +71,16 @@ export class ShopScene extends Phaser.Scene {
     this.supplyPage = Math.min(this.supplyPage, Math.ceil(supplies.length / 5) - 1);
     supplies.slice(this.supplyPage * 5, this.supplyPage * 5 + 5).forEach(([id, spec], i) => {
       const y = 230 + i * 77; this.card(y);
+      const stock = d.inventory[id] || 0;
+      const servings = standardServingsAvailable(d.inventory, id);
+      const target = plan.target?.[id] || 1;
+      const low = stock + 1e-9 < target;
+      const out = servings < 1;
+      const badge = out ? ' · HẾT HÀNG' : low ? ' · SẮP HẾT' : '';
       const icon = toolArt(this, spec.icon, 61, y + 2).setScale(id === 'ice' ? 0.64 : 0.7); this.cards.add(icon);
-      this.cards.add(label(this, 98, y - 13, spec.name, 14, '#304d3b', { fontStyle: 'bold' }).setOrigin(0, 0.5));
-      this.cards.add(label(this, 98, y + 12, `Còn ${amountText(d.inventory[id])} ${spec.unit} · Gói +${spec.pack}`, 10, d.inventory[id] < 1 ? '#a4513e' : '#737557').setOrigin(0, 0.5));
+      this.cards.add(label(this, 98, y - 14, `${spec.name}${badge}`, 13, out ? '#a4513e' : '#304d3b', { fontStyle: 'bold' }).setOrigin(0, 0.5));
+      this.cards.add(label(this, 98, y + 4, `Còn ${amountText(stock)} ${spec.unit} (~${servings} ly) · Gói +${spec.pack}`, 9.5, out ? '#a4513e' : low ? '#9b6b2f' : '#737557').setOrigin(0, 0.5));
+      this.cards.add(label(this, 98, y + 19, `Gợi ý ca tới: ≥ ${amountText(target)} ${spec.unit}`, 8.5, low ? '#a4513e' : '#7d8568').setOrigin(0, 0.5));
       const buy = button(this, 389, y + 3, 112, 49, `${money(spec.price)}\nNhập 1 gói`, () => {
         buy.input.enabled = false;
         const result = this.game.save.purchaseIngredient(id, d.inventory[id]); this.message.setText(result.message);

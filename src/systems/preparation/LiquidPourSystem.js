@@ -26,7 +26,7 @@ export class LiquidPourSystem {
     if (!total) return 0;
     const ratio = Math.min(1, requested / total);
     const mixture = Object.fromEntries(Object.entries(source.amounts).map(([id, n]) => [id, n * ratio]));
-    const accepted = Math.max(0, Math.min(1, accept(mixture, source.consistency || source.foam || 0)));
+    const accepted = Math.max(0, Math.min(1, accept(mixture, source.consistency || source.foam || 0, source)));
     let amount = 0; for (const [id, n] of Object.entries(mixture)) amount += source.remove(id, n * accepted);
     return amount;
   }

@@ -32,4 +32,15 @@ export class SaltedCream extends PreparationState {
     this.steps.whisk = { amount: this.whipping, technique: this.consistency };
   }
   get salty() { return (this.amounts.salt || 0) / (this.amounts.cream || 1) > SALT_TARGET / CREAM_TARGET * 1.35; }
+  stock() {
+    return {
+      cream: this.amounts.cream > 0 ? this.amounts.cream : 0,
+      salt: this.amounts.salt > 0 ? this.amounts.salt : 0,
+    };
+  }
+  clear() {
+    this.amounts = {}; this.layers = []; this.steps = {};
+    this.whipping = 0; this.foam = 0; this.consistency = 0; this.stage = 'LIQUID';
+    this.perfectAnnounced = false; this.revision++;
+  }
 }

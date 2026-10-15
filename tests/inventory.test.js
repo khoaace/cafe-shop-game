@@ -19,22 +19,22 @@ function waiting(session) {
 }
 
 test('ingredient definitions match all four recipes and fixed pack values', () => {
-  assert.deepEqual(recipeNeeds('den'), { coffee: 1, condensed: 0, milk: 0, egg: 0, ice: 1, cream: 0, salt: 0, coconutCream: 0 });
-  assert.deepEqual(recipeNeeds('sua'), { coffee: 1, condensed: 1, milk: 0, egg: 0, ice: 1, cream: 0, salt: 0, coconutCream: 0 });
-  assert.deepEqual(recipeNeeds('bac'), { coffee: 0.5, condensed: 1, milk: 2, egg: 0, ice: 1, cream: 0, salt: 0, coconutCream: 0 });
-  assert.deepEqual(recipeNeeds('trung'), { coffee: 1, condensed: 0, milk: 0, egg: 1, ice: 0, cream: 0, salt: 0, coconutCream: 0 });
+  assert.deepEqual(recipeNeeds('den'), { coffee: 1, condensed: 0, milk: 0, egg: 0, ice: 1, cream: 0, salt: 0, coconutCream: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 });
+  assert.deepEqual(recipeNeeds('sua'), { coffee: 1, condensed: 1, milk: 0, egg: 0, ice: 1, cream: 0, salt: 0, coconutCream: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 });
+  assert.deepEqual(recipeNeeds('bac'), { coffee: 0.5, condensed: 1, milk: 2, egg: 0, ice: 1, cream: 0, salt: 0, coconutCream: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 });
+  assert.deepEqual(recipeNeeds('trung'), { coffee: 1, condensed: 0, milk: 0, egg: 1, ice: 0, cream: 0, salt: 0, coconutCream: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 });
   assert.deepEqual(Object.fromEntries(Object.entries(INGREDIENTS).map(([id, item]) => [id, [item.pack, item.price]])), {
-    coffee: [10, 20000], condensed: [8, 12000], milk: [10, 15000], egg: [6, 15000], ice: [12, 6000], cream: [240, 24000], salt: [6, 2000], coconutCream: [400, 28000],
+    coffee: [10, 20000], condensed: [8, 12000], milk: [10, 15000], egg: [6, 15000], ice: [12, 6000], cream: [240, 24000], salt: [6, 2000], coconutCream: [400, 28000], tea: [600, 12000], kumquat: [10, 10000], syrup: [150, 10000], peach: [2, 16000], orange: [6, 15000], lemongrass: [8, 8000], peachSyrup: [160, 16000], lychee: [2, 16000], lycheeSyrup: [160, 16000], cacao: [120, 18000], matcha: [40, 28000],
   });
 });
 
 test('inventory normalization supplies safe defaults and clamps corrupt quantities', () => {
   assert.deepEqual(normalizeInventory(), INITIAL_INVENTORY);
-  assert.deepEqual(normalizeInventory({ coffee: 2000, condensed: -4, milk: 2.34567, egg: NaN, ice: 3 }), { coffee: 999, condensed: 0, milk: 2.346, egg: 0, ice: 3, cream: 240, salt: 3, coconutCream: 240 });
+  assert.deepEqual(normalizeInventory({ coffee: 2000, condensed: -4, milk: 2.34567, egg: NaN, ice: 3 }), { coffee: 999, condensed: 0, milk: 2.346, egg: 0, ice: 3, cream: 240, salt: 3, coconutCream: 240, tea: 450, kumquat: 8, syrup: 90, peach: 2, orange: 5, lemongrass: 6, peachSyrup: 100, lychee: 2, lycheeSyrup: 100, cacao: 90, matcha: 28 });
 });
 
 test('forecast cycles unlocked recipes and adds one full mistake buffer', () => {
-  assert.deepEqual(estimateDemand(1, 6), { coffee: 8, condensed: 4, milk: 0, egg: 0, ice: 8, cream: 0, salt: 0, coconutCream: 0 });
+  assert.deepEqual(estimateDemand(1, 6), { coffee: 8, condensed: 4, milk: 0, egg: 0, ice: 8, cream: 0, salt: 0, coconutCream: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 });
   const plan = createSupplyPlan({ coffee: 0, condensed: 0, milk: 0, egg: 0, ice: 0 }, 1, 6);
   assert.equal(plan.price, 38000); assert.deepEqual(plan.items.map(item => item.id), ['coffee', 'condensed', 'ice']);
   assert.equal(ingredientValue({ coffee: 1, condensed: 1, milk: 2, egg: 1, ice: 1 }), 9500);
@@ -73,14 +73,14 @@ test('session consumes only successful physical ingredient actions', () => {
   assert.equal(session.pourIngredient(drink, 'condensed', 0.4), 0.4); assert.equal(session.pourIngredient(drink, 'milk', 3), 2);
   assert.equal(session.addIce(drink), true); assert.equal(session.addIce(drink), false);
   assert.equal(session.consumeIngredient('egg', 1), 1); assert.equal(session.consumeIngredient('egg', 1), 0);
-  assert.deepEqual(session.ingredientSummary().used, { coffee: 0.5, condensed: 0.4, milk: 2, egg: 1, ice: 1, cream: 0, salt: 0, coconutCream: 0 });
+  assert.deepEqual(session.ingredientSummary().used, { coffee: 0.5, condensed: 0.4, milk: 2, egg: 1, ice: 1, cream: 0, salt: 0, coconutCream: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 });
 });
 
 test('out-of-stock orders fall back to a feasible recipe and prepared cups count', () => {
-  const denOnly = { coffee: 2, condensed: 0, milk: 0, egg: 0, ice: 2 };
+  const denOnly = { coffee: 2, condensed: 0, milk: 0, egg: 0, ice: 2, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 };
   const session = new DaySession(3, false, Math.random, { inventory: denOnly }); session.spawnCount = 1;
   assert.deepEqual(session.availableRecipes(), ['den']); assert.equal(session.spawn().recipeId, 'den');
-  const prepared = new DaySession(3, false, Math.random, { inventory: { coffee: 0, condensed: 0, milk: 0, egg: 0, ice: 0 } });
+  const prepared = new DaySession(3, false, Math.random, { inventory: { coffee: 0, condensed: 0, milk: 0, egg: 0, ice: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 } });
   prepared.setPreparedRecipeProvider(() => ['trung']);
   assert.equal(prepared.canPrepare('trung'), false); assert.deepEqual(prepared.availableRecipes(), ['trung']); assert.equal(prepared.spawn().recipeId, 'trung');
   assert.equal(canPrepareRecipe(denOnly, 'sua'), false);
@@ -108,5 +108,5 @@ test('closing settlement subtracts stock with income once; reload during shift k
 test('tutorial has unlimited supplies and never changes the main pantry', () => {
   const tutorial = new DaySession(1, true, Math.random, { inventory: { coffee: 0, condensed: 0, milk: 0, egg: 0, ice: 0 } });
   const drink = new Drink('den'); drink.placePhin(); assert.equal(tutorial.addGrounds(drink, 1), 1); assert.equal(tutorial.addIce(drink), true);
-  assert.deepEqual(tutorial.ingredientSummary().used, { coffee: 0, condensed: 0, milk: 0, egg: 0, ice: 0, cream: 0, salt: 0, coconutCream: 0 });
+  assert.deepEqual(tutorial.ingredientSummary().used, { coffee: 0, condensed: 0, milk: 0, egg: 0, ice: 0, cream: 0, salt: 0, coconutCream: 0, tea: 0, kumquat: 0, syrup: 0, peach: 0, orange: 0, lemongrass: 0, peachSyrup: 0, lychee: 0, lycheeSyrup: 0, cacao: 0, matcha: 0 });
 });

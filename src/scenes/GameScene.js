@@ -1,4 +1,6 @@
 import Phaser from 'phaser';
+import { PreparationLayout } from '../rendering/PreparationLayout.js';
+import { DesktopGameView } from '../rendering/DesktopGameView.js';
 import { StationManager } from '../models/StationManager.js';
 import { stationPosition } from '../logic/layout.js';
 import { Environment } from '../rendering/Environment.js';
@@ -8,6 +10,11 @@ import { INGREDIENT_DEFINITIONS } from '../data/drinkEngine.js';
 import { InteractiveDrinkEngine } from '../systems/InteractiveDrinkEngine.js';
 import { SaltedCreamStation } from '../rendering/SaltedCreamStation.js';
 import { CoconutBlenderStation } from '../rendering/CoconutBlenderStation.js';
+import { TraTacStation } from '../rendering/TraTacStation.js';
+import { TraDaoStation } from '../rendering/TraDaoStation.js';
+import { TraVaiStation } from '../rendering/TraVaiStation.js';
+import { CacaoStation } from '../rendering/CacaoStation.js';
+import { MatchaStation } from '../rendering/MatchaStation.js';
 import { DragController } from '../systems/DragController.js';
 import { CustomerView } from '../rendering/CustomerView.js';
 import { StationView } from '../rendering/StationView.js';
@@ -21,6 +28,7 @@ import { Overlay } from '../ui/Overlay.js';
 export class GameScene extends Phaser.Scene {
   constructor(key = 'Game') { super(key); }
   create() {
+    this.desktopUI = null; this.preparationLayouts = []; this.toolScroll = 0;
     this.game.rendering?.attach(this);
     this.tutorial = this.sys.settings.key === 'Tutorial';
     const saved = this.game.save.data;
@@ -46,24 +54,28 @@ export class GameScene extends Phaser.Scene {
     }
     this.hud = new HUD(this);
     this.hint = label(this, 211, 613, '', 12, '#3e5840', { wordWrap: { width: 368 }, align: 'center', lineSpacing: 2 }).setDepth(60);
-    const discard = toolArt(this, 'trash', 441, 613); discard.setScale(0.58).setDepth(60);
+    const discard = toolArt(this, 'trash', 441, 613); this.discardArt = discard; discard.setScale(0.58).setDepth(60);
     const trashZone = this.add.zone(441, 613, 52, 42).setInteractive().setDepth(61);
+    this.trashZone = trashZone;
     trashZone.on('pointerdown', (p, x, y, event) => { event.stopPropagation(); this.toast('Kéo ly cần bỏ vào thùng này để làm lại.'); });
-    this.trayIds = ['brew', 'milk', 'egg', 'salt', 'coconut'];
-    this.tabButtons = [['01 PHA PHIN', 0x58735a], ['02 SỮA & ĐÁ', 0x3b5645], ['03 BỌT TRỨNG', 0x3b5645], ['04 KEM MUỐI', 0x3b5645], ['05 CỐT DỪA', 0x3b5645]]
-      .map(([title, fill], i) => button(this, 50 + i * 95, 656, 91, 32, title, () => this.setTray(this.trayIds[i]), { fill, size: 10, radius: 6 }));
+    this.trayIds = ['brew', 'milk', 'egg', 'salt', 'coconut', 'tratac', 'tradao', 'travai', 'cacao', 'matcha'];
+    this.tabButtons = [['01 PHIN', 0x58735a], ['02 SỮA·ĐÁ', 0x3b5645], ['03 TRỨNG', 0x3b5645], ['04 MUỐI', 0x3b5645], ['05 DỪA', 0x3b5645], ['06 TẮC', 0x3b5645], ['07 ĐÀO', 0x3b5645], ['08 VẢI', 0x3b5645], ['09 CACAO', 0x3b5645], ['10 MATCHA', 0x3b5645]]
+      .map(([title, fill], i) => button(this, 25.8 + i * 47.6, 656, 45.5, 32, title, () => this.setTray(this.trayIds[i]), { fill, size: 6.8, radius: 6 }));
     this.trayRoot = this.add.container(0, 0).setDepth(30);
     this.trayDetail = this.add.graphics().setDepth(31);
     this.drinkEngine = new InteractiveDrinkEngine(this);
     for (const station of this.stations) this.drinkEngine.registerTarget(station.model.id, {
-      accepts: ['pour', 'stir', 'ice', 'garnish', 'whisk', 'scoop'],
+      accepts: ['pour', 'stir', 'ice', 'iceScoopCup', 'garnish', 'whisk', 'scoop'],
       visible: () => station.visible,
       contains: (x, y) => station.contains(x, y), center: () => ({ x: station.x, y: station.y }),
       pourPoint: () => ({ x: station.x, y: station.y + (24 - (station.cup.liquidLevel || 0)) * station.cup.scaleY }),
       recipeId: () => station.model.recipeId,
       getState: () => station.model.drink && !station.model.drink.consumed ? station.model.drink.preparation : null,
-      onChange: () => station.model.drink?.startTimedSteps(),
-      acceptIngredient: (id, amount) => id === 'water' ? station.model.drink?.addMeasuredIngredient(id, amount) || 0 : this.session.pourIngredient(station.model.drink, id, amount),
+      onChange: (action, amount) => {
+        if (action === 'stir' && station.model.drink?.recipeId === 'cacao') station.model.drink.stirBy(amount);
+        station.model.drink?.startTimedSteps();
+      },
+      acceptIngredient: (id, amount) => id === 'water' && station.model.drink?.recipeId !== 'cacao' ? station.model.drink?.addMeasuredIngredient(id, amount) || 0 : this.session.pourIngredient(station.model.drink, id, amount),
       takeIngredient: (id, amount) => {
         const conversion = id === 'ice' ? 3 : 1;
         const available = this.tutorial ? amount : Math.floor((this.session.inventory[id] || 0) * conversion + 1e-9);
@@ -71,7 +83,7 @@ export class GameScene extends Phaser.Scene {
       },
       acceptMixture: (mixture, consistency, source) => {
         const drink = station.model.drink;
-        if (drink?.recipeId === 'muoi' || drink?.recipeId === 'cotdua') return drink.acceptPreparedMixture(mixture, source);
+        if (['muoi', 'cotdua', 'tratac', 'tradao', 'travai', 'cacao', 'matcha'].includes(drink?.recipeId)) return drink.acceptPreparedMixture(mixture, source);
         if (!drink || drink.consumed || drink.preparation.lid || RECIPES[drink.recipeId]?.engine !== 'gesture') return 0;
         const volume = Object.entries(mixture).reduce((sum, [id, n]) => sum + (INGREDIENT_DEFINITIONS[id].liquid || INGREDIENT_DEFINITIONS[id].foam ? n * (drink.preparation.volumePerUnit[id] || 1) : 0), 0);
         const room = drink.preparation.capacity - drink.preparation.volume;
@@ -85,10 +97,26 @@ export class GameScene extends Phaser.Scene {
         return ratio;
       },
     });
-    this.saltedCream = new SaltedCreamStation(this);
-    this.coconut = new CoconutBlenderStation(this);
+    this.saltedCream = this.createPreparation(SaltedCreamStation, 238);
+    this.coconut = this.createPreparation(CoconutBlenderStation, 238);
+    this.tratac = this.createPreparation(TraTacStation, 234);
+    this.tradao = this.createPreparation(TraDaoStation, 204);
+    this.travai = this.createPreparation(TraVaiStation, 204);
+    this.cacao = this.createPreparation(CacaoStation, 186);
+    this.matcha = this.createPreparation(MatchaStation, 186);
     this.drag = new DragController(this);
-    this.renderTray();
+    this.desktopUI = new DesktopGameView(this);
+    this.relayout();
+    this.onWheel = (pointer, objects, dx, dy) => {
+      const p = this.drinkEngine.point(pointer), l = this.layout;
+      if (!l.desktop || this.paused || this.drag.active || this.drinkEngine.active.size || p.x < l.tools.x || p.y < l.tabs.y + l.tabs.h) return;
+      const count = this.tools.length || this.preparationLayouts.find(a => a.view.root.visible)?.tiles.length || 0;
+      const start = this.tools.length ? l.tabs.y + l.tabs.h + 20 : l.itemGrid.y;
+      const max = this.desktopUI.scrollMax || 0;
+      this.toolScroll = Math.max(0, Math.min(max, this.toolScroll + dy * 0.7));
+      this.renderTray();
+    };
+    this.input.on('wheel', this.onWheel);
     if (this.session.event) this.time.delayedCall(400, () => this.showDialogue(EVENTS[this.session.event].name, EVENTS[this.session.event].description));
     this.toast(this.tutorial ? 'Chào bạn! Kéo ly từ khay lên trạm để bắt đầu.' : 'Quán mở rồi! Chạm đơn của khách để xem lượng pha.');
     this.onVisibility = () => {
@@ -104,19 +132,51 @@ export class GameScene extends Phaser.Scene {
     this.events.once('shutdown', () => {
       document.removeEventListener('visibilitychange', this.onVisibility);
       this.input.keyboard?.off('keydown-ESC', this.escape);
-      this.drag.destroy(); this.saltedCream.destroy(); this.coconut.destroy(); this.drinkEngine.destroy();
+      this.input.off('wheel', this.onWheel);
+      this.drag.destroy(); this.saltedCream.destroy(); this.coconut.destroy(); this.tratac.destroy(); this.tradao.destroy(); this.travai.destroy(); this.cacao.destroy(); this.matcha.destroy(); this.drinkEngine.destroy();
       this.tweens.resumeAll(); this.time.paused = false;
       this.pauseReasons.clear(); this.game.save.inShift = false; this.game.audio.pause();
     });
+  }
+  createPreparation(Type, width) {
+    const previous = new Set(this.drinkEngine.targets.keys()), view = new Type(this);
+    const ids = [...this.drinkEngine.targets.keys()].filter(id => !previous.has(id));
+    this.preparationLayouts.push(new PreparationLayout(this, view, ids, width));
+    return view;
+  }
+  relayout() {
+    if (!this.desktopUI) return;
+    this.drag.cancel();
+    const l = this.layout; this.toolScroll = 0;
+    this.desktopUI.relayout();
+    this.stations.forEach(s => s.relayout());
+    this.selectPage(Math.floor(this.selectedStation / 2), this.selectedStation);
+    this.stationButtons.forEach((b, i) => {
+      b.setPosition(l.desktop ? l.board.x + l.board.w - 246 + i * 66 : this.tutorial ? 240 : 66 + i * 116, l.desktop ? l.board.y + 22 : 385)
+        .resize(l.desktop ? 60 : this.tutorial ? 210 : 108, 28); b.title.setFontSize(l.desktop ? 9 : 10);
+    });
+    this.hint.setPosition(l.desktop ? l.board.x + (l.board.w - 60) / 2 : 211, l.desktop ? l.board.y + l.board.h - 24 : 613)
+      .setColor(l.desktop ? '#d8dfc4' : '#3e5840').setFontSize(l.desktop ? 14 : 12).setWordWrapWidth(l.desktop ? l.board.w - 100 : 368);
+    const t = l.trash;
+    this.discardArt.setPosition(l.desktop ? t.x + t.w / 2 : 441, l.desktop ? t.y + t.h / 2 : 613).setScale(l.desktop ? 0.7 : 0.58);
+    this.trashZone.setPosition(l.desktop ? t.x + t.w / 2 : 441, l.desktop ? t.y + t.h / 2 : 613);
+    for (const c of this.customerViews.values()) c.relayout();
+    this.renderTray();
+    if (this.overlay) {
+      const old = this.overlay, reason = old.reason, recipe = old.recipeId, index = old.stationIndex;
+      old.root.destroy(); this.overlay = new Overlay(this, reason);
+      if (reason === 'book') this.overlay.book(recipe, index); else this.overlay.pause();
+    }
   }
   selectPage(page, selected = page * 2) {
     if (this.paused || this.finishing) return;
     if (!this.stationManager.setPage(page)) { this.toast('Mua thêm phin trong cửa hàng sau ca nhé.'); this.game.audio.play('error'); return; }
     this.drag?.cancel(); this.selectedStation = Math.min(selected, this.stations.length - 1);
-    this.stations.forEach(s => s.setVisible(this.stationManager.visible(s.model.id)));
-    this.lockedSlot?.setVisible(page === 1 && this.stations.length === 3);
+    this.stations.forEach(s => s.setVisible(this.layout?.desktop || this.stationManager.visible(s.model.id)));
+    this.lockedSlot?.setVisible(!this.layout?.desktop && page === 1 && this.stations.length === 3);
   }
   showDialogue(name, text) {
+    if (this.layout?.desktop) { this.toast(`${name}: ${text}`); return; }
     this.dialogue?.destroy();
     const root = this.add.container(0, 0).setDepth(65); this.dialogue = root;
     const bg = this.add.graphics(); round(bg, 11, 81, 458, 81, C.cream, 9);
@@ -143,18 +203,28 @@ export class GameScene extends Phaser.Scene {
   }
   setTray(id) {
     if (this.paused || this.finishing) return;
-    this.drag.cancel(); this.tray = id; this.renderTray();
+    this.drag.cancel(); this.toolScroll = 0; this.tray = id; this.renderTray();
     if (id === 'coconut') { this.toast(this.session.upgrades.blender ? 'Cối lên đế · 60 ml cốt dừa · 15 ml sữa đặc · 100 g đá · đậy nắp · giữ công tắc · rót vào ly · rót cà phê' : 'Chưa có máy xay. Mua trong cửa hàng sau ca nhé.'); return; }
+    if (id === 'tratac') { this.toast('Thả 2 quả tắc lên thớt · quẹt cắt đôi · ép lấy 20 ml nước cốt · rót trà, tắc, siro · xúc đá · khuấy đều'); return; }
+    if (id === 'tradao') { this.toast('Bổ cam (1 phần vắt, 1 lát trang trí) · đập dập sả · gắp đào · rót trà, siro đào, nước cam · xúc đá · gắn lát cam'); return; }
+    if (id === 'travai') { this.toast('Múc 2 trái vải từ lon thả vào ly · rót 20 ml siro vải · rót 150 ml trà · xúc 90 g đá · gắn vải trang trí tùy chọn'); return; }
+    if (id === 'cacao') { this.toast('Múc 15 g bột cacao (3 muỗng) · rót 30 ml nước nóng · khuấy tròn cho tan vón cục · rót 15 ml sữa đặc · 100 ml sữa tươi · xúc 90 g đá'); return; }
+    if (id === 'matcha') { this.toast('Múc 4 g matcha (2 muỗng) vào chén · rót 40 ml nước ấm · đánh chổi tre chữ W tạo bọt mịn · xúc đá, rót sữa + siro · rót matcha lên trên'); return; }
     this.toast(id === 'brew' ? 'Ly → phin → muỗng vào hũ bột → nén → rót nước' : id === 'salt' ? 'Rót 40 ml kem vào tô · 2 muỗng muối · đánh tròn đến vùng xanh · kéo tô vào ly để rót' : id === 'milk' ? 'Kéo bình vào ly, di chuyển ngang để nghiêng · thả để dừng · khuấy tròn hoặc qua lại' : 'Kéo phới vào tô, đánh qua lại. Bông rồi kéo tô vào ly.');
   }
   renderTray() {
     this.saltedCream?.setVisible(this.tray === 'salt');
     this.coconut?.setVisible(this.tray === 'coconut');
+    this.tratac?.setVisible(this.tray === 'tratac');
+    this.tradao?.setVisible(this.tray === 'tradao');
+    this.travai?.setVisible(this.tray === 'travai');
+    this.cacao?.setVisible(this.tray === 'cacao');
+    this.matcha?.setVisible(this.tray === 'matcha');
     this.trayRoot.removeAll(true);
     const groups = {
       brew: [['glass', 'Ly', 40], ['phin', 'Phin', 120], ['spoon', 'Muỗng', 200], ['grounds', 'Bột', 280], ['press', 'Lõi nén', 360], ['kettle', 'Ấm nước', 440]],
       milk: [['condensed', 'Sữa đặc', 56], ['milk', 'Sữa tươi', 148], ['ice', '3 viên đá', 240], ['stir', 'Khuấy', 332], ['trash', 'Bỏ ly', 424]],
-      salt: [], coconut: [],
+      salt: [], coconut: [], tratac: [], tradao: [], travai: [], cacao: [], matcha: [],
       egg: [['bowl', 'Tô trứng', 140], ['whisk', 'Phới đánh', 280], ['trash', 'Bỏ ly', 410]],
     };
     const width = this.tray === 'brew' ? 70 : this.tray === 'milk' ? 82 : 108;
@@ -171,9 +241,12 @@ export class GameScene extends Phaser.Scene {
         this.trayRoot.add(tool.stockLabel);
       }
     }
-    this.trayFoot = label(this, 240, 784, ['salt', 'coconut'].includes(this.tray) ? '' : this.tray === 'brew' ? 'DỤNG CỤ THẬT · CHẠM, KÉO VÀ GIỮ ĐỂ PHA' : this.tray === 'milk' ? 'THÊM MỘT CHÚT NGỌT NGÀO CHO BUỔI SÁNG' : 'BỌT TRỨNG CẦN CHUYỂN ĐỘNG · KHÔNG CHỈ GIỮ YÊN', 8, '#b2c09e', { letterSpacing: 1 });
+    this.trayFoot = label(this, 240, 784, ['salt', 'coconut', 'tratac', 'tradao', 'travai', 'cacao', 'matcha'].includes(this.tray) ? '' : this.tray === 'brew' ? 'DỤNG CỤ THẬT · CHẠM, KÉO VÀ GIỮ ĐỂ PHA' : this.tray === 'milk' ? 'THÊM MỘT CHÚT NGỌT NGÀO CHO BUỔI SÁNG' : 'BỌT TRỨNG CẦN CHUYỂN ĐỘNG · KHÔNG CHỈ GIỮ YÊN', 8, '#b2c09e', { letterSpacing: 1 });
     this.trayRoot.add(this.trayFoot);
     this.tabButtons.forEach((b, i) => b.setAlpha(this.trayIds[i] === this.tray ? 1 : 0.65));
+    this.desktopUI?.tray();
+    for (const adapter of this.preparationLayouts) adapter.relayout();
+    this.desktopUI?.scrollbar();
   }
   toast(text) { this.toastText = text; this.toastUntil = this.visualTime + 3900; announce(text); }
   setLiveHint(text) { this.liveHint = text; }
@@ -200,7 +273,7 @@ export class GameScene extends Phaser.Scene {
     }
   }
   rushBanner() {
-    const banner = this.add.container(240, 174).setDepth(50);
+    const banner = this.add.container(this.layout.desktop ? this.layout.width / 2 : 240, this.layout.desktop ? 96 : 174).setDepth(50);
     const bg = this.add.graphics(); round(bg, -201, -17, 402, 34, C.gold, 10);
     banner.add([bg, label(this, 0, 0, 'GIỜ CAO ĐIỂM · PHỐ MÌNH THỨC GIẤC!', 12, '#354c34', { fontStyle: 'bold' })]);
     const motion = !this.game.save.data.settings.reducedMotion;
@@ -263,6 +336,7 @@ export class GameScene extends Phaser.Scene {
     this.shopkeeper.update(this.visualTime);
     this.streetArt?.updateArt?.(this.visualTime, this.game.save.data.settings.reducedMotion);
     this.hud.update();
+    for (const adapter of this.preparationLayouts) adapter.render();
     this.trayDetail.clear();
     for (const tool of this.tools) if (tool.stockLabel) {
       const amount = this.session.inventory[tool.stockId];
@@ -272,19 +346,21 @@ export class GameScene extends Phaser.Scene {
       tool.stockLabel.setText(`×${shown}`).setColor(low ? '#ffd0bd' : '#fff4d5').setBackgroundColor(low ? '#8b493a' : '#283d34');
     }
     if (this.tray === 'brew' && this.drag.spoonLoaded) {
-      this.trayDetail.fillStyle(C.coffee); this.trayDetail.fillEllipse(211, 699, 10, 11);
+      const spoon = this.tools.find(t => t.kind === 'spoon');
+      this.trayDetail.fillStyle(C.coffee); this.trayDetail.fillEllipse(this.layout.desktop ? spoon.x + 11 : 211, this.layout.desktop ? spoon.y - 16 : 699, 10, 11);
     }
     if (this.tray === 'egg') {
       const progress = this.drag.whiskProgress / RULES.whiskDistance;
-      round(this.trayDetail, 100, 766, 80, 4, 0x223d2e, 2);
-      round(this.trayDetail, 100, 766, Math.max(1, 80 * progress), 4, C.gold, 2);
+      const bowl = this.tools.find(t => t.kind === 'bowl'), bx = this.layout.desktop ? bowl.x - 40 : 100, by = this.layout.desktop ? bowl.y + 34 : 766;
+      round(this.trayDetail, bx, by, 80, 4, 0x223d2e, 2);
+      round(this.trayDetail, bx, by, Math.max(1, 80 * progress), 4, C.gold, 2);
       for (let i = 0; i < Math.floor(progress * 10); i++) {
-        this.trayDetail.fillStyle(0xffdf92); this.trayDetail.fillCircle(123 + (i % 5) * 8, 706 - Math.floor(i / 5) * 6, 4);
+        this.trayDetail.fillStyle(0xffdf92); this.trayDetail.fillCircle((this.layout.desktop ? bowl.x - 17 : 123) + (i % 5) * 8, (this.layout.desktop ? bowl.y - 9 : 706) - Math.floor(i / 5) * 6, 4);
       }
     }
     const selected = this.stations[this.selectedStation]?.model;
-    const fallback = selected?.drink?.nextStep() || 'Kéo ly từ khay lên trạm. Chạm đơn khách để chọn gợi ý.';
-    this.hint.setText(this.liveHint || (this.visualTime < this.toastUntil ? this.toastText : fallback));
+    const fallback = selected?.drink?.nextStep(selected?.modifiers) || 'Kéo ly từ khay lên trạm. Chạm đơn khách để chọn gợi ý.';
+    this.hint.setText(this.liveHint || (this.visualTime < this.toastUntil ? this.toastText : this.layout.desktop ? '' : fallback));
   }
   finishDay() {
     if (this.finishing) return;

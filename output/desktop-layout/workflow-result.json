@@ -1,0 +1,71 @@
+{
+  "result": "PASS",
+  "servedRecipe": "den",
+  "cycles": [
+    {
+      "itemSprites": 0,
+      "textures": 82,
+      "displayObjects": 81,
+      "objects": 23,
+      "tweens": 0,
+      "timers": 0,
+      "fps": 58,
+      "inputListeners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scaleListeners": 9
+    },
+    {
+      "itemSprites": 0,
+      "textures": 82,
+      "displayObjects": 81,
+      "objects": 23,
+      "tweens": 0,
+      "timers": 0,
+      "fps": 59,
+      "inputListeners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scaleListeners": 9
+    },
+    {
+      "itemSprites": 0,
+      "textures": 82,
+      "displayObjects": 81,
+      "objects": 23,
+      "tweens": 0,
+      "timers": 0,
+      "fps": 59,
+      "inputListeners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scaleListeners": 9
+    },
+    {
+      "itemSprites": 0,
+      "textures": 82,
+      "displayObjects": 81,
+      "objects": 23,
+      "tweens": 0,
+      "timers": 0,
+      "fps": 59,
+      "inputListeners": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "scaleListeners": 9
+    }
+  ],
+  "errors": []
+}

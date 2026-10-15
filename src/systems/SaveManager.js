@@ -95,10 +95,10 @@ export class SaveManager {
     if (this.inShift) return { ok: false, message: 'Chỉ nhập nguyên liệu khi quán đã nghỉ ca.' };
     const spec = INGREDIENTS[id], current = this.data.inventory[id];
     if (!spec || !Number.isFinite(expectedQuantity) || Math.abs(current - expectedQuantity) > 1e-6) return { ok: false, message: 'Tồn kho vừa thay đổi. Mình kiểm tra lại nhé.' };
-    if (current + spec.pack > 999) return { ok: false, message: 'Kho nguyên liệu này đã đầy.' };
+    if (current + spec.pack > Math.max(999, spec.pack * 6)) return { ok: false, message: 'Kho nguyên liệu này đã đầy.' };
     if (this.data.balance < spec.price) return { ok: false, message: 'Quỹ quán chưa đủ để nhập gói này.' };
     const next = structuredClone(this.data);
-    next.balance -= spec.price; next.inventory[id] = Math.min(999, next.inventory[id] + spec.pack); next.stats.ingredientExpenses += spec.price;
+    next.balance -= spec.price; next.inventory[id] = Math.min(Math.max(999, spec.pack * 6), next.inventory[id] + spec.pack); next.stats.ingredientExpenses += spec.price;
     this.data = next; const saved = this.write();
     return { ok: true, saved, price: spec.price, quantity: spec.pack, message: saved ? `Đã nhập ${spec.pack} ${spec.unit} ${spec.name.toLowerCase()}.` : this.warning };
   }
@@ -115,7 +115,7 @@ export class SaveManager {
     if (this.data.balance < plan.price) return { ok: false, message: `Cần thêm ${(plan.price - this.data.balance).toLocaleString('vi-VN')}đ để nhập đủ ca tới.` };
     const next = structuredClone(this.data);
     next.balance -= plan.price; next.stats.ingredientExpenses += plan.price;
-    for (const item of plan.items) next.inventory[item.id] = Math.min(999, next.inventory[item.id] + item.quantity);
+    for (const item of plan.items) next.inventory[item.id] = Math.min(Math.max(999, INGREDIENTS[item.id].pack * 6), next.inventory[item.id] + item.quantity);
     this.data = next; const saved = this.write();
     return { ok: true, saved, price: plan.price, items: plan.items, message: saved ? 'Đã nhập đủ nguyên liệu dự kiến cho ca tới!' : this.warning };
   }
@@ -126,7 +126,11 @@ export class SaveManager {
     const reward = challengeProgress(d.dayPlan?.challenge, { ...s, ended: true }).complete ? d.dayPlan.challenge.reward : 0;
     const income = integer(s.revenue) + integer(s.tips) + integer(s.bonuses) + reward;
     const used = normalizeInventory(s.ingredients?.used, emptyIngredientTotals());
-    for (const id of Object.keys(INGREDIENTS)) used[id] = Math.min(used[id], d.inventory[id]);
+    const wasted = normalizeInventory(s.ingredients?.wasted, emptyIngredientTotals());
+    for (const id of Object.keys(INGREDIENTS)) {
+      used[id] = Math.min(used[id], d.inventory[id]);
+      wasted[id] = Math.min(wasted[id], used[id]);
+    }
     d.balance += income; d.day++; d.lastCommittedDay = s.day;
     const ratings = (s.ratings || []).filter(n => Number.isFinite(n) && n >= 0 && n <= 5);
     d.ratingSum += ratings.reduce((sum, n) => sum + n, 0); d.ratingCount += ratings.length;
@@ -140,7 +144,9 @@ export class SaveManager {
     const unlocked = ACHIEVEMENTS.filter(a => !d.achievements.includes(a.id) && a.test(d, s)).map(a => a.id);
     d.achievements.push(...unlocked); d.dayPlan = null;
     this.data = d; this.inShift = false;
-    summary.challengeReward = reward; summary.earnings = income; summary.unlocked = unlocked; summary.ingredientCost = ingredientValue(used);
+    summary.challengeReward = reward; summary.earnings = income; summary.unlocked = unlocked;
+    summary.ingredientCost = ingredientValue(used); summary.wasteCost = ingredientValue(wasted);
+    summary.grossProfit = income - summary.ingredientCost;
     return this.write();
   }
   reset() { this.data = freshSave(); this.inShift = false; this.write(); }

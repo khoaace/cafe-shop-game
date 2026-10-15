@@ -1,0 +1,14 @@
+
+> tiem-ca-phe-phin-via-he@1.0.0 build
+> vite build
+
+vite v6.4.4 building for production...
+transforming...
+✓ 81 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     1.09 kB │ gzip:   0.64 kB
+dist/assets/index-aC6TMb-V.css      0.74 kB │ gzip:   0.43 kB
+dist/assets/index-BEKq_0_S.js     432.13 kB │ gzip: 129.62 kB
+dist/assets/phaser-Czz4FBZH.js  1,481.77 kB │ gzip: 339.84 kB
+✓ built in 3.00s

@@ -39,24 +39,32 @@ export class InteractiveDrinkEngine {
     if (recipe && (!step || !target.getState().canStep(recipe, step.id))) return null;
     return step || { id: tool.action, target: tool.progressTarget || 1, action: tool.action };
   }
+  objectPoint(object) { return object.parentContainer ? object.getWorldTransformMatrix() : { tx: object.x, ty: object.y }; }
+  placeObject(object, x, y) {
+    const parent = object.parentContainer;
+    if (parent && parent.getWorldTransformMatrix) { const p = parent.getWorldTransformMatrix().applyInverse(x, y); object.setPosition(p.x, p.y); }
+    else object.setPosition(x, y);
+  }
   down(pointer) {
     if (this.scene.paused || this.scene.finishing || this.active.has(pointer.id)) return false;
     const p = this.point(pointer);
     const shown = object => { for (let parent = object; parent; parent = parent.parentContainer) if (!parent.visible || !parent.active) return false; return true; };
-    const tool = [...this.tools.values()].reverse().find(t => shown(t.object) && t.object.visible && t.object.active && t.enabled?.() !== false && ![...this.active.values()].some(a => a.tool === t) && Math.abs(p.x - t.object.x) <= t.hitSize / 2 && Math.abs(p.y - t.object.y) <= t.hitSize / 2);
+    const tool = [...this.tools.values()].reverse().find(t => shown(t.object) && t.object.visible && t.object.active && t.enabled?.() !== false && ![...this.active.values()].some(a => a.tool === t) && (() => { const clip = t.object.layoutClip; if (clip && (p.x < clip.x || p.y < clip.y || p.x > clip.x + clip.w || p.y > clip.y + clip.h)) return false; const pos = this.objectPoint(t.object); const scale = t.object.parentContainer?.scaleX || 1; const hit = t.hitSize * scale * (t.layoutHitScale || 1) / 2; return Math.abs(p.x - pos.tx) <= hit && Math.abs(p.y - pos.ty) <= hit; })());
     if (!tool || tool.sourceTarget && this.owners.has(tool.sourceTarget)) return false;
     // A tool whose stock or prerequisite is missing stays put and explains why.
     const blocked = tool.blocked?.();
     if (blocked) { this.scene.toast(blocked); this.scene.game.audio.play('error'); return true; }
+    if (tool.onPickup && tool.onPickup() === false) return true;
     if (tool.sourceTarget) this.owners.set(tool.sourceTarget, tool.id);
     const a = { tool, point: p, origin: { ...p }, target: null, worked: false, state: null, drawOffset: { x: 0, y: 0 } };
+    if (tool.object.desktopMask) tool.object.clearMask();
     this.active.set(pointer.id, a); this.scene.game.audio.unlock(); this.scene.tweens.killTweensOf(tool.object);
     tool.object.setScale(tool.home.scaleX * 1.06, tool.home.scaleY * 1.06); this.pour.begin(pointer.id, p, { rate: tool.rate ?? 25, initialTilt: 0 }); this.move(pointer); return true;
   }
   move(pointer) {
     const a = this.active.get(pointer.id); if (!a || this.scene.paused) return false;
     const p = this.point(pointer); a.point = p;
-    if (a.tool.action !== 'blend') a.tool.object.setPosition(p.x + a.drawOffset.x, p.y + a.drawOffset.y);
+    if (a.tool.action !== 'blend') this.placeObject(a.tool.object, p.x + a.drawOffset.x, p.y + a.drawOffset.y);
     const target = this.targetAt(p, a.tool);
     const state = target?.getState();
     if (a.target !== target || a.state !== state) {
@@ -66,7 +74,7 @@ export class InteractiveDrinkEngine {
       if (target) {
         this.owners.set(target.id, a.tool.id);
         // Tilt begins after entering the drop zone rather than during the pickup drag.
-        this.pour.begin(pointer.id, p, { rate: a.tool.rate ?? 25, initialTilt: 0 });
+        this.pour.begin(pointer.id, p, { rate: a.tool.rate ?? 25, initialTilt: 0, tiltDistance: 48 * (target.interactionScale?.() || 1) });
         if (a.tool.action === 'blend' && this.step(target, a.tool)) this.blender.begin(pointer.id, state);
       }
     }
@@ -74,12 +82,13 @@ export class InteractiveDrinkEngine {
     if (!target) return true;
     const step = this.step(target, a.tool); if (!step) return true;
     const center = target.center(), action = a.tool.action;
+    const gesturePoint = target.gesturePoint?.(p) || p, gestureCenter = target.gestureCenter?.() || center;
     let amount = 0;
-    if (action === 'whisk') amount = a.tool.circularOnly ? this.whisk.moveCircular(pointer.id, state, p, center) : this.whisk.move(pointer.id, state, p, center, step.target);
-    else if (action === 'stir') amount = this.stir.move(pointer.id, state, p, center, step.target);
-    else if (action === 'slice' || action === 'squeeze') amount = this.fruit.move(pointer.id, state, p, center, action);
+    if (action === 'whisk') amount = a.tool.circularOnly ? this.whisk.moveCircular(pointer.id, state, gesturePoint, gestureCenter) : a.tool.matchaWhisk ? this.whisk.moveMatcha(pointer.id, state, gesturePoint, gestureCenter, step.target) : this.whisk.move(pointer.id, state, gesturePoint, gestureCenter, step.target);
+    else if (action === 'stir') amount = this.stir.move(pointer.id, state, gesturePoint, gestureCenter, step.target);
+    else if (action === 'slice' || action === 'squeeze' || action === 'roll') amount = this.fruit.move(pointer.id, state, gesturePoint, gestureCenter, action);
     if (amount) {
-      if (!a.tool.circularOnly && (!['whisk', 'stir'].includes(action) || step.id !== action)) state.record(step.id, amount, step.target);
+      if (!a.tool.circularOnly && !a.tool.matchaWhisk && (!['whisk', 'stir'].includes(action) || step.id !== action)) state.record(step.id, amount, step.target);
       a.worked = true; target.onChange?.(action, amount);
       a.tool.object.rotation = Math.atan2(p.y - center.y, p.x - center.x) * 0.3;
     }
@@ -94,7 +103,7 @@ export class InteractiveDrinkEngine {
       const offset = a.target && a.tool.pourOffset || { x: 0, y: 0 };
       a.drawOffset.x += (offset.x - a.drawOffset.x) * Math.min(1, seconds * 18);
       a.drawOffset.y += (offset.y - a.drawOffset.y) * Math.min(1, seconds * 18);
-      if (a.tool.action !== 'blend') a.tool.object.setPosition(a.point.x + a.drawOffset.x, a.point.y + a.drawOffset.y);
+      if (a.tool.action !== 'blend') this.placeObject(a.tool.object, a.point.x + a.drawOffset.x, a.point.y + a.drawOffset.y);
       if (!a.target) continue;
       const target = a.target, state = target?.getState(); if (!state || state !== a.state || target.visible?.() === false || !a.tool.object.active) { this.end(key, true); continue; }
       const step = this.step(target, a.tool); if (!step) continue;
@@ -151,7 +160,7 @@ export class InteractiveDrinkEngine {
           const accepted = t.takeIngredient?.(tool.ingredient, available) || 0;
           amount = this.garnish.drop(state, tool.ingredient, Math.floor(accepted), a.point, t.center());
         } else if (tool.action === 'lid') amount = (state.lid ? this.blender.removeLid(state) : this.blender.placeLid(state)) ? 1 : 0;
-        else if (tool.action === 'place' && INGREDIENT_DEFINITIONS[tool.ingredient]?.fruit && !state.fruit) {
+        else if (tool.action === 'place' && !state.fruit && (INGREDIENT_DEFINITIONS[tool.ingredient]?.fruit || INGREDIENT_DEFINITIONS[tool.ingredient]?.placeable)) {
           const accepted = t.takeIngredient?.(tool.ingredient, tool.quantity) || 0;
           amount = accepted && this.fruit.place(state, tool.ingredient, accepted, tool.juiceCapacity ?? 20) ? accepted : 0;
         } else if (tool.action === 'scoop' && !state.lid) amount = t.acceptIngredient(tool.ingredient, tool.quantity);
@@ -161,6 +170,7 @@ export class InteractiveDrinkEngine {
     tool.release?.({ target: t, state, point: a.point, canceled, matched: !!state && state === a.state });
     this.effects.streams.delete(key); this.pour.end(key); this.whisk.end(key); this.stir.end(key); this.fruit.end(key); this.blender.end(key);
     if (t) this.owners.delete(t.id); if (tool.sourceTarget) this.owners.delete(tool.sourceTarget); this.active.delete(key); this.scene.liveHint = null;
+    if (tool.object.desktopMask) tool.object.setMask(tool.object.desktopMask);
     if (canceled || this.effects.reduced) tool.object.setPosition(tool.home.x, tool.home.y).setScale(tool.home.scaleX, tool.home.scaleY).setRotation(tool.home.rotation);
     else this.scene.tweens.add({ targets: tool.object, x: tool.home.x, y: tool.home.y, rotation: tool.home.rotation, scaleX: tool.home.scaleX, scaleY: tool.home.scaleY, duration: 220, ease: 'Back.Out' });
   }

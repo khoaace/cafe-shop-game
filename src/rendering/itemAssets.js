@@ -19,6 +19,13 @@ export function prepareItemAssets(scene) {
   }
 }
 export const ITEM_SIZES = {
+  coconut: [48, 61], tea: [61, 62], syrup: [40, 65], scoop: [59, 61],
+  kumquat: [29, 32], 'kumquat-half': [26, 25], orange: [39, 43], 'orange-wheel': [32, 31],
+  lemongrass: [12, 66], 'lemongrass-prepared': [64, 14], 'peach-piece': [30, 20], 'lychee-fruit': [26, 26],
+  peachSyrup: [40, 65], lycheeSyrup: [40, 65], 'cacao-tin': [52, 48], 'matcha-tin': [44, 47],
+  chasen: [42, 65], chashaku: [39, 65], tongs: [37, 64], 'fruit-scoop': [43, 65],
+  'mixing-bowl': [96, 49], board: [72, 54], squeezer: [54, 46], 'measuring-cup': [39, 38],
+  'blender-base': [64, 44], 'blender-jar': [67, 74], 'blender-lid': [54, 19], 'lychee-container': [65, 42],
   glass: [40, 65], phin: [69, 59], spoon: [39, 65], stir: [39, 65], grounds: [53, 60],
   press: [52, 49], kettle: [78, 60], condensed: [47, 61], 'condensed-premium': [49, 61],
   milk: [62, 58], ice: [59, 55], bowl: [73, 53], whisk: [52, 66], trash: [49, 57], coaster: [88, 23],

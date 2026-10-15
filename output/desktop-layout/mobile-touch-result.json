@@ -1,0 +1,695 @@
+{
+  "result": "PASS",
+  "captures": [
+    "output/playwright/expanded-touch-tab-3.png",
+    "output/playwright/expanded-touch-tab-4.png",
+    "output/playwright/expanded-touch-tab-5.png",
+    "output/playwright/expanded-touch-tab-6.png",
+    "output/playwright/expanded-touch-tab-7.png",
+    "output/playwright/expanded-touch-tab-8.png",
+    "output/playwright/expanded-touch-tab-9.png"
+  ],
+  "errors": [],
+  "final": {
+    "scene": "Game",
+    "layout": {
+      "desktop": false,
+      "width": 480,
+      "height": 800,
+      "trash": {
+        "x": 406,
+        "y": 589,
+        "w": 74,
+        "h": 48
+      }
+    },
+    "tools": [],
+    "engineTools": [
+      {
+        "id": "tradao-orange-slice",
+        "x": 36,
+        "y": 718,
+        "enabled": false
+      },
+      {
+        "id": "tradao-orange-garnish",
+        "x": 36,
+        "y": 718,
+        "enabled": false
+      },
+      {
+        "id": "tradao-lemongrass-roll",
+        "x": 48,
+        "y": 738,
+        "enabled": false
+      },
+      {
+        "id": "tradao-lemongrass-move",
+        "x": 48,
+        "y": 738,
+        "enabled": false
+      },
+      {
+        "id": "tradao-squeezer-press",
+        "x": 112,
+        "y": 724,
+        "enabled": false
+      },
+      {
+        "id": "tradao-orange-juice-cup",
+        "x": 168,
+        "y": 728,
+        "enabled": false
+      },
+      {
+        "id": "tradao-orange-fruit",
+        "x": 226,
+        "y": 715,
+        "enabled": true
+      },
+      {
+        "id": "tradao-lemongrass-stalk",
+        "x": 271,
+        "y": 715,
+        "enabled": true
+      },
+      {
+        "id": "tradao-peach-tongs",
+        "x": 316,
+        "y": 715,
+        "enabled": true
+      },
+      {
+        "id": "tradao-tea-pitcher",
+        "x": 361,
+        "y": 715,
+        "enabled": true
+      },
+      {
+        "id": "tradao-syrup-bottle",
+        "x": 406,
+        "y": 715,
+        "enabled": true
+      },
+      {
+        "id": "tradao-ice-scoop",
+        "x": 451,
+        "y": 715,
+        "enabled": true
+      }
+    ],
+    "targets": [
+      {
+        "id": "station-1",
+        "x": 240,
+        "y": 517
+      },
+      {
+        "id": "tradao-board",
+        "x": 46,
+        "y": 726,
+        "radius": 28
+      },
+      {
+        "id": "tradao-squeezer",
+        "x": 112,
+        "y": 724,
+        "radius": 26
+      }
+    ],
+    "render": {
+      "desktop": false,
+      "logical": [
+        480,
+        800
+      ],
+      "factor": 2,
+      "canvas": [
+        960,
+        1600
+      ],
+      "textCount": 184,
+      "textResolution": 2,
+      "textPixels": [
+        486,
+        60
+      ],
+      "textLogical": [
+        243,
+        30.48046875
+      ],
+      "textureCount": 250
+    },
+    "save": {
+      "version": 3,
+      "day": 6,
+      "balance": 0,
+      "ratingSum": 20,
+      "ratingCount": 5,
+      "tutorialDone": false,
+      "upgrades": {
+        "phins": 1,
+        "seats": 3,
+        "premium": false,
+        "fan": false,
+        "decor": false,
+        "blender": true
+      },
+      "dayPlan": {
+        "day": 6,
+        "seed": 2505823831,
+        "event": null,
+        "vip": null,
+        "vipAt": 1,
+        "expectedOrders": 6,
+        "challenge": {
+          "kind": "served",
+          "target": 5,
+          "label": "Phục vụ 5 khách",
+          "reward": 15000
+        }
+      },
+      "lastCommittedDay": 0,
+      "achievements": [],
+      "stories": {
+        "driver": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "office": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        },
+        "student": {
+          "encounters": 0,
+          "chapter": 0,
+          "lastDay": 0
+        }
+      },
+      "mastery": {
+        "den": 0,
+        "sua": 0,
+        "bac": 0,
+        "trung": 0,
+        "muoi": 0,
+        "cotdua": 0,
+        "tratac": 0,
+        "tradao": 0,
+        "travai": 0,
+        "cacao": 0,
+        "matcha": 0
+      },
+      "inventory": {
+        "coffee": 10,
+        "condensed": 6,
+        "milk": 6,
+        "egg": 4,
+        "ice": 12,
+        "cream": 240,
+        "salt": 3,
+        "coconutCream": 240,
+        "tea": 450,
+        "kumquat": 8,
+        "syrup": 90,
+        "peach": 2,
+        "orange": 5,
+        "lemongrass": 6,
+        "peachSyrup": 100,
+        "lychee": 2,
+        "lycheeSyrup": 100,
+        "cacao": 90,
+        "matcha": 28
+      },
+      "ingredientsUsed": {
+        "coffee": 0,
+        "condensed": 0,
+        "milk": 0,
+        "egg": 0,
+        "ice": 0,
+        "cream": 0,
+        "salt": 0,
+        "coconutCream": 0,
+        "tea": 0,
+        "kumquat": 0,
+        "syrup": 0,
+        "peach": 0,
+        "orange": 0,
+        "lemongrass": 0,
+        "peachSyrup": 0,
+        "lychee": 0,
+        "lycheeSyrup": 0,
+        "cacao": 0,
+        "matcha": 0
+      },
+      "stats": {
+        "served": 0,
+        "lost": 0,
+        "perfect": 0,
+        "bestCombo": 0,
+        "lifetimeRevenue": 0,
+        "lifetimeTips": 0,
+        "lifetimeBonuses": 0,
+        "lifetimeEarnings": 0,
+        "upgradeExpenses": 0,
+        "ingredientExpenses": 0,
+        "bestDay": 0,
+        "sessions": 1
+      },
+      "settings": {
+        "sound": false,
+        "music": false,
+        "reducedMotion": false
+      }
+    },
+    "paused": false,
+    "session": {
+      "day": 6,
+      "tutorial": false,
+      "revenue": 0,
+      "tips": 0,
+      "bonuses": 0,
+      "earnings": 0,
+      "ingredientCost": 4800,
+      "wasteCost": 2800,
+      "grossProfit": -4800,
+      "served": 0,
+      "lost": 0,
+      "perfect": 0,
+      "bestCombo": 0,
+      "elapsed": 15.566863333333215,
+      "ended": false,
+      "event": null,
+      "challenge": {
+        "kind": "served",
+        "target": 5,
+        "label": "Phục vụ 5 khách",
+        "reward": 15000
+      },
+      "challengeComplete": false,
+      "recipes": {
+        "den": 0,
+        "sua": 0,
+        "bac": 0,
+        "trung": 0,
+        "muoi": 0,
+        "cotdua": 0,
+        "tratac": 0,
+        "tradao": 0,
+        "travai": 0,
+        "cacao": 0,
+        "matcha": 0
+      },
+      "storyEncounters": [],
+      "rushServed": 0,
+      "rushLost": 0,
+      "wrongOrders": 0,
+      "ingredients": {
+        "opening": {
+          "coffee": 10,
+          "condensed": 6,
+          "milk": 6,
+          "egg": 4,
+          "ice": 12,
+          "cream": 240,
+          "salt": 3,
+          "coconutCream": 240,
+          "tea": 450,
+          "kumquat": 8,
+          "syrup": 90,
+          "peach": 2,
+          "orange": 5,
+          "lemongrass": 6,
+          "peachSyrup": 100,
+          "lychee": 2,
+          "lycheeSyrup": 100,
+          "cacao": 90,
+          "matcha": 28
+        },
+        "remaining": {
+          "coffee": 10,
+          "condensed": 6,
+          "milk": 6,
+          "egg": 4,
+          "ice": 12,
+          "cream": 240,
+          "salt": 3,
+          "coconutCream": 240,
+          "tea": 450,
+          "kumquat": 8,
+          "syrup": 90,
+          "peach": 1.75,
+          "orange": 5,
+          "lemongrass": 6,
+          "peachSyrup": 100,
+          "lychee": 1.75,
+          "lycheeSyrup": 100,
+          "cacao": 85,
+          "matcha": 28
+        },
+        "used": {
+          "coffee": 0,
+          "condensed": 0,
+          "milk": 0,
+          "egg": 0,
+          "ice": 0,
+          "cream": 0,
+          "salt": 0,
+          "coconutCream": 0,
+          "tea": 0,
+          "kumquat": 0,
+          "syrup": 0,
+          "peach": 0.25,
+          "orange": 0,
+          "lemongrass": 0,
+          "peachSyrup": 0,
+          "lychee": 0.25,
+          "lycheeSyrup": 0,
+          "cacao": 5,
+          "matcha": 0
+        },
+        "cost": 4800,
+        "wasted": {
+          "coffee": 0,
+          "condensed": 0,
+          "milk": 0,
+          "egg": 0,
+          "ice": 0,
+          "cream": 0,
+          "salt": 0,
+          "coconutCream": 0,
+          "tea": 0,
+          "kumquat": 0,
+          "syrup": 0,
+          "peach": 0,
+          "orange": 0,
+          "lemongrass": 0,
+          "peachSyrup": 0,
+          "lychee": 0.25,
+          "lycheeSyrup": 0,
+          "cacao": 5,
+          "matcha": 0
+        },
+        "wasteCost": 2800
+      },
+      "endReason": null,
+      "rating": 0,
+      "ratings": [],
+      "review": "Một buổi sáng yên tĩnh. Ngày mai mình thử lại nhé!",
+      "rush": false,
+      "powerOut": false,
+      "fanActive": false
+    },
+    "customers": [
+      {
+        "id": "customer-1",
+        "name": "Chị Lan",
+        "recipe": "den",
+        "modifiers": null,
+        "modifierLabel": "",
+        "state": "WAITING",
+        "ratio": 0.8393789411764717,
+        "seat": 0,
+        "vip": false,
+        "type": "office"
+      }
+    ],
+    "stations": [
+      {
+        "id": "station-1",
+        "visible": true,
+        "page": 0,
+        "x": 240,
+        "y": 517,
+        "geometry": {
+          "page": 0,
+          "x": 240,
+          "y": 517
+        },
+        "recipeId": "tradao",
+        "modifiers": null,
+        "evaluation": {
+          "valid": false,
+          "recipeCorrectness": false,
+          "amountAccuracy": 0.0714285714285714,
+          "preparationTechnique": 0,
+          "finalQuality": "INCORRECT",
+          "quality": "INCORRECT",
+          "score": 0,
+          "message": "Thiếu trà rồi!"
+        },
+        "drink": {
+          "id": "cup-3",
+          "recipeId": "tradao",
+          "modifiers": null,
+          "state": "GLASS",
+          "grounds": 0,
+          "press": 0,
+          "water": 0,
+          "brewElapsed": 0,
+          "coffee": 0,
+          "condensed": 0,
+          "milk": 0,
+          "foam": 0,
+          "ice": 0,
+          "stir": 0,
+          "consumed": false,
+          "timedSteps": {},
+          "coffeeSource": {
+            "id": "cup-3-phin-collection",
+            "capacity": 3,
+            "volumePerUnit": {},
+            "amounts": {},
+            "steps": {},
+            "layers": [],
+            "garnishes": [],
+            "ice": [],
+            "mixing": 0,
+            "foam": 0,
+            "consistency": 0,
+            "lid": false,
+            "fruit": null,
+            "revision": 0
+          },
+          "creamTechniqueTotal": 0,
+          "creamMovementTotal": 0,
+          "blendTechniqueTotal": 0,
+          "blendTimeTotal": 0,
+          "blendedCoconut": 0,
+          "kumquatTechniqueTotal": 0,
+          "kumquatJuiceTotal": 0,
+          "orangeTechniqueTotal": 0,
+          "orangeJuiceTotal": 0,
+          "matchaTechniqueTotal": 0,
+          "matchaWaterTotal": 0,
+          "matchaWhiskDistanceTotal": 0,
+          "preparation": {
+            "id": "cup-3",
+            "capacity": 270,
+            "volumePerUnit": {},
+            "amounts": {
+              "peach": 1
+            },
+            "steps": {
+              "peach": {
+                "amount": 1,
+                "technique": 1
+              }
+            },
+            "layers": [],
+            "garnishes": [],
+            "ice": [],
+            "mixing": 0,
+            "foam": 0,
+            "consistency": 0,
+            "lid": false,
+            "fruit": null,
+            "revision": 2
+          }
+        }
+      }
+    ],
+    "liquidDiagnostics": [
+      {
+        "commands": 717,
+        "clip": [
+          7,
+          16777215,
+          1,
+          1,
+          5,
+          222.32000064849854,
+          541.9599990844727,
+          4,
+          219.20000076293945,
+          485.8000011444092,
+          4,
+          260.79999923706055,
+          485.8000011444092,
+          4,
+          257.67999935150146,
+          541.9599990844727,
+          4,
+          222.32000064849854,
+          541.9599990844727,
+          8
+        ],
+        "x": 240,
+        "y": 517
+      }
+    ],
+    "diagnostics": {
+      "itemSprites": 22,
+      "textures": 254,
+      "displayObjects": 546,
+      "objects": 51,
+      "tweens": 0,
+      "timers": 0,
+      "fps": 60,
+      "inputListeners": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "scaleListeners": 10
+    },
+    "saltedCream": {
+      "id": "salted-cream",
+      "capacity": 80,
+      "volumePerUnit": {},
+      "amounts": {},
+      "steps": {},
+      "layers": [],
+      "garnishes": [],
+      "ice": [],
+      "mixing": 0,
+      "foam": 0,
+      "consistency": 0,
+      "lid": false,
+      "fruit": null,
+      "revision": 0,
+      "whipping": 0,
+      "perfectAnnounced": false
+    },
+    "tratac": {
+      "id": "kumquat-prep",
+      "fruits": 0,
+      "halves": 0,
+      "sliced": false,
+      "inSqueezer": false,
+      "extracted": 0,
+      "juiceCapacity": 20,
+      "amounts": {},
+      "steps": {},
+      "compression": 0,
+      "sliceBounce": 0,
+      "squeezeCount": 0,
+      "revision": 0,
+      "perfectAnnounced": false
+    },
+    "tradao": {
+      "id": "tradao-prep",
+      "orangeOnBoard": false,
+      "orangeSliced": false,
+      "orangeConsumed": 0,
+      "orangeStockDeducted": false,
+      "squeezePortions": 0,
+      "garnishSlices": 0,
+      "extractedJuice": 0,
+      "juiceCapacity": 30,
+      "orangeCompression": 0,
+      "sliceRotation": 0,
+      "sliceBounce": 0,
+      "lemongrassOnBoard": false,
+      "lemongrassRollDistance": 0,
+      "lemongrassPrepared": false,
+      "lemongrassAvailable": 0,
+      "lemongrassConsumed": 0,
+      "lemongrassStockDeducted": false,
+      "stalkBend": 0,
+      "amounts": {},
+      "steps": {},
+      "revision": 1
+    },
+    "travai": {
+      "id": "travai-prep",
+      "amounts": {},
+      "steps": {}
+    },
+    "cacao": {
+      "id": "cacao-prep",
+      "amounts": {},
+      "steps": {}
+    },
+    "matcha": {
+      "id": "matcha-bowl",
+      "capacity": 120,
+      "volumePerUnit": {},
+      "amounts": {},
+      "steps": {},
+      "layers": [],
+      "garnishes": [],
+      "ice": [],
+      "mixing": 0,
+      "foam": 0,
+      "consistency": 0,
+      "lid": false,
+      "fruit": null,
+      "revision": 0,
+      "whisking": 0,
+      "whiskProgress": 0,
+      "stage": "CLUMPY",
+      "perfectAnnounced": false,
+      "consumedMatcha": 0
+    },
+    "toast": "Bổ cam (1 phần vắt, 1 lát trang trí) · đập dập sả · gắp đào · rót trà, siro đào, nước cam · xúc đá · gắn lát cam",
+    "hint": "Bổ cam (1 phần vắt, 1 lát trang trí) · đập dập sả · gắp đào · rót trà, siro đào, nước cam · xúc đá · gắn lát cam",
+    "coconut": {
+      "docked": false,
+      "owned": true,
+      "motor": false,
+      "state": {
+        "id": "coconut-blend",
+        "capacity": 300,
+        "volumePerUnit": {
+          "condensed": 15
+        },
+        "amounts": {},
+        "steps": {
+          "blend": {
+            "amount": 0,
+            "technique": 0
+          }
+        },
+        "layers": [],
+        "garnishes": [],
+        "ice": [],
+        "mixing": 0,
+        "foam": 0,
+        "consistency": 0,
+        "lid": false,
+        "fruit": null,
+        "revision": 0,
+        "blendTime": 0,
+        "perfectAnnounced": false,
+        "stage": "COARSE",
+        "technique": 0,
+        "crush": 0
+      },
+      "stage": "COARSE",
+      "blendTime": 0,
+      "lid": false
+    },
+    "engine": {
+      "active": 0,
+      "owners": []
+    },
+    "gesture": {
+      "active": null,
+      "foam": 0,
+      "loaded": 0
+    }
+  }
+}

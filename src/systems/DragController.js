@@ -36,16 +36,16 @@ export class DragController {
     const customer = [...scene.customerViews.values()].find(c => c.contains(x, y));
     if (customer) {
       const free = scene.stations.find(s => s.visible && !s.model.drink) || scene.stations[scene.selectedStation];
-      free.model.chooseRecipe(customer.model.recipeId); scene.selectedStation = free.index;
+      free.model.chooseRecipe(customer.model.recipeId, customer.model.modifiers); scene.selectedStation = free.index;
       scene.showDialogue(customer.model.type.name, customer.model.type.line);
       scene.game.audio.play('talk');
       return;
     }
     const station = this.stationAt(x, y);
-    if (station && station.model.drink && Math.abs(x - station.x) < 65 && y < 551) {
+    if (station && station.model.drink && Math.abs(x - station.x) < 65 && (scene.layout?.desktop ? Math.abs(y - station.y) < 80 : y < 551)) {
       this.start('cup', pointer, station); return;
     }
-    const tool = scene.tools.find(item => Math.abs(x - item.x) <= item.width / 2 && y >= 675 && y <= 768);
+    const tool = scene.tools.find(item => scene.layout?.desktop ? x >= item.bounds.x && x <= item.bounds.x + item.bounds.w && y >= item.bounds.y && y <= item.bounds.y + item.bounds.h && y >= scene.layout.tabs.y + scene.layout.tabs.h && y <= scene.layout.tools.y + scene.layout.tools.h : Math.abs(x - item.x) <= item.width / 2 && y >= 675 && y <= 768);
     if (!tool) return;
     if (tool.kind === 'grounds') { scene.toast('Kéo muỗng vào hũ để xúc bột, rồi kéo tới phin.'); scene.game.audio.play('grounds'); return; }
     if (tool.kind === 'trash') { scene.toast('Kéo ly cần bỏ vào thùng ở cạnh bàn.'); scene.game.audio.play('trash'); return; }
@@ -59,7 +59,7 @@ export class DragController {
       loaded: kind === 'spoon' ? this.spoonLoaded : 0, worked: false, toastAt: 0 };
     const shadow = scene.add.ellipse(point.x + 4, point.y + 27, 58, 15, C.dark, 0.18).setDepth(98);
     const proxy = kind === 'cup' ? createCupArt(scene, station.model.drink) : toolArt(scene, kind);
-    proxy.setPosition(point.x, point.y).setDepth(100).setScale(1.08);
+    proxy.setPosition(point.x, point.y).setDepth(100).setScale(scene.layout?.desktop ? station?.geometry.cupScale || 1.15 : 1.08);
     this.pourSystem.begin(pointer.id, point, { rate: kind === 'kettle' ? RULES.waterRate : RULES.milkRate, initialTilt: 1 });
     this.active.proxy = proxy; this.active.shadow = shadow;
     if (station) { station.draggingCup = true; scene.selectedStation = station.index; }
@@ -76,7 +76,8 @@ export class DragController {
       if (station) this.pourSystem.begin(pointer.id, { x: station.x, y: point.y }, { rate: a.kind === 'kettle' ? RULES.waterRate : RULES.milkRate, initialTilt: 1 });
     }
     this.pourSystem.move(pointer.id, point);
-    if (a.kind === 'spoon' && Math.abs(a.x - 280) < 36 && Math.abs(a.y - 717) < 45 && this.scene.tray === 'brew' && !a.loaded) {
+    const grounds = this.scene.tools.find(t => t.kind === 'grounds'), bowl = this.scene.tools.find(t => t.kind === 'bowl');
+    if (a.kind === 'spoon' && grounds && Math.abs(a.x - grounds.x) < 36 && Math.abs(a.y - grounds.y - 2) < 45 && this.scene.tray === 'brew' && !a.loaded) {
       const recipe = RECIPES[this.scene.stations[this.scene.selectedStation].model.recipeId];
       if (this.scene.tutorial || this.scene.session.inventory.coffee + 1e-9 >= recipe.coffee) {
         a.loaded = recipe.coffee; this.spoonLoaded = a.loaded;
@@ -86,8 +87,8 @@ export class DragController {
         a.toastAt = this.scene.visualTime + 1200; this.scene.toast('Hết bột cà phê. Ca sau ghé cửa hàng nhập thêm nhé.'); this.scene.game.audio.play('error');
       }
     }
-    if (a.kind === 'whisk' && this.scene.tray === 'egg' && Math.abs(a.x - 140) < 64 && Math.abs(a.y - 715) < 48) {
-      const amount = this.whiskSystem.move(pointer.id, this.whiskState, { x: a.x, y: a.y, time: performance.now() }, { x: 140, y: 715, radius: 64 }, RULES.whiskDistance);
+    if (a.kind === 'whisk' && this.scene.tray === 'egg' && bowl && Math.abs(a.x - bowl.x) < 64 && Math.abs(a.y - bowl.y) < 48) {
+      const amount = this.whiskSystem.move(pointer.id, this.whiskState, { x: a.x, y: a.y, time: performance.now() }, { x: bowl.x, y: bowl.y, radius: 64 }, RULES.whiskDistance);
       const before = this.whiskProgress;
       if (amount > 0 && !this.whiskEggLoaded) {
         const egg = this.scene.session.consumeIngredient('egg', 1);
@@ -102,7 +103,8 @@ export class DragController {
     } else if (a.kind === 'whisk') { a.tracker.reset(); this.whiskSystem.end(pointer.id); }
     if (a.kind === 'stir' && station?.model.drink) {
       const d = station.model.drink;
-      if (d.state !== 'BREWED' || d.milk + d.condensed <= 0) { this.stirSystem.end(pointer.id); return; }
+      const canStirTraTac = d.recipeId === 'tratac' && ((d.preparation.amounts.tea || 0) > 0 || (d.preparation.amounts.citrusJuice || 0) > 0 || (d.preparation.amounts.syrup || 0) > 0);
+      if (!canStirTraTac && (d.state !== 'BREWED' || d.milk + d.condensed <= 0)) { this.stirSystem.end(pointer.id); return; }
       d.preparation.steps.stir = { amount: d.stir, technique: 1 };
       const amount = this.stirSystem.move(pointer.id, d.preparation, { x: a.x, y: a.y, time: performance.now() }, { x: station.x, y: station.y, radius: 61 }, RULES.stirRadians);
       const before = station.model.drink.stir;
@@ -156,7 +158,7 @@ export class DragController {
       this.scene.setLiveHint(percent >= 100 ? 'Bọt bông rồi! Thả phới, kéo tô trứng đến ly.' : `Đánh trứng ${percent}% · di chuyển phới qua lại trong tô`);
     }
     if (a.kind === 'stir' && drink) {
-      this.scene.setLiveHint(drink.state !== 'BREWED' ? 'Chờ phin nhỏ xong rồi khuấy nhé.' : `Khuấy ${Math.round(drink.stir / RULES.stirRadians * 100)}% · vẽ vòng tròn quanh tâm ly`);
+      this.scene.setLiveHint(drink.recipeId !== 'tratac' && drink.state !== 'BREWED' ? 'Chờ phin nhỏ xong rồi khuấy nhé.' : `Khuấy ${Math.round(drink.stir / RULES.stirRadians * 100)}% · vẽ vòng tròn quanh tâm ly`);
     }
   }
   stream(a, station, color, t, width) {
@@ -187,7 +189,8 @@ export class DragController {
     const scene = this.scene; const station = this.stationAt(a.x, a.y); const drink = station?.model.drink;
     let ok = false;
     if (a.kind === 'cup') {
-      if (a.x > 406 && a.y >= 589 && a.y <= 637) {
+      const trash = scene.layout?.trash || { x: 406, y: 589, w: 74, h: 48 };
+      if (a.x >= trash.x && a.x <= trash.x + trash.w && a.y >= trash.y && a.y <= trash.y + trash.h) {
         scene.session.recordDrinkWaste(a.source.model.drink); a.source.model.discard(); scene.toast('Đã dọn ly. Bắt đầu lại thật thong thả nhé.'); scene.game.audio.play('trash'); a.heard = true; ok = true;
       } else {
         const target = [...scene.customerViews.values()].find(view => view.contains(a.x, a.y));
@@ -201,7 +204,8 @@ export class DragController {
             a.source.model.discard(); a.heard = true; ok = true;
           } else { scene.game.audio.play('error'); a.heard = true; target.feedbackUntil = scene.visualTime + 1400; scene.shopkeeper.drawFace('angry'); scene.time.delayedCall(1400, () => scene.shopkeeper.drawFace('idle')); }
         } else if (station && station !== a.source && !station.model.drink) {
-          station.model.drink = a.source.model.discard(); station.model.chooseRecipe(station.model.drink.recipeId); scene.game.audio.play('place'); a.heard = true; ok = true;
+          const prevMods = a.source.model.modifiers;
+          station.model.drink = a.source.model.discard(); station.model.chooseRecipe(station.model.drink.recipeId, prevMods); scene.game.audio.play('place'); a.heard = true; ok = true;
         }
       }
     } else if (a.kind === 'glass') {

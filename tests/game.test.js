@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { Drink } from '../src/models/Drink.js';
 import { SaltedCream } from '../src/models/SaltedCream.js';
 import { CoconutBlend } from '../src/models/CoconutBlend.js';
+import { KumquatPrep } from '../src/models/KumquatPrep.js';
+import { MatchaBowl, MATCHA_WHISK_TARGET } from '../src/models/MatchaBowl.js';
 import { BlenderSystem } from '../src/systems/preparation/BlenderSystem.js';
 import { LiquidPourSystem } from '../src/systems/preparation/LiquidPourSystem.js';
 import { BrewingStation } from '../src/models/BrewingStation.js';
@@ -14,6 +16,72 @@ import { ARCHETYPES, RECIPES, RULES, clockText, unlockedRecipes } from '../src/c
 
 function prepare(id = 'den', additionsFirst = false) {
   const r = RECIPES[id]; const d = new Drink(id);
+  if (id === 'tratac') {
+    const prep = new KumquatPrep(); prep.place(2); prep.slice(); prep.moveToSqueezer(); prep.squeeze(80);
+    const addJuiceAndSyrup = () => {
+      new LiquidPourSystem().transfer(prep, 100, m => d.acceptPreparedMixture(m, prep));
+      d.addMeasuredIngredient('syrup', 15); d.addMeasuredIngredient('ice', 3);
+    };
+    if (additionsFirst) addJuiceAndSyrup();
+    d.addMeasuredIngredient('tea', 150);
+    if (!additionsFirst) addJuiceAndSyrup();
+    d.stirBy(RULES.stirRadians);
+    return d;
+  }
+  if (id === 'tradao') {
+    const addFruitAndJuice = () => {
+      d.addMeasuredIngredient('lemongrass', 1);
+      d.addMeasuredIngredient('peach', 2);
+      d.addMeasuredIngredient('orangeJuice', 30);
+      d.addMeasuredIngredient('peachSyrup', 20);
+      d.addMeasuredIngredient('ice', 3);
+      d.addMeasuredIngredient('orange', 1);
+    };
+    if (additionsFirst) addFruitAndJuice();
+    d.addMeasuredIngredient('tea', 140);
+    if (!additionsFirst) addFruitAndJuice();
+    return d;
+  }
+  if (id === 'travai') {
+    const addLycheeAndSyrup = () => {
+      d.addMeasuredIngredient('lychee', 2);
+      d.addMeasuredIngredient('lycheeSyrup', 20);
+      d.addMeasuredIngredient('ice', 3);
+    };
+    if (additionsFirst) addLycheeAndSyrup();
+    d.addMeasuredIngredient('tea', 150);
+    if (!additionsFirst) addLycheeAndSyrup();
+    d.stirBy(RULES.stirRadians);
+    return d;
+  }
+  if (id === 'cacao') {
+    const addMilkAndIce = () => {
+      d.addMeasuredIngredient('condensed', 15);
+      d.addMeasuredIngredient('milk', 100);
+      d.addMeasuredIngredient('ice', 3);
+    };
+    if (additionsFirst) addMilkAndIce();
+    d.addMeasuredIngredient('cacao', 15);
+    d.addMeasuredIngredient('water', 30);
+    d.stirBy(Math.PI * 3.2);
+    if (!additionsFirst) addMilkAndIce();
+    return d;
+  }
+  if (id === 'matcha') {
+    const bowl = new MatchaBowl();
+    bowl.add('matcha', 4);
+    bowl.add('water', 40);
+    bowl.whisk(MATCHA_WHISK_TARGET);
+    const addMilkAndIce = () => {
+      d.addMeasuredIngredient('ice', 3);
+      d.addMeasuredIngredient('milk', 150);
+      d.addMeasuredIngredient('syrup', 10);
+    };
+    if (additionsFirst) addMilkAndIce();
+    if (!additionsFirst) addMilkAndIce();
+    new LiquidPourSystem().transfer(bowl, 100, m => d.acceptPreparedMixture(m, bowl));
+    return d;
+  }
   const add = () => {
     if (id === 'cotdua') {
       const jar = new CoconutBlend(); jar.add('coconutCream', 60); jar.add('condensed', 1); jar.add('ice', 3); jar.lid = true; for (let i = 0; i < 45; i++) jar.blend(0.1); jar.lid = false;
@@ -133,7 +201,7 @@ test('tutorial is untimed and ends after three customers', () => {
   assert.equal(day.update(0.1).some(e => e.type === 'end'), true);
 });
 test('difficulty unlocks recipes gradually and limits pending orders', () => {
-  assert.deepEqual(unlockedRecipes(1), ['den', 'sua']); assert.equal(unlockedRecipes(2).length, 3); assert.equal(unlockedRecipes(3).length, 4);
+  assert.deepEqual(unlockedRecipes(1), ['den', 'sua']); assert.equal(unlockedRecipes(2).length, 3); assert.equal(unlockedRecipes(3).length, 5);
   const day = new DaySession(1); assert.ok(day.spawn()); assert.ok(day.spawn()); assert.equal(day.spawn(), null);
   const later = new DaySession(3); assert.ok(later.spawn()); assert.ok(later.spawn()); assert.ok(later.spawn()); assert.equal(later.spawn(), null);
 });

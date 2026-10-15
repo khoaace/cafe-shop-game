@@ -25,14 +25,16 @@ export class MotionGesture {
       } else if (mode === 'circular') this.turn = 0;
     }
     if (mode === 'circular' && (radius < 10 || radius > (center.radius || 64) || Math.abs(radius - oldRadius) >= 15)) this.turn = 0;
-    // A stroke needs at least 14px of travel before its reversal is credited.
+    // A stroke needs at least 14px (10px for bamboo matcha whisk) of travel before its reversal is credited.
+    const minStroke = mode === 'matchaWhisk' ? 10 : 14;
     const axis = Math.abs(dy) > Math.abs(dx) ? 'dy' : 'dx';
     const direction = Math.sign(axis === 'dy' ? dy : dx);
-    const reversed = this[axis] && this[axis] !== direction && this.stroke >= 14;
+    const reversed = this[axis] && this[axis] !== direction && this.stroke >= minStroke;
     const diagonal = Math.abs(dx) > 1.5 && Math.abs(dy) > 1.5;
-    const strokeCredit = reversed && (mode !== 'whisk' || diagonal) ? Math.min(60, this.stroke) : 0;
+    const strokeCredit = reversed && (mode !== 'whisk' || diagonal) ? Math.min(68, this.stroke * (mode === 'matchaWhisk' ? 1.25 : 1)) : 0;
     if (this[axis] && this[axis] !== direction) this.stroke = 0;
     this[axis] = direction; this.stroke += distance;
+    if (mode === 'matchaWhisk') return Math.max(strokeCredit, circular * radius * 0.85);
     return mode === 'circular' ? circular : mode === 'whisk' ? Math.max(circular * radius, strokeCredit) : Math.max(circular, strokeCredit / 30);
   }
 }

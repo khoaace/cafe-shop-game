@@ -1,0 +1,8 @@
+### Result
+{"tools":[{"id":"salt-cream-jug","x":964.6666870117188,"y":648.9749755859375,"enabled":true},{"id":"salt-measure","x":1142.4000244140625,"y":648.9749755859375,"enabled":true},{"id":"salt-whisk","x":1320.13330078125,"y":648.9749755859375,"enabled":true},{"id":"salt-coffee-pitcher","x":964.6666870117188,"y":775.8499755859375,"enabled":true},{"id":"salted-bowl-pour","x":1077.660400390625,"y":521.3854370117188,"enabled":true}],"targets":[{"id":"station-1","x":234.2,"y":461.25},{"id":"station-2","x":634.5999999999999,"y":461.25},{"id":"station-3","x":234.2,"y":705.75},{"id":"station-4","x":634.5999999999999,"y":705.75},{"id":"salted-cream-bowl","x":1077.6604166666666,"y":521.3854166666666,"radius":47.08333333333333}]}
+### Ran Playwright code
+```js
+await (async page => { await page.reload(); await page.waitForFunction(()=>window.__PHIN_QA__?.snapshot().scene==="Menu"); let b=await page.locator("canvas").boundingBox(); await page.mouse.click(b.x+b.width/2,b.y+b.height*679/800); await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().scene==="Game"); const l=await page.evaluate(()=>window.__PHIN_QA__.snapshot().layout); const w=(l.tabs.w-24)/5; await page.mouse.click(l.tabs.x+3*(w+6)+w/2,l.tabs.y+20); await page.waitForTimeout(300); await page.screenshot({path:"output/desktop-layout/third-1440.png"}); return await page.evaluate(()=>({tools:window.__PHIN_QA__.snapshot().engineTools,targets:window.__PHIN_QA__.snapshot().targets})); })(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-15T03-51-08-069Z.log#L7-L8
