@@ -166,8 +166,8 @@ test('customer states are explicit and resolution is idempotent', () => {
 });
 test('correct serving grants menu price and tip exactly once', () => {
   const day = new DaySession(); const c = waiting(day); const d = prepare();
-  const reward = day.serve(c, d); assert.equal(reward.price, 12000); assert.equal(reward.tip, 3000);
-  assert.equal(day.earnings, 15000); assert.equal(day.serve(c, d).valid, false); assert.equal(day.earnings, 15000);
+  const reward = day.serve(c, d); assert.equal(reward.price, 12000); assert.equal(reward.tip, 3000); assert.equal(reward.speedBonus, 1200);
+  assert.equal(day.earnings, 16200); assert.equal(day.serve(c, d).valid, false); assert.equal(day.earnings, 16200);
   assert.equal(day.lose(c), false); assert.equal(day.ratings.length, 1);
 });
 test('wrong orders reset combo but retain cup and waiting customer for correction', () => {
@@ -178,7 +178,7 @@ test('wrong orders reset combo but retain cup and waiting customer for correctio
 test('combo milestone rewards 3 / 5 / 10 are applied once per reached streak', () => {
   const day = new DaySession(3);
   for (let i = 0; i < 10; i++) assert.equal(day.serve(waiting(day), prepare()).valid, true);
-  assert.equal(day.bonuses, 25000); assert.equal(day.bestCombo, 10); assert.equal(day.served, 10);
+  assert.equal(day.bonuses, 25000 + 10 * 1200); assert.equal(day.bestCombo, 10); assert.equal(day.served, 10);
   const loser = waiting(day); assert.equal(day.lose(loser), true); assert.equal(day.combo, 0);
 });
 test('independent patience expiry does not duplicate customer exits or ratings', () => {
@@ -210,13 +210,13 @@ test('06:00–10:00 clock mapping is correct', () => {
 });
 test('summary totals separate revenue, tips and bonuses', () => {
   const day = new DaySession(); for (let i = 0; i < 3; i++) day.serve(waiting(day), prepare());
-  const s = day.summary(); assert.equal(s.revenue, 36000); assert.equal(s.tips, 9000); assert.equal(s.bonuses, 3000); assert.equal(s.earnings, 48000);
+  const s = day.summary(); assert.equal(s.revenue, 36000); assert.equal(s.tips, 9000); assert.equal(s.bonuses, 3000 + 3 * 1200); assert.equal(s.speedBonuses, 3600); assert.equal(s.earnings, 51600);
 });
 test('day save persists, prevents duplicate settlement and smooths reputation', () => {
   const storage = memoryStorage(); const manager = new SaveManager(storage);
   const day = new DaySession(); day.serve(waiting(day), prepare()); const s = day.summary();
   assert.equal(manager.completeDay(s), true); assert.equal(manager.completeDay(s), false);
-  const reload = new SaveManager(storage); assert.equal(reload.data.day, 2); assert.equal(reload.data.balance, 15000);
+  const reload = new SaveManager(storage); assert.equal(reload.data.day, 2); assert.equal(reload.data.balance, 16200);
   assert.equal(reload.data.stats.served, 1); assert.ok(reload.reputation > 4 && reload.reputation < 5);
 });
 test('tutorial cannot inflate the main economy', () => {
@@ -226,7 +226,7 @@ test('tutorial cannot inflate the main economy', () => {
 });
 test('midday reload retains the start-of-day checkpoint', () => {
   const storage = memoryStorage(); const manager = new SaveManager(storage); const day = new DaySession();
-  day.serve(waiting(day), prepare()); assert.equal(day.earnings, 15000);
+  day.serve(waiting(day), prepare()); assert.equal(day.earnings, 16200);
   assert.equal(new SaveManager(storage).data.balance, 0); assert.equal(manager.data.day, 1);
 });
 test('corrupt, unsupported and partially malformed saves recover safely', () => {
@@ -240,7 +240,7 @@ test('blocked storage keeps the session usable with an honest warning', () => {
   const m = new SaveManager({ getItem() { throw new Error('blocked'); }, setItem() { throw new Error('quota'); } });
   assert.equal(m.write(), false); assert.equal(m.available, false); assert.ok(m.warning);
   const day = new DaySession(); day.serve(waiting(day), prepare()); m.completeDay(day.summary());
-  assert.equal(m.data.day, 2); assert.equal(m.data.balance, 15000); assert.equal(m.completeDay(day.summary()), false);
+  assert.equal(m.data.day, 2); assert.equal(m.data.balance, 16200); assert.equal(m.completeDay(day.summary()), false);
 });
 test('settings and reset persist without changing a running economy', () => {
   const storage = memoryStorage(); const m = new SaveManager(storage); m.settings({ sound: false, reducedMotion: true });

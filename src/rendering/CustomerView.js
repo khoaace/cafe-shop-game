@@ -1,5 +1,6 @@
 import { seatPosition } from '../logic/layout.js';
 import { RECIPES, COLORS as C } from '../config.js';
+import { SPEED_BONUS } from '../logic/stars.js';
 import { label, round, person, drawCup, createCupArt } from './art.js';
 export class CustomerView {
   constructor(scene, model) {
@@ -21,7 +22,10 @@ export class CustomerView {
     if (model.recipeId === 'matcha') { this.icon.fillStyle(0xfbf8ef); this.icon.fillRoundedRect(-57, -5, 10, 16, 2); this.icon.fillStyle(0x458b32); this.icon.fillRoundedRect(-57, -5, 10, 7, 2); this.icon.fillStyle(0x9bd678); this.icon.fillRoundedRect(-56, -5, 8, 2.5, 1); }
     this.order = label(scene, 0, this.compact ? 4 : 8, recipe.short, 14, '#324b38', { fontStyle: 'bold' });
     this.bar = scene.add.graphics();
-    this.root.add([bg, this.icon, this.name, this.order, this.bar]);
+    // ⚡ marks the quick-service window (bonus); "!" warns that the guest is about to leave.
+    this.fast = label(scene, 60, 26, '⚡', 12, '#d18a12', { fontStyle: 'bold' });
+    this.alert = label(scene, 0, -40, '!', 20, '#fff4de', { fontStyle: 'bold', backgroundColor: '#be654d', padding: { x: 7, y: 0 } }).setVisible(false);
+    this.root.add([bg, this.icon, this.name, this.order, this.bar, this.fast, this.alert]);
     this.root.setDepth(20);
     if (this.compact) this.root.setScale(0.88);
     if (model.vip) { this.name.setColor('#985098'); this.order.setColor('#73518a'); }
@@ -59,9 +63,16 @@ export class CustomerView {
     this.root.setVisible(['ORDERING', 'WAITING', 'SERVED'].includes(c.state));
     this.order.setText(c.state === 'SERVED' ? 'Cảm ơn quán! ♥' : RECIPES[c.recipeId].short);
     this.bar.clear();
-    round(this.bar, -48, this.compact ? 16 : 25, 96, 4, 0xd9d5ba, 2);
-    const color = c.ratio > 0.5 ? C.green : c.ratio > 0.25 ? 0xdba34a : 0xbe654d;
-    round(this.bar, -48, this.compact ? 16 : 25, Math.max(2, 96 * c.ratio), 4, color, 2, c.ratio < 0.15 ? 0.65 + Math.sin(t * 0.012) * 0.35 : 1);
+    const barY = this.compact ? 16 : 25, waiting = c.state === 'WAITING' && !c.tutorial;
+    const fast = waiting && c.ratio >= SPEED_BONUS.ratio, urgent = waiting && c.ratio < 0.25;
+    round(this.bar, -48, barY, 96, 4, 0xd9d5ba, 2);
+    const color = fast ? 0xe0a83a : c.ratio > 0.5 ? C.green : c.ratio > 0.25 ? 0xdba34a : 0xbe654d;
+    round(this.bar, -48, barY, Math.max(2, 96 * c.ratio), 4, color, 2, c.ratio < 0.15 ? 0.65 + Math.sin(t * 0.012) * 0.35 : 1);
+    if (waiting) { this.bar.fillStyle(0x6d5a3a, 0.75); this.bar.fillRect(-48 + 96 * SPEED_BONUS.ratio - 0.5, barY - 2, 1.5, 8); }
+    const motion = !this.scene.game.save.data.settings.reducedMotion;
+    this.fast.setVisible(fast).setY(barY + 1).setAlpha(motion ? 0.75 + Math.sin(t * 0.01) * 0.25 : 1);
+    this.alert.setVisible(urgent).setScale(motion ? 1 + Math.max(0, Math.sin(t * 0.014)) * 0.18 : 1);
+    this.root.setRotation(urgent && motion ? Math.sin(t * 0.03) * 0.035 : 0);
   }
   relayout() {
     this.layout = seatPosition(this.model.seat, this.scene.session.upgrades.seats, this.scene.layout);

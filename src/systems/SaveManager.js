@@ -8,7 +8,7 @@ export const LEGACY_KEY = 'phin-goc-pho:v1';
 export const freshSave = () => ({ version: 3, day: 1, balance: 0, ratingSum: 20, ratingCount: 5, tutorialDone: false,
   upgrades: normalizeUpgrades(), dayPlan: null, lastCommittedDay: 0, achievements: [], stories: emptyStories(), mastery: emptyRecipes(),
   inventory: normalizeInventory(INITIAL_INVENTORY), ingredientsUsed: emptyIngredientTotals(),
-  stats: { served: 0, lost: 0, perfect: 0, bestCombo: 0, lifetimeRevenue: 0, lifetimeTips: 0, lifetimeBonuses: 0, lifetimeEarnings: 0, upgradeExpenses: 0, ingredientExpenses: 0, bestDay: 0, sessions: 0 },
+  stats: { served: 0, lost: 0, perfect: 0, bestCombo: 0, lifetimeRevenue: 0, lifetimeTips: 0, lifetimeBonuses: 0, lifetimeEarnings: 0, upgradeExpenses: 0, ingredientExpenses: 0, bestDay: 0, sessions: 0, totalStars: 0, threeStarDays: 0 },
   settings: { sound: true, music: true, reducedMotion: false } });
 const safeNumber = (n, fallback = 0) => Number.isFinite(n) && n >= 0 && n <= Number.MAX_SAFE_INTEGER ? n : fallback;
 const integer = (n, fallback = 0) => Math.floor(safeNumber(n, fallback));
@@ -138,6 +138,9 @@ export class SaveManager {
     d.stats.lifetimeRevenue += integer(s.revenue); d.stats.lifetimeTips += integer(s.tips); d.stats.lifetimeBonuses += integer(s.bonuses) + reward;
     d.stats.lifetimeEarnings += income;
     for (const id of Object.keys(INGREDIENTS)) { d.inventory[id] = Math.max(0, d.inventory[id] - used[id]); d.ingredientsUsed[id] += used[id]; }
+    const stars = Math.min(3, integer(s.stars));
+    summary.newRecord = income > d.stats.bestDay && d.stats.sessions > 1;
+    d.stats.totalStars += stars; if (stars === 3) d.stats.threeStarDays++;
     d.stats.bestCombo = Math.max(d.stats.bestCombo, integer(s.bestCombo)); d.stats.bestDay = Math.max(d.stats.bestDay, income);
     for (const id of Object.keys(d.mastery)) d.mastery[id] += integer(s.recipes?.[id]);
     for (const id of new Set(s.storyEncounters || [])) if (d.stories[id]) d.stories[id] = storyAfter(d.stories[id], s.day);
