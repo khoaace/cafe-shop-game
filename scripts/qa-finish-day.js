@@ -13,7 +13,7 @@ async(page)=>{
     await page.waitForFunction(id=>window.__PHIN_QA__.snapshot().customers.some(c=>c.recipe===id&&c.state==='WAITING'),recipe,{timeout:40000});
     const c=(await snap()).customers.find(c=>c.recipe===recipe&&c.state==='WAITING');check(c,recipe+' waiting');await drag(x,517,[90,240,390][c.seat],280);
   }
-  const before=await snap();check(before.session.served===6,'Six real orders served');check(before.session.bonuses===10000,'Combo milestones three and five');
+  const before=await snap();check(before.session.served===6,'Six real orders served');check(before.session.bonuses-before.session.speedBonuses===10000,'Combo milestones three and five (excluding speed bonus)');
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().scene==='Summary',null,{timeout:55000});
   const summary=await snap();check(summary.save.day===4,'Next day persisted');check(summary.save.stats.served===6,'Served count persisted exactly once');
   check(summary.save.balance===before.session.earnings+(before.session.challengeComplete?before.session.challenge.reward:0),'Closing balance matches live earnings');

@@ -249,6 +249,13 @@ export class GameScene extends Phaser.Scene {
     this.desktopUI?.scrollbar();
   }
   toast(text) { this.toastText = text; this.toastUntil = this.visualTime + 3900; announce(text); }
+  // Secondary news (goals, challenge) joins a message still on screen instead of hiding it.
+  // Keeps the first message (usually the serve verdict) and drops middle ones to fit two lines.
+  appendToast(text) {
+    const parts = this.visualTime < this.toastUntil && this.toastText ? [...this.toastText.split('  ✦  '), text] : [text];
+    while (parts.length > 2 && parts.join('  ✦  ').length > 100) parts.splice(1, 1);
+    this.toast(parts.join('  ✦  '));
+  }
   setLiveHint(text) { this.liveHint = text; }
   particles(x, y, color, count = 8, falling = false) {
     if (this.game.save.data.settings.reducedMotion) return;
@@ -345,7 +352,7 @@ export class GameScene extends Phaser.Scene {
       button.title.setText(`P${i + 1} · ${status}`); button.setAlpha(s?.visible ? 1 : 0.65);
     });
     if (this.session.challenge.complete && !this.challengeCelebrated) {
-      this.challengeCelebrated = true; this.toast('Hoàn thành thử thách! Thưởng sẽ chốt cuối ca.'); this.particles(240, 140, C.gold, 12); this.game.audio.play('combo');
+      this.challengeCelebrated = true; this.appendToast('Xong thử thách! Thưởng chốt cuối ca.'); this.particles(240, 140, C.gold, 12); this.game.audio.play('combo');
     }
     this.shopkeeper.update(this.visualTime);
     this.streetArt?.updateArt?.(this.visualTime, this.game.save.data.settings.reducedMotion);

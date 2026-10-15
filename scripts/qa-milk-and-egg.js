@@ -20,7 +20,7 @@ async (page) => {
   const bac=await snap();await page.screenshot({path:'output/playwright/bac-xiu.png'});
   await page.waitForFunction(()=>window.__PHIN_QA__.snapshot().customers.some(c=>c.recipe==='bac'&&c.state==='WAITING'),null,{timeout:40000});
   const c=(await snap()).customers.find(c=>c.recipe==='bac'&&c.state==='WAITING');await drag(126,517,[90,240,390][c.seat],280);
-  check((await snap()).session.served===3,'Bac xiu correctly served');check((await snap()).session.bonuses===3000,'Combo x3 awarded');
+  check((await snap()).session.served===3,'Bac xiu correctly served');{const s=(await snap()).session;check(s.bonuses-s.speedBonuses===3000,'Combo x3 awarded (excluding speed bonus)');}
   await choose(354,3);await brew(354,1980);await page.mouse.click(401,656);
   await page.mouse.move(280,715);await page.mouse.down();await page.mouse.move(140,715,{steps:8});
   const still=(await snap()).gesture.foam;await page.waitForTimeout(800);check((await snap()).gesture.foam===still,'Holding still cannot whisk foam');
