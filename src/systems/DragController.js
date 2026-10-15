@@ -198,9 +198,9 @@ export class DragController {
           const result = scene.session.serve(target.model, a.source.model.drink);
           scene.toast(result.message || 'Khách đã rời quán.');
           if (result.valid) {
-            scene.celebrate(target.x, target.y + 20, result);
+            const announced = scene.celebrate(target.x, target.y + 20, result);
             if (result.story) scene.showDialogue(result.story.name, result.story.text);
-            if (!result.bonus) scene.toast(`${result.message} ${target.model.type.happy}`);
+            if (!announced) scene.toast(`${result.message} ${target.model.type.happy}`);
             a.source.model.discard(); a.heard = true; ok = true;
           } else { scene.game.audio.play('error'); a.heard = true; target.feedbackUntil = scene.visualTime + 1400; scene.shopkeeper.drawFace('angry'); scene.time.delayedCall(1400, () => scene.shopkeeper.drawFace('idle')); }
         } else if (station && station !== a.source && !station.model.drink) {

@@ -5,6 +5,8 @@ export const ACHIEVEMENTS = [
   { id: 'served50', name: 'Khách quen của phố', description: 'Phục vụ 50 khách.', test: d => d.stats.served >= 50 },
   { id: 'rush', name: 'Ông hoàng giờ cao điểm', description: 'Có phục vụ trong cao điểm, không mất khách lúc đó.', test: (d, s) => s.rushServed > 0 && s.rushLost === 0 && s.elapsed >= 112.5 },
   { id: 'five', name: 'Quán ruột 5 sao', description: 'Ngày ≥ 4,8 sao và phục vụ ít nhất 5 khách.', test: (d, s) => s.served >= 5 && s.rating >= 4.8 },
+  { id: 'stars3', name: 'Ba sao rực rỡ', description: 'Đạt đủ 3 ★ mục tiêu trong một ngày.', test: (d, s) => s.stars >= 3 },
+  { id: 'speedy', name: 'Tay pha thần tốc', description: '5 ly “Nhanh tay” trong một ngày.', test: (d, s) => s.fastServes >= 5 },
   { id: 'wealth', name: 'Đại gia vỉa hè', description: 'Tích lũy 500.000đ thu nhập, trước chi nâng cấp.', test: d => d.stats.lifetimeEarnings >= 500000 },
 ];
 export const STORIES = {

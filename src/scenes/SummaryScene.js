@@ -13,12 +13,24 @@ export class SummaryScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor(C.dark);
     const g = this.add.graphics();
     plant(this, 20, 213, 1.4).setDepth(-1); plant(this, 459, 264, 1.4, 'ceramic').setDepth(-1);
-    label(this, 240, 54, 'PHIN GÓC PHỐ', 12, '#d7c298', { letterSpacing: 3 });
-    label(this, 240, 106, r.tutorial ? 'Bạn đã biết pha phin!' : 'Một sáng thật trọn vẹn.', 30, '#fff1d0', { fontFamily: SERIF });
-    label(this, 240, 146, r.tutorial ? '3 LY ĐẦU TIÊN · SẴN SÀNG MỞ QUÁN' : `TỔNG KẾT NGÀY ${r.day} · ${r.endReason === 'stockout' ? 'HẾT NGUYÊN LIỆU' : '06:00—10:00'}`, 10, '#c3c9a9', { letterSpacing: 1 });
+    const motion = !this.game.save.data.settings.reducedMotion;
+    const stars = r.tutorial ? null : { stars: r.stars || 0, results: r.starGoals || [] };
+    const headline = r.tutorial ? 'Bạn đã biết pha phin!' : ['Mai mình làm tốt hơn nhé.', 'Một sáng dễ thương.', 'Một sáng thật trọn vẹn.', 'Buổi sáng hoàn hảo!'][stars.stars];
+    label(this, 240, 36, 'PHIN GÓC PHỐ', 12, '#d7c298', { letterSpacing: 3 });
+    label(this, 240, 76, headline, 29, '#fff1d0', { fontFamily: SERIF });
+    label(this, 240, 108, r.tutorial ? '3 LY ĐẦU TIÊN · SẴN SÀNG MỞ QUÁN' : `TỔNG KẾT NGÀY ${r.day} · ${r.endReason === 'stockout' ? 'HẾT NGUYÊN LIỆU' : '06:00—10:00'}`, 10, '#c3c9a9', { letterSpacing: 1 });
+    if (stars) this.revealStars(stars, motion);
     round(g, 29, 185, 422, 476, C.cream, 20);
     label(this, 240, 225, r.tutorial ? 'TIỀN THƯỞNG LUYỆN TẬP' : 'TIỀN THU TRONG CA', 10, '#8e815d', { letterSpacing: 2 });
-    label(this, 240, 271, money(r.earnings), 43, '#31523e', { fontFamily: SERIF, fontStyle: 'bold' });
+    const total = label(this, 240, 271, money(motion ? 0 : r.earnings), 43, '#31523e', { fontFamily: SERIF, fontStyle: 'bold' });
+    if (motion) {
+      const counter = { value: 0 };
+      this.tweens.add({ targets: counter, value: r.earnings, duration: 1100, delay: 250, ease: 'Cubic.Out', onUpdate: () => total.setText(money(Math.round(counter.value / 100) * 100)), onComplete: () => { total.setText(money(r.earnings)); this.game.audio.play('money', 0.02); } });
+    }
+    if (r.newRecord) {
+      const ribbon = label(this, 386, 236, 'KỶ LỤC MỚI!', 11, '#fff4de', { fontStyle: 'bold', backgroundColor: '#be6649', padding: { x: 8, y: 4 } }).setRotation(0.12).setDepth(5);
+      if (motion) { ribbon.setScale(0); this.tweens.add({ targets: ribbon, scale: 1, delay: 1400, duration: 380, ease: 'Back.Out' }); }
+    }
     const ingredientCost = r.ingredientCost ?? r.ingredients?.cost ?? 0;
     const wasteCost = r.wasteCost ?? r.ingredients?.wasteCost ?? 0;
     const grossProfit = r.grossProfit ?? (r.earnings - ingredientCost);
@@ -27,13 +39,15 @@ export class SummaryScene extends Phaser.Scene {
       ['Giá trị nguyên liệu đã dùng', `${money(ingredientCost)}${wasteCost ? ` · bỏ ${money(wasteCost)}` : ''}`],
       ['Lợi nhuận gộp trong ca', money(grossProfit)],
       ['Khách vui / khách bỏ về', `${r.served} / ${r.lost}`], ['Ly Perfect / combo tốt nhất', `${r.perfect} / ×${r.bestCombo}`],
+      ...(r.fastServes ? [['Ly “Nhanh tay” ⚡', `${r.fastServes} ly · +${money(r.speedBonuses || 0)}`]] : []),
       ['Đánh giá trong ngày', r.ratings.length ? `${r.rating.toFixed(1)} / 5 ★` : 'Chưa có đánh giá'],
     ];
+    const step = rows.length > 8 ? 24.5 : 27;
     for (let i = 0; i < rows.length; i++) {
-      const y = 312 + i * 27;
+      const y = 312 + i * step;
       label(this, 55, y, rows[i][0], 13, '#6a735a').setOrigin(0, 0.5);
       label(this, 424, y, rows[i][1], 14, '#334d39', { fontStyle: 'bold' }).setOrigin(1, 0.5);
-      if (i < rows.length - 1) { g.lineStyle(1, 0xe6ddc1); g.lineBetween(55, y + 13, 425, y + 13); }
+      if (i < rows.length - 1) { g.lineStyle(1, 0xe6ddc1); g.lineBetween(55, y + step / 2, 425, y + step / 2); }
     }
     wrappedLabel(this, 240, 565, `“${r.review}”`, 345, 17, '#8e633f', { fontFamily: SERIF, fontStyle: 'italic' });
     if (r.challengeReward) label(this, 240, 604, `✓ Thử thách hoàn thành · +${money(r.challengeReward)}`, 12, '#5d7b46', { fontStyle: 'bold' });
@@ -42,10 +56,22 @@ export class SummaryScene extends Phaser.Scene {
     button(this, 134, 765, 204, 38, 'Về trang đầu', () => this.scene.start('Menu'), { fill: 0x385441, size: 12 });
     button(this, 347, 765, 204, 38, r.tutorial ? 'Luyện pha lại' : 'Ghé cửa hàng', () => this.scene.start(r.tutorial ? 'Tutorial' : 'Shop'), { fill: 0x385441, size: 12 });
     if (r.unlocked?.length) {
-      const text = label(this, 240, 188, `★ ${r.unlocked.map(id => ACHIEVEMENTS.find(a => a.id === id).name).join(' · ')}`, 11, '#fff0cf', { wordWrap: { width: 410 }, align: 'center', backgroundColor: '#57734d', padding: { x: 8, y: 6 } }).setDepth(20);
+      const text = label(this, 240, 196, `★ ${r.unlocked.map(id => ACHIEVEMENTS.find(a => a.id === id).name).join(' · ')}`, 11, '#fff0cf', { wordWrap: { width: 410 }, align: 'center', backgroundColor: '#57734d', padding: { x: 8, y: 6 } }).setDepth(20);
       if (!this.game.save.data.settings.reducedMotion) { text.setScale(0.9); this.tweens.add({ targets: text, scale: 1, duration: 350, ease: 'Back.Out' }); }
     }
     announce(`Kết thúc ${r.tutorial ? 'hướng dẫn' : `ngày ${r.day}${r.endReason === 'stockout' ? ' vì hết nguyên liệu' : ''}`}. Phục vụ ${r.served} khách, thu nhập ${money(r.earnings)}.`);
+  }
+  revealStars(stars, motion) {
+    stars.results.forEach((goal, i) => {
+      const x = 240 + (i - 1) * 64, y = 147 + (i === 1 ? -5 : 0), size = i === 1 ? 44 : 36;
+      label(this, x, y, '★', size, '#3b5645');
+      const star = label(this, x, y, '★', size, '#f2c66d', { stroke: '#fff1d0', strokeThickness: 2 }).setVisible(goal.complete);
+      const note = label(this, x, 175, `${goal.complete ? '✓' : '✗'} ${goal.short}`, 9, goal.complete ? '#f2dca6' : '#8f9c86');
+      if (!goal.complete || !motion) return;
+      star.setScale(0).setAngle(-40); note.setAlpha(0);
+      this.tweens.add({ targets: star, scale: 1, angle: 0, delay: 500 + i * 380, duration: 420, ease: 'Back.Out', onStart: () => this.game.audio.play('perfect') });
+      this.tweens.add({ targets: note, alpha: 1, delay: 650 + i * 380, duration: 250 });
+    });
   }
   update(_time, delta) { this.game.audio.ambient(Math.min(delta, 100) / 1000, false); }
 }

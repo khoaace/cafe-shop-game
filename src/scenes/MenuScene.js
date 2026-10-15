@@ -3,6 +3,8 @@ import { COLORS as C, ARCHETYPES, money } from '../config.js';
 import { street, label, round, createCupArt, toolArt, plant, person, tableArt, SERIF } from '../rendering/art.js';
 import { button, wrappedLabel, announce } from '../ui/widgets.js';
 import { inventoryShortage } from '../logic/inventory.js';
+import { starGoals } from '../logic/stars.js';
+import { EVENTS } from '../logic/dayPlan.js';
 export class MenuScene extends Phaser.Scene {
   constructor() { super('Menu'); }
   create() {
@@ -33,9 +35,15 @@ export class MenuScene extends Phaser.Scene {
     const card = this.add.graphics(); round(card, 0, 518, 480, 300, C.cream, { tl: 28, tr: 28, bl: 0, br: 0 });
     label(this, 240, 542, 'TIỆM CÀ PHÊ PHIN VỈA HÈ', 9, '#9b8055', { letterSpacing: 3 });
     label(this, 240, 579, 'Pha chút bình yên.', 34, '#294937', { fontFamily: SERIF });
-    wrappedLabel(this, 240, 621, 'Tự tay pha phin, đón những người khách quen.\nMột góc phố nhỏ, một buổi sáng của riêng bạn.', 410, 13, '#6b7058');
     const save = this.game.save.data, plan = this.game.save.prepareDay();
-    button(this, 240, 679, 402, 51, save.day > 1 ? `Mở quán · Ngày ${save.day}` : 'Mở quán · Ngày đầu tiên', () => this.scene.start('Game'), { size: 17 });
+    // Returning players see today's ★ goals and event up front — a reason to open one more shift.
+    const teaser = save.day > 1
+      ? `Hôm nay: ${starGoals(plan).map(g => `○ ${g.short}`).join('  ·  ')}${plan.event ? `\n${EVENTS[plan.event].name} · ${EVENTS[plan.event].description}` : '\nPha thật nhanh để nhận thưởng ⚡ Nhanh tay!'}`
+      : 'Tự tay pha phin, đón những người khách quen.\nMột góc phố nhỏ, một buổi sáng của riêng bạn.';
+    wrappedLabel(this, 240, 621, teaser, 420, save.day > 1 ? 12 : 13, save.day > 1 ? '#7a5f33' : '#6b7058');
+    const open = button(this, 240, 679, 402, 51, save.day > 1 ? `Mở quán · Ngày ${save.day}` : 'Mở quán · Ngày đầu tiên', () => this.scene.start('Game'), { size: 17 });
+    if (!save.settings.reducedMotion) this.tweens.add({ targets: open, scale: 1.035, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
+    if (save.stats.totalStars) label(this, 400, 33, `★ ${save.stats.totalStars}`, 14, '#f2c66d', { fontStyle: 'bold' });
     button(this, 106, 735, 133, 40, 'Cửa hàng', () => this.scene.start('Shop'), { fill: C.paper, color: '#576443', size: 12 });
     button(this, 245, 735, 133, 40, 'Sổ góc phố', () => this.scene.start('Notebook'), { fill: C.paper, color: '#576443', size: 12 });
     button(this, 384, 735, 133, 40, 'Học pha · 3 ly', () => this.scene.start('Tutorial'), { fill: C.paper, color: '#576443', size: 12 });

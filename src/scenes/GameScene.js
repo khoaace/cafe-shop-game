@@ -285,14 +285,25 @@ export class GameScene extends Phaser.Scene {
   celebrate(x, y, result) {
     this.game.audio.play('success'); this.game.audio.play('money', 0.018);
     this.shopkeeper.drawFace('happy'); this.time.delayedCall(1700, () => this.shopkeeper.drawFace('idle'));
+    const motion = !this.game.save.data.settings.reducedMotion;
     if (result.quality === 'PERFECT') this.drinkEngine.effects.perfect(x, y); else this.particles(x, y, C.gold, 8);
+    // Big, readable verdict first, then the money — players learn what "Perfect" is worth.
+    const [word, color] = { PERFECT: ['TUYỆT HẢO!', '#d9822b'], GOOD: ['NGON LẮM!', '#3f7a4d'], ACCEPTABLE: ['TẠM ỔN', '#8a6a45'] }[result.quality] || ['CẢM ƠN!', '#3f7a4d'];
+    const verdict = label(this, x, y - 62, word, result.quality === 'PERFECT' ? 22 : 18, color, { fontStyle: 'bold', stroke: '#fff6e0', strokeThickness: 5 }).setDepth(122);
     const reward = label(this, x, y - 32, `+${money(result.total)}`, 18, '#315c3c', { fontStyle: 'bold', stroke: '#fff0ce', strokeThickness: 4 }).setDepth(121);
     const heart = label(this, x + 38, y - 10, '♥', 24, '#bb654c').setDepth(121);
-    this.tweens.add({ targets: [reward, heart], y: '-=40', alpha: 0, duration: 1700, delay: 400, ease: 'Sine.Out', onComplete: () => { reward.destroy(); heart.destroy(); } });
-    if (result.bonus) {
+    const extras = [verdict, reward, heart];
+    if (result.speedBonus) extras.push(label(this, x, y - 8, `⚡ Nhanh tay +${money(result.speedBonus)}`, 11, '#7a5212', { fontStyle: 'bold', backgroundColor: '#ffe3a1', padding: { x: 6, y: 3 } }).setDepth(121));
+    if (motion) { verdict.setScale(0.3); this.tweens.add({ targets: verdict, scale: 1, duration: 360, ease: 'Back.Out' }); }
+    this.tweens.add({ targets: extras, y: '-=40', alpha: 0, duration: 1700, delay: 650, ease: 'Sine.Out', onComplete: () => extras.forEach(o => o.destroy()) });
+    if (motion && (result.quality === 'PERFECT' || [3, 5, 10].includes(result.combo))) this.cameras.main.shake(result.combo >= 5 ? 220 : 140, result.combo >= 5 ? 0.006 : 0.003);
+    if (result.bonus - (result.speedBonus || 0) > 0) {
       this.game.audio.play('combo');
-      this.toast(result.reviewerBonus ? `Reviewer tặng 5 sao · Thưởng ${money(result.bonus)}!` : `${this.session.combo >= 10 ? 'HUYỀN THOẠI PHA PHIN' : this.session.combo >= 5 ? 'SUPER COMBO' : 'COMBO'} ×${this.session.combo} · Thưởng ${money(result.bonus)}!`);
+      const comboBonus = result.bonus - (result.speedBonus || 0) - (result.reviewerBonus || 0);
+      this.toast(result.reviewerBonus ? `Reviewer tặng 5 sao · Thưởng ${money(result.reviewerBonus)}!` : `${this.session.combo >= 10 ? 'HUYỀN THOẠI PHA PHIN' : this.session.combo >= 5 ? 'SUPER COMBO' : 'COMBO'} ×${this.session.combo} · Thưởng ${money(comboBonus)}!`);
+      return true;
     }
+    return false;
   }
   update(time, delta) {
     if (!this.session || this.paused || this.finishing) return;
@@ -308,6 +319,9 @@ export class GameScene extends Phaser.Scene {
       else view.update(this.visualTime);
     }
     if (this.session.rush && !this.wasRush) this.rushBanner();
+    if (!this.tutorial && !this.closingWarned && this.session.elapsed >= RULES.lastArrival) {
+      this.closingWarned = true; this.toast('09:30 · Quán ngừng đón khách mới. Phục vụ nốt những ly cuối nhé!'); this.game.audio.play('rush');
+    }
     this.wasRush = this.session.rush;
     this.game.audio.ambient(seconds, this.session.rush, this.session.event);
     this.environment.update(this.visualTime);

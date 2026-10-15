@@ -69,6 +69,9 @@ Lượng sữa tính bằng **phần trong game**, không phải ml. Sai lệch 
 - Đơn chờ tối đa = nhỏ nhất của số ghế, hai lần số phin, và mức ngày: 2 / 3 / 4 / 6 cho ngày 1–2 / 3–5 / 6–9 / 10+. Nhịp thường/cao điểm lần lượt 30/24, 28/23, 26/21, 24/19 giây. Kiên nhẫn khách thường 75–100 giây, VIP ít nhất 100 giây.
 - Ngừng nhận khách mới lúc 09:30. Đến 10:00, khách chưa phục vụ tính là bỏ về, mỗi khách đúng một lần.
 - Tip: Perfect 25%, Good 12%, Acceptable 3%, làm tròn 100đ. Combo 3/5/10 thưởng lần lượt 3.000/7.000/15.000đ. Sai đơn hoặc khách bỏ về ngắt combo.
+- **Mục tiêu 3 ★ mỗi ngày:** phục vụ đủ số khách, đạt doanh thu mục tiêu và không để ai bỏ về (theo `expectedOrders` của ngày). Tiến độ hiện ngay trên HUD, sao được bật hiệu ứng ở màn tổng kết và cộng dồn vào sổ (Tổng sao / số ngày 3 ★).
+- **Nhanh tay ⚡:** phục vụ khi khách còn ≥ 70% kiên nhẫn được thưởng thêm 10% giá món (tính vào thưởng, không áp dụng khi học pha). Vạch 70% và biểu tượng ⚡ hiện trên thanh kiên nhẫn; khách sắp bỏ về có dấu “!” rung.
+- Huy hiệu mới: **Ba sao rực rỡ** (một ngày 3 ★) và **Tay pha thần tốc** (5 ly Nhanh tay trong ngày).
 - Danh tiếng dùng trung bình tích lũy với giá trị khởi đầu 4 sao/5 lượt, tránh mất cả sao chỉ sau một lỗi.
 
 ## Quán lớn lên qua từng ngày

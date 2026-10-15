@@ -3,6 +3,7 @@ import { Customer } from './Customer.js';
 import { normalizeUpgrades, difficulty } from '../logic/upgrades.js';
 import { VIPS, seededRandom } from '../logic/dayPlan.js';
 import { emptyRecipes, emptyStories, STORIES, storyAfter, challengeProgress } from '../logic/progression.js';
+import { starGoals, dayStars, speedBonus } from '../logic/stars.js';
 import { INGREDIENTS, INITIAL_INVENTORY, emptyIngredientTotals, normalizeInventory, canPrepareRecipe, recipeNeedsForModifiers, feasibleModifiersFor, ingredientValue } from '../logic/inventory.js';
 
 function drinkStockAmounts(drink) {
@@ -49,7 +50,10 @@ export class DaySession {
     this.preparedRecipeProvider = () => [];
     this.stockout = false; this.endReason = null;
     this.maxCustomers = tutorial ? 1 : this.difficulty.capacity;
+    this.speedBonuses = 0; this.fastServes = 0;
+    this.starGoals = tutorial ? [] : starGoals(this.plan);
   }
+  get stars() { return dayStars(this.starGoals, this, this.ended); }
   get event() { return this.plan?.event || null; }
   get rush() { return !this.tutorial && this.elapsed >= RULES.rushStart && this.elapsed < RULES.rushEnd; }
   get powerOut() { return this.event === 'outage' && this.elapsed >= 45 && this.elapsed < 75; }
@@ -527,7 +531,9 @@ export class DaySession {
     if (this.rush) this.rushServed++;
     this.bestCombo = Math.max(this.bestCombo, this.combo);
     const reviewerBonus = customer.type.id === 'reviewer' && result.quality === 'PERFECT' ? 10000 : 0;
-    const bonus = (RULES.comboRewards[this.combo] || 0) + reviewerBonus;
+    const fast = speedBonus(price, customer.ratio, this.tutorial);
+    if (fast) { this.speedBonuses += fast; this.fastServes++; }
+    const bonus = (RULES.comboRewards[this.combo] || 0) + reviewerBonus + fast;
     this.bonuses += bonus;
     if (result.quality === 'PERFECT') this.perfect++;
     const rating = Math.min(5, Math.max(3, result.score - (customer.ratio < 0.25 ? 0.4 : 0) - (customer.wrongOrders ? 0.2 : 0) + (this.upgrades.decor ? 0.1 : 0)));
@@ -546,7 +552,7 @@ export class DaySession {
         : result.quality === 'PERFECT' ? ['Cà phê ngon, ghế nhựa hơi thấp mà lòng vui quá!', 'Một ngụm là thấy Sài Gòn dễ thương liền!', 'Phin nhỏ từng giọt, niềm vui đầy cả ly.']
           : ['Quán nhỏ mà có gu. Mai ghé tiếp!', 'Cà phê vừa miệng, buổi sáng vừa vui.'];
     this.setReview(lines);
-    return { ...result, price, tip, bonus, reviewerBonus, story, total: price + tip + bonus };
+    return { ...result, price, tip, bonus, reviewerBonus, speedBonus: fast, combo: this.combo, story, total: price + tip + bonus };
   }
   summary() {
     const ingredients = this.ingredientSummary();
@@ -555,7 +561,8 @@ export class DaySession {
       served: this.served, lost: this.lost, perfect: this.perfect, bestCombo: this.bestCombo, elapsed: this.elapsed, ended: this.ended,
       event: this.event, challenge: this.plan?.challenge, challengeComplete: this.challenge.complete,
       recipes: { ...this.recipes }, storyEncounters: [...this.storyEncounters], rushServed: this.rushServed, rushLost: this.rushLost, wrongOrders: this.wrongOrders,
-      ingredients, endReason: this.endReason,
+      ingredients, endReason: this.endReason, speedBonuses: this.speedBonuses, fastServes: this.fastServes,
+      ...(() => { const result = dayStars(this.starGoals, this, true); return { starGoals: result.results, stars: this.tutorial ? 0 : result.stars }; })(),
       rating: this.rating, ratings: [...this.ratings], review: this.review || 'Một buổi sáng yên tĩnh. Ngày mai mình thử lại nhé!' };
   }
 }
