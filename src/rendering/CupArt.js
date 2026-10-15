@@ -11,46 +11,36 @@ export function createCupArt(scene, drink = null, x = 0, y = 0, scale = 1) {
   const layerView = new LiquidLayerSystem(scene, root);
   const liquid = layerView.graphics, ice = itemImage(scene, 'ice', 0, 0, 35, 24);
   const extraIce = itemImage(scene, 'ice', 0, 0, 30, 21);
-  const saltedGlass = scene.add.graphics();
+  const glassFx = scene.add.graphics();
   const glass = itemImage(scene, 'glass', 0, -3, 48, 70);
   const phin = itemImage(scene, 'phin', 2, -57, 66, 48);
   const grounds = scene.add.graphics(), press = itemImage(scene, 'press', -2, -70, 31, 23);
   const details = scene.add.graphics();
-  content.add([liquid, ice, extraIce, glass, saltedGlass, phin, grounds, press, details]);
+  content.add([liquid, ice, extraIce, glass, glassFx, phin, grounds, press, details]);
   root.details = details;
   root.paint = (d, t = 0) => {
-    content.setVisible(Boolean(d)); liquid.clear(); grounds.clear(); details.clear(); saltedGlass.clear();
+    content.setVisible(Boolean(d)); liquid.clear(); grounds.clear(); details.clear(); glassFx.clear();
     if (!d) return root;
     const quantities = [(d.condensed || 0) * 7, (d.milk || 0) * 10, (d.coffee || 0) * 27, (d.foam || 0) * 13];
     const colors = [0xe6c98c, 0xf9e9ce, 0x48281b, 0xecc572];
     const salted = d.recipeId === 'muoi', coconut = d.recipeId === 'cotdua', tratac = d.recipeId === 'tratac', tradao = d.recipeId === 'tradao', travai = d.recipeId === 'travai', cacao = d.recipeId === 'cacao', matcha = d.recipeId === 'matcha';
-    glass.setVisible(!salted && !coconut && !tratac && !tradao && !travai && !cacao && !matcha);
-    if (coconut) return paintCoconut(root, d, t, { layerView, liquid, ice, extraIce, glass: saltedGlass, phin, press, grounds, details });
-    if (tratac) return paintTraTac(root, d, t, { layerView, liquid, ice, extraIce, glass: saltedGlass, phin, press, grounds, details });
-    if (tradao) return paintTraDao(root, d, t, { layerView, liquid, ice, extraIce, glass: saltedGlass, phin, press, grounds, details });
-    if (travai) return paintTraVai(root, d, t, { layerView, liquid, ice, extraIce, glass: saltedGlass, phin, press, grounds, details });
-    if (cacao) return paintCacao(root, d, t, { layerView, liquid, ice, extraIce, glass: saltedGlass, phin, press, grounds, details });
-    if (matcha) return paintMatcha(root, d, t, { layerView, liquid, ice, extraIce, glass: saltedGlass, phin, press, grounds, details });
-    if (salted) {
-      // A clear glass and translucent individual cubes keep all three served layers readable.
-      saltedGlass.fillStyle(0xd6ece3, 0.06); saltedGlass.fillRoundedRect(-23, -33, 46, 60, 5);
-      saltedGlass.lineStyle(1.5, 0x648c81, 0.8); saltedGlass.strokeRoundedRect(-23, -33, 46, 60, 5);
-      saltedGlass.lineStyle(1.2, 0xfffdf3, 0.9); saltedGlass.strokeEllipse(0, -32, 45, 6); saltedGlass.strokeEllipse(0, 26, 37, 4);
-      saltedGlass.fillStyle(0xffffff, 0.2); saltedGlass.fillRoundedRect(-19, -24, 2, 39, 1);
-      quantities[2] = (d.preparation?.amounts.brewedCoffee || 0) * 27; quantities[3] = (d.preparation?.amounts.cream || 0) / 40 * 17; colors[3] = 0xfffcf4; }
+    // One painted glass sprite for every recipe; recipe painters only add liquid, ice and garnish.
+    glass.setVisible(true);
+    if (coconut) return paintCoconut(root, d, t, { layerView, liquid, ice, extraIce, glass: glassFx, phin, press, grounds, details });
+    if (tratac) return paintTraTac(root, d, t, { layerView, liquid, ice, extraIce, glass: glassFx, phin, press, grounds, details });
+    if (tradao) return paintTraDao(root, d, t, { layerView, liquid, ice, extraIce, glass: glassFx, phin, press, grounds, details });
+    if (travai) return paintTraVai(root, d, t, { layerView, liquid, ice, extraIce, glass: glassFx, phin, press, grounds, details });
+    if (cacao) return paintCacao(root, d, t, { layerView, liquid, ice, extraIce, glass: glassFx, phin, press, grounds, details });
+    if (matcha) return paintMatcha(root, d, t, { layerView, liquid, ice, extraIce, glass: glassFx, phin, press, grounds, details });
+    if (salted) { quantities[2] = (d.preparation?.amounts.brewedCoffee || 0) * 27; quantities[3] = (d.preparation?.amounts.cream || 0) / 40 * 17; colors[3] = 0xfffcf4; }
     const structured = RECIPES[d.recipeId]?.engine === 'gesture' && d.preparation;
     const layers = structured ? d.preparation.layers.map(l => ({ ...l, amount: l.amount * (d.preparation.volumePerUnit[l.id] || 1) / d.preparation.capacity * 51 })) : quantities.map((amount, i) => ({ amount, color: colors[i], foam: i === 3 && amount > 0, slowSpread: salted && i === 3 }));
     const mixing = structured ? d.preparation.mixing : Math.min(1, (d.stir || 0) / RULES.stirRadians);
     const filled = layerView.render(layers, t, mixing, structured || salted ? d.preparation.foam : 0);
     root.liquidLevel = filled;
     const iceQuantity = structured ? d.preparation.amounts.ice || 0 : d.ice;
-    ice.setVisible(!salted && iceQuantity > 0).setY(22 - Math.max(14, filled) + (salted ? quantities[3] + 8 : 10));
+    ice.setVisible(iceQuantity > 0).setY(22 - Math.max(14, filled) + (salted ? quantities[3] + 8 : 10));
     extraIce.setVisible(!salted && iceQuantity > 3).setY(22 - Math.max(20, filled) + 21);
-    if (salted && iceQuantity) for (let i = 0; i < 6 && i < iceQuantity; i++) {
-      const x = -12 + i % 3 * 12, y = Math.min(21, Math.min(14, 22 - filled + quantities[3] + 8) + Math.floor(i / 3) * 10);
-      details.fillStyle(0xc6e8e6, 0.55); details.fillRoundedRect(x - 4.5, y - 4.5, 9, 9, 2);
-      details.lineStyle(1, 0xffffff, 0.65); details.strokeRoundedRect(x - 4.5, y - 4.5, 9, 9, 2);
-    }
     if (structured) for (const garnish of d.preparation.garnishes) {
       details.fillStyle(garnish.color, 0.95); details.fillCircle(garnish.x, garnish.y, 5);
       details.lineStyle(1, 0xfff4de, 0.55); details.strokeCircle(garnish.x, garnish.y, 3);
@@ -78,11 +68,6 @@ function paintTraTac(root, d, t, parts) {
   ice.setVisible(false); extraIce.setVisible(false); phin.setVisible(false); press.setVisible(false);
   const reduced = d.reduced ?? root.scene?.game?.save?.data.settings.reducedMotion;
   const motion = reduced ? 0 : t;
-
-  // Tall clear street-style glass with cool condensation.
-  glass.fillStyle(0xe2f4ec, 0.08); glass.fillRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.5, 0x699488, 0.82); glass.strokeRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.2, 0xfffdf3, 0.9); glass.strokeEllipse(0, -32, 45, 6); glass.strokeEllipse(0, 26, 37, 4);
 
   const mixing = Math.min(1, p?.mixing || 0);
   const teaAmt = (a.tea || 0) / 230 * 50;
@@ -178,9 +163,7 @@ function paintTraTac(root, d, t, parts) {
     details.strokeEllipse(ripplePulse * 0.8, topY + 0.6, 22 + ripplePulse * 2, 2.1);
   }
 
-  // Soft highlights & condensation beads on the clear glass.
-  glass.fillStyle(0xffffff, 0.25); glass.fillRoundedRect(-19, -25, 2.5, 42, 1);
-  glass.fillStyle(0xffffff, 0.14); glass.fillRoundedRect(14, -20, 2, 28, 1);
+  // Condensation beads over the glass sprite.
   if (iceCubes > 0) for (let i = 0; i < 5; i++) {
     glass.fillStyle(0xe8fbf8, 0.45);
     glass.fillCircle(-15 + (i * 8) % 30, -10 + (i * 9) % 28, 1);
@@ -195,10 +178,6 @@ function paintTraDao(root, d, t, parts) {
   ice.setVisible(false); extraIce.setVisible(false); phin.setVisible(false); press.setVisible(false);
   const reduced = d.reduced ?? root.scene?.game?.save?.data.settings.reducedMotion;
   const motion = reduced ? 0 : t;
-
-  glass.fillStyle(0xe5f4ec, 0.08); glass.fillRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.5, 0x699488, 0.82); glass.strokeRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.2, 0xfffdf3, 0.9); glass.strokeEllipse(0, -32, 45, 6); glass.strokeEllipse(0, 26, 37, 4);
 
   const teaAmt = (a.tea || 0) / 250 * 48;
   const syrupAmt = (a.peachSyrup || 0) * 1.4 / 250 * 48;
@@ -305,9 +284,6 @@ function paintTraDao(root, d, t, parts) {
       liquid.strokeEllipse(ripple * 0.7, topY + 0.7, 21 + ripple * 1.8, 2);
     }
   }
-
-  glass.fillStyle(0xffffff, 0.25); glass.fillRoundedRect(-19, -25, 2.5, 42, 1);
-  glass.fillStyle(0xffffff, 0.14); glass.fillRoundedRect(14, -20, 2, 28, 1);
   return root;
 }
 
@@ -318,10 +294,6 @@ function paintTraVai(root, d, t, parts) {
   ice.setVisible(false); extraIce.setVisible(false); phin.setVisible(false); press.setVisible(false);
   const reduced = d.reduced ?? root.scene?.game?.save?.data.settings.reducedMotion;
   const motion = reduced ? 0 : t;
-
-  glass.fillStyle(0xedf7f2, 0.08); glass.fillRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.5, 0x678f84, 0.82); glass.strokeRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.2, 0xfffdf3, 0.9); glass.strokeEllipse(0, -32, 45, 6); glass.strokeEllipse(0, 26, 37, 4);
 
   const mixing = Math.min(1, p?.mixing || 0);
   const teaAmt = (a.tea || 0) / 240 * 50;
@@ -416,9 +388,6 @@ function paintTraVai(root, d, t, parts) {
       liquid.strokeEllipse(ripple * 0.7, topY + 0.7, 20 + ripple * 1.6, 1.9);
     }
   }
-
-  glass.fillStyle(0xffffff, 0.27); glass.fillRoundedRect(-19, -25, 2.5, 42, 1);
-  glass.fillStyle(0xffffff, 0.15); glass.fillRoundedRect(14, -20, 2, 28, 1);
   return root;
 }
 
@@ -429,10 +398,6 @@ function paintCacao(root, d, t, parts) {
   ice.setVisible(false); extraIce.setVisible(false); phin.setVisible(false); press.setVisible(false);
   const reduced = d.reduced ?? root.scene?.game?.save?.data.settings.reducedMotion;
   const motion = reduced ? 0 : t;
-
-  glass.fillStyle(0xebf4ee, 0.08); glass.fillRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.5, 0x678f84, 0.82); glass.strokeRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.2, 0xfffdf3, 0.9); glass.strokeEllipse(0, -32, 45, 6); glass.strokeEllipse(0, 26, 37, 4);
 
   const cacaoGrams = a.cacao || 0;
   const waterMl = a.water || 0;
@@ -554,9 +519,6 @@ function paintCacao(root, d, t, parts) {
     liquid.lineStyle(0.9, 0xd8a172, 0.48);
     liquid.strokeEllipse(ripple * 0.7, topY + 0.7, 20 + ripple * 1.5, 1.9);
   }
-
-  glass.fillStyle(0xffffff, 0.27); glass.fillRoundedRect(-19, -25, 2.5, 42, 1);
-  glass.fillStyle(0xffffff, 0.15); glass.fillRoundedRect(14, -20, 2, 28, 1);
   return root;
 }
 
@@ -565,9 +527,6 @@ function paintCoconut(root, d, t, parts) {
   const { layerView, liquid, ice, extraIce, glass, phin, press, grounds, details } = parts;
   const p = d.preparation, a = p?.amounts || {};
   ice.setVisible(false); extraIce.setVisible(false);
-  glass.fillStyle(0xd6ece3, 0.07); glass.fillRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.5, 0x648c81, 0.8); glass.strokeRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.2, 0xfffdf3, 0.9); glass.strokeEllipse(0, -32, 45, 6); glass.strokeEllipse(0, 26, 37, 4);
   const slush = ((a.coconutCream || 0) + (a.condensed || 0) * 15 + (a.ice || 0) * 8) / 130 * 50;
   const coffee = (a.brewedCoffee || 0) * 40 / 130 * 50;
   // Time since coffee first touched the coconut drives how far it has seeped down.
@@ -617,9 +576,7 @@ function paintCoconut(root, d, t, parts) {
       for (let i = 0; i < 10; i++) { g.fillStyle(0xffffff, 0.8); g.fillCircle(-16 + i * 3.6, slushTop + Math.sin(i * 2.3) * 1.2, 1 + (i % 2) * 0.6); }
     }
   }
-  // Soft highlights on the clear glass.
-  glass.fillStyle(0xffffff, 0.26); glass.fillRoundedRect(-19, -25, 2.5, 42, 1);
-  glass.fillStyle(0xffffff, 0.14); glass.fillRoundedRect(14, -20, 2, 28, 1);
+  // A soft moving glint over the glass sprite.
   glass.lineStyle(1, 0xffffff, 0.3 + (reduced ? 0 : 0.1 * Math.sin(t / 600))); glass.beginPath(); glass.arc(0, -10, 18, -0.4, 0.2); glass.strokePath();
   const filtering = ['PHIN', 'PRESSED', 'POURING', 'BREWING'].includes(d.state);
   phin.setVisible(filtering); press.setVisible(filtering && d.press > 0);
@@ -638,10 +595,6 @@ function paintMatcha(root, d, t, parts) {
   ice.setVisible(false); extraIce.setVisible(false); phin.setVisible(false); press.setVisible(false);
   const reduced = d.reduced ?? root.scene?.game?.save?.data.settings.reducedMotion;
   const motion = reduced ? 0 : t;
-
-  glass.fillStyle(0xe5f4ec, 0.08); glass.fillRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.5, 0x699488, 0.82); glass.strokeRoundedRect(-23, -33, 46, 60, 5);
-  glass.lineStyle(1.2, 0xfffdf3, 0.9); glass.strokeEllipse(0, -32, 45, 6); glass.strokeEllipse(0, 26, 37, 4);
 
   const milkMl = a.milk || 0;
   const syrupMl = a.syrup || 0;
@@ -719,9 +672,6 @@ function paintMatcha(root, d, t, parts) {
       }
     }
   }
-
-  glass.fillStyle(0xffffff, 0.27); glass.fillRoundedRect(-19, -25, 2.5, 42, 1);
-  glass.fillStyle(0xffffff, 0.15); glass.fillRoundedRect(14, -20, 2, 28, 1);
   return root;
 }
 

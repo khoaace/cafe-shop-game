@@ -14,13 +14,14 @@ export class NotebookScene extends Phaser.Scene {
     const bg = this.add.graphics(); round(bg, 20, 82, 440, 622, C.cream, 20);
     label(this, 240, 43, 'NHỮNG BUỔI SÁNG ĐÃ QUA', 10, '#dacda4', { letterSpacing: 2 });
     label(this, 240, 123, 'Sổ chuyện góc phố', 30, '#36513d', { fontFamily: SERIF });
-    ['Thống kê', 'Huy hiệu', 'Món ngon', 'Chuyện', 'Cài đặt'].forEach((name, i) => button(this, 69 + i * 86, 180, 79, 39, name, () => this.render(i), { size: 10 }));
+    this.tabs = ['Thống kê', 'Huy hiệu', 'Món ngon', 'Chuyện', 'Cài đặt'].map((name, i) => button(this, 69 + i * 86, 180, 79, 39, name, () => this.render(i), { size: 10 }));
     this.content = this.add.container(0, 0); this.render(0);
     button(this, 130, 749, 200, 47, 'Về trang đầu', () => this.scene.start('Menu'), { size: 14, fill: 0x405b45 });
     button(this, 351, 749, 200, 47, 'Ghé cửa hàng', () => this.scene.start('Shop'), { size: 14, fill: C.gold, color: '#354b36' });
   }
   render(tab, character = 'driver', recipePage = 0) {
     this.content.removeAll(true); const d = this.game.save.data, add = o => { this.content.add(o); return o; };
+    this.tabs?.forEach((b, i) => b.setAlpha(i === tab ? 1 : 0.55));
     if (tab === 0) {
       const favorite = Object.entries(d.mastery).sort((a, b) => b[1] - a[1])[0];
       const pantry = Object.entries(INGREDIENTS).map(([id, spec]) => `${spec.name.replace('Bột cà phê', 'Bột').replace('Sữa ', '')} ${Number.isInteger(d.inventory[id]) ? d.inventory[id] : d.inventory[id].toFixed(1)}`).join(' · ');

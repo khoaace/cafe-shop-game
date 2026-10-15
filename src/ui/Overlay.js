@@ -4,6 +4,7 @@ import { mastery } from '../logic/progression.js';
 import { RECIPES, unlockedRecipes, COLORS as C, money } from '../config.js';
 import { label, round, createCupArt, SERIF } from '../rendering/art.js';
 import { button, wrappedLabel } from './widgets.js';
+const capitalize = text => text.charAt(0).toLocaleUpperCase('vi') + text.slice(1);
 export class Overlay {
   constructor(scene, reason) {
     this.scene = scene; this.reason = reason;
@@ -49,7 +50,7 @@ export class Overlay {
       page(label(scene, 240, 405, recipe.name, 25, '#304d3b', { fontFamily: SERIF }));
       page(label(scene, 240, 435, `${money(recipe.price)} · ${mastery(scene.game.save.data.mastery[id])}`, 14, '#a46a3d', { fontStyle: 'bold' }));
       const structured = recipe.engine === 'gesture' || ['muoi', 'cotdua'].includes(recipe.id);
-      const lines = structured ? (guideMode === 'ingredients' ? recipe.ingredients.map(i => `${INGREDIENT_DEFINITIONS[i.id].name}: ${i.label || `${i.target} ${i.unit}`}`) : recipe.steps.map(s => s.instruction)) : [
+      const lines = structured ? (guideMode === 'ingredients' ? recipe.ingredients.map(i => `${capitalize(INGREDIENT_DEFINITIONS[i.id].name)}: ${i.label || `${i.target} ${i.unit}`}`) : recipe.steps.map(s => s.instruction)) : [
         `Bột cà phê: ${recipe.coffee === 0.5 ? '½ muỗng' : '1 muỗng'}   ·   Nước: ${recipe.water * 100}%`,
         recipe.condensed ? `Sữa đặc: ${recipe.condensed} phần${recipe.milk ? `   ·   Sữa tươi: ${recipe.milk} phần` : ''}` : recipe.foam ? 'Bọt trứng: đánh bông rồi kéo tô vào ly' : 'Cà phê nguyên chất, không thêm sữa',
         recipe.ice ? `Đá: ${recipe.ice} viên (1 lần kéo muỗng đá)` : 'Uống nóng · không thêm đá',
@@ -86,14 +87,16 @@ export class Overlay {
       add(label(scene, left, r.y + 76, recipe.name, 25, '#304d3b', { fontFamily: SERIF }).setOrigin(0, 0.5));
       add(label(scene, left, r.y + 108, `${money(recipe.price)} · ${mastery(scene.game.save.data.mastery[id])}`, 14, '#a46a3d').setOrigin(0, 0.5));
       add(createCupArt(scene, recipePreview(recipe), left + 85, r.y + 214, 1.45));
-      const ingredients = recipe.ingredients.map(i => `${INGREDIENT_DEFINITIONS[i.id].name}: ${i.label || `${i.target} ${i.unit}`}`).join('\n');
+      const ingredients = recipe.ingredients.map(i => `${capitalize(INGREDIENT_DEFINITIONS[i.id].name)}: ${i.label || `${i.target} ${i.unit}`}`).join('\n');
       add(label(scene, left + 185, r.y + 145, 'ĐỊNH LƯỢNG', 14, '#526b50', { fontStyle: 'bold' }).setOrigin(0, 0));
-      add(label(scene, left + 185, r.y + 172, ingredients, 14, '#56644c', { wordWrap: { width: width - 185 }, lineSpacing: 5 }).setOrigin(0, 0));
-      add(label(scene, left, r.y + 310, 'CÁCH PHA', 14, '#526b50', { fontStyle: 'bold' }).setOrigin(0, 0));
+      const amounts = add(label(scene, left + 185, r.y + 172, ingredients, 14, '#56644c', { wordWrap: { width: width - 185 }, lineSpacing: 5 }).setOrigin(0, 0));
+      // Long ingredient lists (7+ lines) push the steps down instead of overlapping them.
+      const stepsY = Math.max(r.y + 310, amounts.y + amounts.height + 18);
+      add(label(scene, left, stepsY, 'CÁCH PHA', 14, '#526b50', { fontStyle: 'bold' }).setOrigin(0, 0));
       const colW = (width - 20) / 2, split = Math.ceil(recipe.steps.length / 2);
       for (let col = 0; col < 2; col++) {
         const steps = recipe.steps.slice(col * split, (col + 1) * split).map((step, i) => `${col * split + i + 1}. ${step.instruction}`).join('\n\n');
-        add(label(scene, left + col * (colW + 20), r.y + 338, steps, 14, '#56644c', { wordWrap: { width: colW }, lineSpacing: 4 }).setOrigin(0, 0));
+        add(label(scene, left + col * (colW + 20), stepsY + 28, steps, 14, '#56644c', { wordWrap: { width: colW }, lineSpacing: 4 }).setOrigin(0, 0));
       }
       const available = unlocked.includes(id);
       add(button(scene, left + width / 2, r.y + r.h - 48, Math.min(420, width), 42, !available ? `Chưa mở · từ ngày ${recipe.unlock.day || 1}` : stationIndex !== null ? `Dùng cho trạm ${stationIndex + 1}` : 'Về bàn pha', () => {
