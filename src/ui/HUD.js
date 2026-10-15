@@ -77,7 +77,7 @@ export class HUD {
       view.setText(`${goal.failed ? '✗' : done ? '★' : '○'} ${text}`).setColor(goal.failed ? '#a2523d' : done ? (this.scene.layout?.desktop ? '#f2c66d' : '#a06b16') : this.scene.layout?.desktop ? '#c9d2b6' : '#2b4c3c');
       if (goal.complete && !this.goalDone[i]) {
         this.goalDone[i] = true; this.pop(view, 1.6);
-        this.scene.toast(`★ Đạt mục tiêu: ${goal.label}!`); this.scene.game.audio.play('perfect');
+        this.scene.appendToast(`★ ${goal.label}!`); this.scene.game.audio.play('perfect');
         const m = view.getWorldTransformMatrix(); this.scene.particles(m.tx, m.ty, C.gold, 10);
       }
     });

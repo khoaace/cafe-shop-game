@@ -33,7 +33,7 @@ Nhân vật và khung cảnh dùng thêm **21 ảnh/sprite sheet imagegen** tron
 
 Mã vẽ chia thành `rendering/primitives.js`, `tools.js`, `characters.js`, `scenery.js`; `art.js` giữ API dùng chung. `itemAssets.js` nạp bộ sprite và tạo texture tối đa 512 px một lần; ảnh nguồn được giữ nguyên, texture không tạo lại khi resize. `CupArt.js` tách ảnh ly/phin khỏi lớp cà phê, sữa, bọt, đá và lõi nén để hiển thị đúng trạng thái thật. Khay, lúc kéo, bàn pha, sổ và cửa hàng dùng chung bộ hình. `ResolutionManager.js` quản lý camera/texture chữ và `resolution.js` chứa phép tính thuần có kiểm thử. Graphics tĩnh chỉ dựng một lần, ly cập nhật khi trạng thái/thành phần hoặc frame hiệu ứng đổi.
 
-[Ảnh đối chiếu trước/sau](output/playwright/sharpness-comparison.html) · [QA desktop / Retina](QA-DESKTOP.md). Hiện **79/79 kiểm thử logic đạt** sau khi bổ sung kho nguyên liệu.
+[Ảnh đối chiếu trước/sau](output/playwright/sharpness-comparison.html) · [QA desktop / Retina](QA-DESKTOP.md). Hiện **181/181 kiểm thử logic đạt** (`npm test`).
 
 Nếu cổng mặc định đang dùng: `npm run dev -- --port 5175 --strictPort`, rồi mở `http://localhost:5175`. Lưu ý localStorage tách theo cổng; save ở cổng cũ vẫn còn nguyên.
 
